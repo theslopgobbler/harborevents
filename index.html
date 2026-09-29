@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Festivals, shows, markets and holiday events around Grays Harbor, Washington, updated weekly.">
+<style>[hidden]{display:none!important} img{max-width:100%}</style><title>Harbor Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Alegreya+Sans+SC:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Harbor Events: "rainforest floor" design.
+   Header is always deep canopy green. Light = lichen & fern. Dark = mossy forest floor. Accent = moss; today = chanterelle. */
+:root{
+  --bg:#e3e9d6; --surface:#f5f7ee; --surface-2:#e9eedd; --ink:#15261a; --ink-2:#34493a; --ink-3:#586b5a;
+  --line:#c3cfb3; --moss:#4f6f1c; --moss-bright:#7a9a2e; --accent:#4f6f1c; --accent-ink:#f5f7ee; --today:#b8561b;
+  --warn:#6b4600; --warn-bg:#f5e3b5; --focus:#1f58a6;
+  --head-bg:#132318; --head-bg2:#1b3322; --head-ink:#eef3e2; --head-ink2:#c3d3b1; --tree-back:#2a4a33; --tree-front:#0c1a10; --moss-ground:#58792a;
+  --cap:#c9632a; --cap2:#e39a3d; --stem:#efe4cc; --amanita:#b8322a;
+  --r-ah:#a9481f; --r-os:#2d6a8a; --r-sb:#71519c; --r-ev:#4a7526; --r-quinault:#16705a; --r-all:#5c6659;
+  --gold:#b8860b; --gold-ink:#5e4200; --gold-bg:#fbeaa8;
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --label:"Alegreya Sans SC","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",Verdana,"Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0d1710; --surface:#142219; --surface-2:#1b2d20; --ink:#e7efdc; --ink-2:#bccbb0; --ink-3:#8fa287;
+    --line:#2a3f2e; --moss:#9dbf4a; --moss-bright:#b7d765; --accent:#a8c957; --accent-ink:#0d1710; --today:#f0a45a;
+    --warn:#ffd27a; --warn-bg:#3a2d0e; --focus:#8cc2ff;
+    --head-bg:#0a130c; --head-bg2:#122016; --tree-back:#1d3524; --tree-front:#050c07; --moss-ground:#476a22;
+    --r-ah:#ee9366; --r-os:#72b4dc; --r-sb:#b59bea; --r-ev:#9ccc72; --r-quinault:#5fcfae; --r-all:#a9b3a3;
+    --gold:#f0c24e; --gold-ink:#ffdc80; --gold-bg:#30280c;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d1710; --surface:#142219; --surface-2:#1b2d20; --ink:#e7efdc; --ink-2:#bccbb0; --ink-3:#8fa287;
+  --line:#2a3f2e; --moss:#9dbf4a; --moss-bright:#b7d765; --accent:#a8c957; --accent-ink:#0d1710; --today:#f0a45a;
+  --warn:#ffd27a; --warn-bg:#3a2d0e; --focus:#8cc2ff;
+  --head-bg:#0a130c; --head-bg2:#122016; --tree-back:#1d3524; --tree-front:#050c07; --moss-ground:#476a22;
+  --r-ah:#ee9366; --r-os:#72b4dc; --r-sb:#b59bea; --r-ev:#9ccc72; --r-quinault:#5fcfae; --r-all:#a9b3a3;
+  --gold:#f0c24e; --gold-ink:#ffdc80; --gold-bg:#30280c;
+}
+/* Larger text: everything is sized in rem, so this scales the whole page */
+:root[data-size="large"]{font-size:125%}
+:root[data-size="large"] body{line-height:1.6}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:1rem/1.5 var(--body);margin:0}
+.wrap{max-width:62rem;margin:0 auto;padding-inline:16px;padding-block:0 3rem}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:400}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+
+/* ---------- header: under the canopy ---------- */
+.forest-head{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--head-bg) 0%,var(--head-bg2) 100%);color:var(--head-ink);padding:1.6rem 16px 7.5rem}
+.forest-head .inner{position:relative;z-index:1;max-width:62rem;margin:0 auto}
+.place{font:700 .95rem var(--label);letter-spacing:.08em;color:var(--head-ink2)}
+.forest-head h1{font:400 clamp(2.6rem,8vw,4.6rem)/1 var(--display);color:var(--head-ink);margin-top:.2rem;letter-spacing:-.01em}
+.forest-head p{margin:.6rem 0 0;color:var(--head-ink2);max-width:58ch;font-size:1.02rem}
+.stamp{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font:700 .95rem var(--label);letter-spacing:.06em;color:var(--head-ink);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:.2rem .75rem}
+.stamp::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--moss-bright)}
+.forest-head svg.woods{position:absolute;left:0;right:0;bottom:0;width:100%;height:9rem;pointer-events:none}
+.woods .back{fill:var(--tree-back)}
+.woods .front{fill:var(--tree-front)}
+.woods .ground{fill:var(--moss-ground)}
+.woods .ground2{fill:var(--tree-front)}
+.woods .cap{fill:var(--cap)} .woods .cap2{fill:var(--cap2)} .woods .stem{fill:var(--stem)} .woods .amanita{fill:var(--amanita)} .woods .spot{fill:var(--stem)}
+.woods .fern{fill:none;stroke:var(--moss-ground);stroke-width:3;stroke-linecap:round}
+
+/* ---------- reading options ---------- */
+.reading{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;padding-top:.9rem}
+.rbtn{display:inline-flex;align-items:center;gap:.45rem;border:2px solid var(--ink-2);background:var(--surface);color:var(--ink);border-radius:999px;padding:.4rem .95rem;font:700 1rem var(--body);cursor:pointer;min-height:2.75rem}
+.rbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.rbtn .ico{font-weight:700;line-height:1}
+
+/* ---------- filter bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:.75rem;display:grid;gap:.65rem;border-bottom:2px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:.45rem .95rem .45rem .7rem;font:700 .98rem var(--body);cursor:pointer;min-height:2.75rem;display:inline-flex;align-items:center;gap:.5rem}
+.chip .sw{width:.8rem;height:.8rem;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;background:var(--c,var(--ink-3))} /* little cap shape */
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.seg{display:inline-flex;border:2px solid var(--ink-2);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--surface);color:var(--ink);padding:.45rem 1.05rem;font:700 1rem var(--body);cursor:pointer;min-height:2.6rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+select,input,textarea{font:1rem var(--body);color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:.5rem;padding:.45rem .6rem;min-height:2.6rem}
+label.tog{display:inline-flex;gap:.45rem;align-items:center;font-size:1rem;color:var(--ink-2);cursor:pointer}
+label.tog input{width:1.25rem;height:1.25rem;min-height:0;accent-color:var(--moss)}
+.btn{border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:.5rem 1.1rem;font:700 1rem var(--body);cursor:pointer}
+.spacer{flex:1}
+.msg{font-size:.92rem;color:var(--ink-2)}
+#count{font:700 .95rem var(--label);letter-spacing:.04em;color:var(--ink-3)}
+.notice{background:var(--surface);border:1.5px dashed var(--line);border-radius:.6rem;padding:.9rem 1rem;color:var(--ink-2);margin-top:1rem}
+
+/* ---------- running now ---------- */
+.ongoing{margin-top:1.25rem;background:var(--surface);border-radius:.8rem;padding:.8rem 1rem;border:1.5px solid var(--line);border-left:.45rem solid var(--moss)}
+.ongoing h2{font:800 1.05rem var(--label);letter-spacing:.08em;color:var(--moss);margin-bottom:.35rem}
+.ongoing ul{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+.ongoing li{font-size:1rem;padding-left:.8rem;border-left:4px solid var(--c)}
+.ongoing .when{color:var(--ink-3);font-size:.9rem}
+
+/* ---------- agenda: field-guide pages under mossy bands ---------- */
+.agenda{margin-top:1.5rem;display:grid;gap:2rem}
+.week{background:var(--surface);border-radius:.9rem;overflow:hidden;border:1.5px solid var(--line)}
+.week h2{font:400 1.45rem/1.15 var(--display);color:var(--head-ink);background-color:var(--head-bg2);padding:.65rem 1rem 1.05rem;
+  background-image:radial-gradient(circle at 50% 100%,var(--moss-ground) 0 .5rem,transparent .55rem),radial-gradient(circle at 50% 100%,var(--moss-ground) 0 .38rem,transparent .42rem);
+  background-size:1.3rem .75rem,.9rem .6rem;background-position:0 100%,.45rem 100%;background-repeat:repeat-x}
+.day{display:grid;grid-template-columns:5.2rem 1fr;gap:1rem;padding:.85rem 1rem;border-bottom:1px solid var(--line)}
+.day:last-child{border-bottom:0}
+.dlabel{font-variant-numeric:tabular-nums;line-height:1.05;border-right:2px solid var(--line);padding-right:.6rem}
+.dlabel .dow{font:800 .9rem var(--label);letter-spacing:.06em;color:var(--ink-3)}
+.dlabel .dnum{font:400 2.3rem var(--display);color:var(--ink)}
+.dlabel .mon{font:700 .9rem var(--label);letter-spacing:.06em;color:var(--ink-3)}
+.day.today .dlabel{border-right-color:var(--today)}
+.day.today .dnum,.day.today .dow{color:var(--today)}
+.evs{display:grid;gap:.75rem;min-width:0}
+.ev{display:grid;grid-template-columns:.32rem 1fr auto;gap:.7rem;align-items:start}
+.ev .bar4{align-self:stretch;border-radius:1rem;background:var(--c)}
+.ev .t{font-weight:700;font-size:1.1rem;overflow-wrap:anywhere}
+.ev .t a{text-decoration:none;border-bottom:1.5px solid var(--line)}
+.ev .t a:hover{border-bottom-color:var(--ink)}
+.ev .meta{font-size:.98rem;color:var(--ink-2);overflow-wrap:anywhere}
+.ev .meta b{font-weight:700;color:var(--ink)}
+.ev .desc{font-size:.94rem;color:var(--ink-3);max-width:65ch}
+.ev.series .t{font-weight:400;color:var(--ink-2)}
+.tag{display:inline-block;font:800 .82rem var(--label);letter-spacing:.05em;padding:.02rem .5rem;border-radius:999px;background:var(--surface-2);color:var(--ink-2);margin-left:.4rem;vertical-align:.1em}
+.tag.feat{background:var(--moss);color:var(--accent-ink)}
+.ev.partner{background:var(--gold-bg);border-radius:.6rem;padding:.5rem .6rem .5rem 0;box-shadow:inset 0 0 0 2px var(--gold)}
+.ev.partner .bar4{background:var(--gold)}
+.ev.partner .t,.ev.partner .t a{color:var(--gold-ink);font-weight:700}
+.ev.partner .t a{border-bottom-color:var(--gold)}
+.tag.partner{background:var(--gold);color:#221700}
+.verify{font-size:.9rem;background:var(--warn-bg);color:var(--warn);border-radius:.4rem;padding:.2rem .55rem;margin-top:.25rem;display:inline-block}
+.x{border:0;background:transparent;color:var(--ink-3);font-size:.88rem;cursor:pointer;padding:.2rem .35rem;border-radius:.3rem}
+.x:hover{color:var(--ink);background:var(--surface-2)}
+
+/* ---------- month ---------- */
+.month{margin-top:1.5rem}
+.mhead{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
+.mhead h2{font:400 1.9rem var(--display);flex:1}
+.mhead button{border:2px solid var(--ink-2);background:var(--surface);color:var(--ink);border-radius:50%;width:2.9rem;height:2.9rem;font-size:1.4rem;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1.5px solid var(--line);border-radius:.8rem;overflow:hidden;background:var(--surface)}
+.grid .dh{font:800 .9rem var(--label);letter-spacing:.06em;color:var(--head-ink);padding:.4rem;background:var(--head-bg2)}
+.cell{min-height:7rem;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);padding:.3rem .35rem;display:flex;flex-direction:column;gap:.15rem;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.cell.out{background:var(--surface-2);color:var(--ink-3)}
+.cell .n{font:800 .95rem var(--label)}
+.cell.today .n{color:var(--today)}
+.cell.today{box-shadow:inset 0 0 0 2px var(--today)}
+.cell.sel{outline:3px solid var(--focus);outline-offset:-3px}
+.pill{font-size:.78rem;line-height:1.25;padding:.12rem .35rem;border-radius:.3rem;background:color-mix(in srgb,var(--c) 16%,transparent);border-left:3px solid var(--c);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill.series{opacity:.7}
+.pill.partner{background:color-mix(in srgb,var(--gold) 32%,transparent);border-left-color:var(--gold);font-weight:700;color:var(--gold-ink)}
+.more{font-size:.75rem;color:var(--ink-3)}
+.dots{display:none;gap:.2rem;flex-wrap:wrap}
+.dots i{width:.5rem;height:.5rem;border-radius:50%;background:var(--c)}
+.dots i.partner{background:var(--gold);box-shadow:0 0 0 2px var(--gold-bg)}
+.dayview{margin-top:1rem}
+.dayview h3{font:400 1.5rem var(--display);margin-bottom:.5rem}
+:root[data-size="large"] .bar{position:static}
+@media (max-width:640px){
+  .bar{position:static}
+  .cell{min-height:3.6rem}
+  .cell .pill,.cell .more{display:none}
+  .cell .dots{display:flex}
+  .day{grid-template-columns:4.2rem 1fr;gap:.7rem;padding-inline:.7rem}
+  .dlabel .dnum{font-size:1.9rem}
+  .reading{justify-content:flex-start}
+  .forest-head{padding-bottom:6rem}
+  .forest-head svg.woods{height:6.5rem}
+}
+
+/* ---------- add form ---------- */
+details.add{margin-top:2rem;background:var(--surface);border:1.5px solid var(--line);border-radius:.8rem;padding:.8rem 1rem}
+details.add summary{cursor:pointer;font:400 1.3rem var(--display)}
+form.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.7rem;margin-top:.8rem}
+form.f label{display:grid;gap:.25rem;font-size:.9rem;font-weight:700;color:var(--ink-2)}
+form.f .wide{grid-column:1/-1}
+form.f .actions{grid-column:1/-1;display:flex;gap:.7rem;align-items:center}
+.hiddenlist{margin-top:.8rem;font-size:.92rem;color:var(--ink-2)}
+.hiddenlist ul{margin:.4rem 0 0;padding-left:1.2rem}
+
+/* ---------- subscribe + footer ---------- */
+#subscribe{border:1.5px solid var(--line);border-left:.45rem solid var(--moss);border-radius:.8rem}
+#subscribe ul{margin:.5rem 0 0;padding-left:1.2rem;display:grid;gap:.35rem}
+#subscribe .msg{font-size:.85rem;overflow-wrap:anywhere}
+.join{margin:0 0 .4rem;font-size:1.05rem;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-left:.45rem solid var(--moss);border-radius:.8rem;padding:.8rem 1rem}
+.join a{font-weight:700;color:var(--moss)}
+footer{margin-top:2rem;padding-top:1rem;border-top:2px solid var(--line);font-size:.9rem;color:var(--ink-3);display:grid;gap:.25rem}
+</style>
+
+<header class="forest-head">
+  <div class="inner">
+    <div class="place">Hoquiam · Aberdeen · Ocean Shores · Westport · Montesano · Elma · McCleary · Quinault</div>
+    <h1>Harbor Events</h1>
+    <p>Festivals, shows, markets and holiday doings around Grays Harbor, from the rainforest to the beaches. <span id="addHint">Facebook-only events can be added below.</span></p>
+    <div class="stamp" id="stamp">Grays Harbor · community calendar</div>
+  </div>
+  <svg class="woods" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <!-- back row of spruce and fir, misty -->
+    <g class="back">
+      <path d="M40 150 L70 40 L100 150Z M60 90 L70 55 L80 90Z"/><path d="M130 150 L165 20 L200 150Z"/><path d="M230 150 L255 60 L280 150Z"/>
+      <path d="M320 150 L352 30 L384 150Z"/><path d="M420 150 L445 70 L470 150Z"/><path d="M500 150 L538 15 L576 150Z"/>
+      <path d="M610 150 L636 55 L662 150Z"/><path d="M700 150 L735 25 L770 150Z"/><path d="M800 150 L824 65 L848 150Z"/>
+      <path d="M880 150 L915 18 L950 150Z"/><path d="M985 150 L1012 50 L1039 150Z"/><path d="M1070 150 L1104 28 L1138 150Z"/><path d="M1160 150 L1185 60 L1210 150Z"/>
+    </g>
+    <!-- front row: layered boughs -->
+    <g class="front">
+      <path d="M0 150 L28 70 L20 72 L40 40 L60 72 L52 70 L80 150Z"/>
+      <path d="M180 150 L205 88 L198 90 L215 62 L232 90 L225 88 L250 150Z"/>
+      <path d="M380 150 L410 60 L401 63 L424 26 L447 63 L438 60 L468 150Z"/>
+      <path d="M640 150 L662 96 L656 98 L672 72 L688 98 L682 96 L704 150Z"/>
+      <path d="M760 150 L792 58 L782 61 L806 20 L830 61 L820 58 L852 150Z"/>
+      <path d="M1000 150 L1026 84 L1018 86 L1038 52 L1058 86 L1050 84 L1076 150Z"/>
+      <path d="M1110 150 L1140 64 L1131 67 L1154 30 L1177 67 L1168 64 L1198 150Z"/>
+    </g>
+    <!-- moss bank + ferns -->
+    <path class="ground" d="M0 150 L0 132 C 60 120, 120 138, 190 128 S 320 118, 400 130 S 540 122, 610 132 S 760 120, 850 130 S 1010 118, 1090 128 S 1170 124, 1200 130 L1200 150Z"/>
+    <path class="fern" d="M300 136 C 290 118, 276 108, 258 104 M292 124 L282 112 M286 118 L274 118 M296 130 L300 114"/>
+    <path class="fern" d="M930 134 C 944 116, 960 108, 980 106 M940 124 L952 112 M946 118 L958 120 M934 130 L930 114"/>
+    <!-- mushrooms: chanterelles and one fly agaric -->
+    <g transform="translate(470 128)"><path class="stem" d="M-3 0 L-4 -14 L4 -14 L3 0Z"/><path class="cap2" d="M-13 -13 C -10 -24, 10 -24, 13 -13 C 6 -16, -6 -16, -13 -13Z"/></g>
+    <g transform="translate(490 131)"><path class="stem" d="M-2 0 L-3 -9 L3 -9 L2 0Z"/><path class="cap2" d="M-9 -8 C -7 -16, 7 -16, 9 -8 C 4 -10, -4 -10, -9 -8Z"/></g>
+    <g transform="translate(560 131)"><rect class="stem" x="-3.5" y="-20" width="7" height="20" rx="2"/><path class="amanita" d="M-17 -18 C -15 -34, 15 -34, 17 -18Z"/><circle class="spot" cx="-7" cy="-25" r="2.2"/><circle class="spot" cx="4" cy="-28" r="1.8"/><circle class="spot" cx="10" cy="-22" r="1.6"/></g>
+    <g transform="translate(1060 130)"><path class="stem" d="M-3 0 L-4 -12 L4 -12 L3 0Z"/><path class="cap" d="M-12 -11 C -9 -22, 9 -22, 12 -11 C 5 -14, -5 -14, -12 -11Z"/></g>
+  </svg>
+</header>
+
+<div class="wrap">
+  <div class="reading" role="group" aria-label="Reading options">
+    <button type="button" class="rbtn" id="themeBtn"><span class="ico" aria-hidden="true">◐</span><span id="themeLabel">Colors: Automatic</span></button>
+    <button type="button" class="rbtn" id="sizeBtn" aria-pressed="false"><span class="ico" aria-hidden="true">A+</span>Larger text</button>
+  </div>
+
+  <div class="bar">
+    <div class="chips" id="regions" role="group" aria-label="Area"></div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" id="vAgenda" aria-pressed="true">List</button>
+        <button type="button" id="vMonth" aria-pressed="false">Month</button>
+      </div>
+      <select id="cat" aria-label="Category"></select>
+      <label class="tog"><input type="checkbox" id="series" checked> Weekly regulars</label>
+      <span class="spacer"></span>
+      <span id="count"></span>
+    </div>
+  </div>
+
+  <div id="status" class="notice" hidden></div>
+  <section class="ongoing" id="ongoing" hidden><h2>Happening all season</h2><ul id="ongoingList"></ul></section>
+  <section class="agenda" id="agenda"></section>
+  <section class="month" id="month" hidden>
+    <div class="mhead"><button type="button" id="prev" aria-label="Previous month">‹</button><h2 id="mtitle"></h2><button type="button" id="next" aria-label="Next month">›</button></div>
+    <div class="grid" id="grid"></div>
+    <div class="dayview" id="dayview"></div>
+  </section>
+
+  <details class="add" id="addBox">
+    <summary>Add an event</summary>
+    <form class="f" id="addForm">
+      <label class="wide">Event name<input id="fTitle" required maxlength="140" placeholder="e.g. Harvest dinner at the Grange"></label>
+      <label>Date<input id="fDate" type="date" required></label>
+      <label>Last day (multi-day)<input id="fEnd" type="date"></label>
+      <label>Time<input id="fTime" maxlength="60" placeholder="7:00 PM"></label>
+      <label>Area<select id="fRegion"></select></label>
+      <label>Town<input id="fCity" maxlength="60" placeholder="Hoquiam"></label>
+      <label>Venue<input id="fVenue" maxlength="120"></label>
+      <label>Category<select id="fCat"></select></label>
+      <label class="wide">Link (Facebook post, ticket page…)<input id="fUrl" type="url" maxlength="500" placeholder="https://"></label>
+      <label class="wide">Notes<textarea id="fDesc" rows="2" maxlength="400"></textarea></label>
+      <div class="actions"><button class="btn" type="submit">Save event</button><span class="msg" id="fMsg"></span></div>
+    </form>
+    <div class="hiddenlist" id="hiddenBox"></div>
+  </details>
+
+  <section class="notice" id="subscribe" hidden>
+    <strong>Put these events on your phone's calendar.</strong> Copy a link below. In Google Calendar choose "Other calendars → From URL"; on an iPhone go to Settings → Calendar → Accounts → Add Subscribed Calendar. New events show up on their own each week.
+    <ul id="subList"></ul>
+  </section>
+
+  <footer>
+    <p class="join" id="joinDiscord" hidden><a id="discordLink" href="#" target="_blank" rel="noopener">Join our Discord</a> to suggest sources or events and see even more up-to-date information!</p>
+    <span>Dates change. Check the event's own link before you drive out.</span>
+  </footer>
+</div>
+
+<script>window.HH_STATIC={"updatedAt":"2026-09-29T05:51:05-07:00","events":[{"category":"nightlife","city":"Ocean Shores","dates":["2026-09-29","2026-10-13","2026-10-27","2026-11-10","2026-11-24"],"id":"corks-trivia","region":"os","series":true,"source":"Greater Grays Harbor chamber calendar","time":"6:00 PM","title":"Tuesday Trivia at Corks \u0026 Taps","url":"https://chamber.graysharbor.org/events/calendar/","venue":"Corks \u0026 Taps, 130 Oyhut Bay Blvd SW"},{"category":"food","city":"Ocean Shores","dates":["2026-09-30","2026-10-07","2026-10-14","2026-10-21","2026-10-28","2026-11-04","2026-11-11","2026-11-18","2026-11-25","2026-12-02"],"id":"wine-down-wednesday","region":"os","series":true,"source":"Greater Grays Harbor chamber calendar","title":"Wine Down Wednesday","url":"https://chamber.graysharbor.org/events/calendar/","venue":"Oyhut Bay Grill and Corks \u0026 Taps"},{"category":"nightlife","city":"Ocean Shores","dates":["2026-09-29"],"id":"oyhut-musical-trivia-0929","region":"os","source":"Greater Grays Harbor chamber calendar","title":"Musical Trivia at Oyhut Bay Event Center","url":"https://chamber.graysharbor.org/events/details/musical-trivia-at-the-oyhut-bay-event-center-16946","venue":"Oyhut Bay Event Center"},{"category":"family","city":"Montesano","cost":"Free admission; free hay and straw mazes","from":"2026-09-28","id":"chapman-farms-pumpkins","region":"ev","source":"GraysHarborTalk","time":"Daily 9:00 AM–6:00 PM","title":"Chapman Farms pumpkin patch","to":"2026-10-31","url":"https://www.graysharbortalk.com/2026/09/14/2026-pumpkin-patches-in-grays-harbor-and-surrounding-areas/","venue":"239 Brady Loop Rd E"},{"category":"outdoors","city":"Westport","from":"2026-09-14","id":"boat-basin-derby","region":"sb","source":"Westport-Grayland Chamber","title":"Boat Basin Salmon Derby","to":"2026-10-31","url":"https://westportgrayland-chamber.org/events/boat-basin-salmon-derby/","venue":"Westport Marina"},{"category":"music","city":"Montesano","dates":["2026-09-30","2026-10-07","2026-10-14","2026-10-21","2026-10-28","2026-11-04","2026-11-11","2026-11-18","2026-11-25","2026-12-02"],"desc":"Hosted by Dogger.","id":"gepettos-open-mic","region":"ev","series":true,"source":"allevents.in","time":"6:00 PM","title":"Open Mic Wednesdays at Gepetto\u0027s","url":"https://allevents.in/montesano/all","venue":"Gepetto\u0027s Italian Restaurant \u0026 Sports Bar"},{"category":"outdoors","city":"Westport","desc":"Season-long charter derby (began March 8); runs through Oct 18.","from":"2026-09-28","id":"westport-charter-derby","region":"sb","source":"Westport-Grayland Chamber","title":"Westport Charter Boat Association Fishing Derby","to":"2026-10-18","url":"https://westportgrayland-chamber.org/events/","venue":"Westport Marina"},{"category":"nightlife","city":"Ocean Shores","dates":["2026-10-06","2026-10-20","2026-11-03","2026-11-17","2026-12-01"],"id":"corks-bingo","region":"os","series":true,"source":"Greater Grays Harbor chamber calendar","time":"6:00 PM","title":"Bingo at Corks \u0026 Taps","url":"https://chamber.graysharbor.org/events/calendar/","venue":"Corks \u0026 Taps, 130 Oyhut Bay Blvd SW"},{"category":"music","city":"Ocean Shores","dates":["2026-10-03","2026-10-10","2026-10-17","2026-10-24","2026-10-31","2026-11-07","2026-11-14","2026-11-21","2026-11-28","2026-12-05"],"id":"shaun-beebe-oyhut","region":"os","series":true,"source":"Greater Grays Harbor chamber calendar","time":"6:00 PM","title":"Shaun Beebe live at Oyhut Bay Grill","url":"https://chamber.graysharbor.org/events/calendar/","venue":"Oyhut Bay Grill, 404 Salmonberry Ln SW"},{"category":"arts","city":"Aberdeen","dates":["2026-10-02","2026-11-06","2026-12-04"],"id":"first-friday-aberdeen","region":"ah","series":true,"source":"Coastal Currents","time":"5:00–8:00 PM","title":"First Friday Art Walk","url":"https://coastal-currents.com/events/","venue":"Downtown Aberdeen / Aberdeen Art Center"},{"category":"stage","city":"Aberdeen","dates":["2026-10-02","2026-10-03","2026-10-09","2026-10-10","2026-10-11","2026-10-16","2026-10-17","2026-10-18"],"desc":"Musical comedy revue.","id":"driftwood-i-love-you","region":"ah","source":"Coastal Currents","time":"Fri–Sat 7:30 PM, Sun 2:00 PM","title":"\"I Love You, You\u0027re Perfect, Now Change\"","url":"https://coastal-currents.com/events/","venue":"Driftwood Theatre"},{"category":"arts","city":"Seabrook","dates":["2026-10-03"],"desc":"Local makers, live art demos and displays in shops and select homes.","id":"seabrook-autumn-artwalk","region":"os","source":"Greater Grays Harbor chamber calendar","time":"11:00 AM–3:00 PM","title":"Seabrook Autumn Artwalk","url":"https://chamber.graysharbor.org/events/details/seabrook-autumn-artwalk-16790","venue":"Seabrook Town Center"},{"category":"family","city":"Ocean Shores","dates":["2026-10-03","2026-10-24"],"id":"oyhut-pumpkin-patch","region":"os","source":"Greater Grays Harbor chamber calendar","time":"12:00–3:00 PM","title":"Pumpkin Patch at Oyhut Bay","url":"https://chamber.graysharbor.org/events/details/pumpkin-patch-at-oyhut-bay-17203","venue":"Oyhut Bay Seaside Resort, 300 Lodge Ave SW"},{"category":"community","city":"Cosmopolis","dates":["2026-10-03"],"id":"cosmopolis-dollar-auction","region":"ah","source":"Greater Grays Harbor chamber calendar","time":"5:00 PM","title":"Cosmopolis Lions Club Dollar Auction","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"601 2nd St, Cosmopolis"},{"category":"music","city":"Aberdeen","dates":["2026-10-03"],"id":"ericka-corban-bishop","region":"ah","source":"Coastal Currents","time":"7:30 PM","title":"Ericka Corban in concert","url":"https://coastal-currents.com/events/","venue":"Bishop Center, Grays Harbor College"},{"category":"community","city":"Westport","dates":["2026-10-03"],"id":"bling-bones-boots","region":"sb","source":"Westport-Grayland Chamber","time":"6:00–11:00 PM","title":"Bling, Bones \u0026 Boots Gala","url":"https://westportgrayland-chamber.org/events/bling-bones-boots-gala/","venue":"Saltwater Saloon"},{"category":"market","city":"Elma","dates":["2026-10-03","2026-10-04"],"desc":"Monthly October–April swap meet: collectibles, tools, vintage finds.","id":"swap-meet-oct","region":"ev","source":"Coastal Currents","title":"Indoor Swap Meet","url":"https://coastal-currents.com/events/","venue":"Grays Harbor County Fairgrounds"},{"category":"festival","city":"Amanda Park","dates":["2026-10-03"],"id":"quinault-mushroom-fest","region":"quinault","source":"Greater Grays Harbor chamber calendar","time":"9:00 AM–4:00 PM","title":"Quinault Rainforest Mushroom Festival","url":"https://chamber.graysharbor.org/events/details/quinault-rainforest-mushroom-festival-10-03-2026-16939","venue":"Lake Quinault School, 6130 US-101"},{"category":"stage","city":"Hoquiam","dates":["2026-10-07"],"id":"circus-of-horror","region":"ah","source":"Greater Grays Harbor chamber calendar","time":"6:00 PM","title":"Circus of Horror (live show)","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"7th Street Theatre","verify":"The theatre\u0027s own site lists Circus of Horror on Sept 16; the chamber lists Oct 7. Check before going."},{"category":"holiday","city":"Aberdeen","cost":"Free card for costumes","dates":["2026-10-07"],"id":"messy-jessys-halloween-bingo","region":"ah","source":"GraysHarborTalk","time":"5:00–8:00 PM","title":"Halloween Bingo","url":"https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/","venue":"Messy Jessy\u0027s Bar and Grill, 212 S I St"},{"category":"nightlife","city":"Aberdeen","dates":["2026-10-09"],"id":"justin-hayes-comedy","region":"ah","source":"allevents.in","time":"9:00 PM","title":"Comedy with Justin Hayes","url":"https://allevents.in/aberdeen-wa/all","venue":"Messy Jessy\u0027s Bar and Grill"},{"category":"food","city":"Grayland","dates":["2026-10-09"],"id":"cranberry-cookoff","region":"sb","source":"Westport-Grayland Chamber","time":"12:00–5:30 PM","title":"Cranberry Festival Cook-Off","url":"https://westportgrayland-chamber.org/events/cranberry-festival-cookoff/","venue":"Grayland Community Hall"},{"category":"festival","city":"Grayland","dates":["2026-10-10","2026-10-11"],"featured":true,"id":"cranberry-harvest-festival","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–5:00 PM","title":"33rd Annual Cranberry Harvest Festival","url":"https://westportgrayland-chamber.org/events/cranberry-harvest-festival/","venue":"Grayland Community Hall"},{"category":"festival","city":"Grayland","dates":["2026-10-10"],"id":"firefly-parade","region":"sb","source":"Greater Grays Harbor chamber calendar","time":"7:00 PM","title":"33rd Annual Firefly Parade","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"Grayland Community Hall, 2071 Cranberry Rd"},{"category":"outdoors","city":"Grayland","dates":["2026-10-11"],"desc":"Run/walk through the cranberry bogs.","id":"bog-jog","region":"sb","source":"Westport-Grayland Chamber","time":"9:00 AM","title":"The Bog Jog","url":"https://westportgrayland-chamber.org/events/bog-jog/"},{"category":"outdoors","city":"Cosmopolis","dates":["2026-10-10"],"id":"cosmopolis-coho-derby","region":"ah","source":"Greater Grays Harbor chamber calendar","time":"9:00 AM","title":"Cosmopolis Lions Inaugural Coho Salmon Derby","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01"},{"category":"community","city":"McCleary","dates":["2026-10-10"],"id":"mccleary-genealogy","region":"ev","source":"Coastal Currents","time":"10:00 AM–3:00 PM","title":"McCleary Historical Society Genealogy Conference","url":"https://coastal-currents.com/events/","venue":"McCleary Museum"},{"category":"arts","city":"Countywide","dates":["2026-10-11","2026-11-15"],"desc":"Polson, Mermaid Museum, Chehalis Valley, McCleary, Coastal Interpretive Center, Museum of North Beach, Running Anvil and more.","id":"free-museum-day","region":"all","source":"Greater Grays Harbor chamber calendar","title":"America 250: Free museum admission day","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"Participating museums","verify":"Coastal Currents lists the November date as Nov 8; the chamber lists Nov 15."},{"category":"community","city":"Ocean Shores","dates":["2026-10-11"],"id":"indigenous-peoples-day-qbr","region":"os","source":"Greater Grays Harbor chamber calendar","time":"11:00 AM","title":"Indigenous Peoples\u0027 Day Celebration","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"Quinault Beach Resort \u0026 Casino, Great Hall"},{"category":"outdoors","city":"Elma","dates":["2026-10-16","2026-10-17","2026-10-18"],"id":"welsh-pony-show","region":"ev","source":"Coastal Currents","title":"Welsh Pony \u0026 Cob Society of Washington show","url":"https://coastal-currents.com/events/","venue":"Grays Harbor County Fairgrounds"},{"category":"market","city":"Grayland","dates":["2026-10-16","2026-10-17"],"id":"kila-hana-fall-market","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–4:00 PM","title":"Fall Fair Market","url":"https://westportgrayland-chamber.org/events/fall-fair-market/","venue":"Kila Hana Camperland"},{"category":"market","city":"Ocean Shores","dates":["2026-10-17","2026-10-18"],"id":"urban-unglued","region":"os","source":"Tourism Ocean Shores calendar","time":"10:00 AM–5:00 PM","title":"Urban Unglued market","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"food","city":"Ocean Shores","dates":["2026-10-17"],"id":"toast-the-harbor","region":"os","source":"Coastal Currents","time":"2:00–8:00 PM","title":"Toast the Harbor wine festival","url":"https://coastal-currents.com/events/","venue":"Quinault Beach Resort \u0026 Casino"},{"category":"festival","city":"Grayland","dates":["2026-10-17"],"id":"south-beach-mushroom-fest","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–5:00 PM","title":"3rd Annual South Beach Mushroom Festival","url":"https://westportgrayland-chamber.org/events/mushroom-festival/","venue":"Grayland Community Hall"},{"category":"film","city":"Hoquiam","dates":["2026-10-17","2026-10-18"],"id":"7th-frankenstein","region":"ah","source":"7th Street Theatre","time":"Sat 7:00 PM, Sun 2:00 PM","title":"Frankenstein (1931)","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"music","city":"Seabrook","dates":["2026-10-17"],"id":"smokey-brights-seabrook","region":"os","source":"Greater Grays Harbor chamber calendar","time":"7:00 PM","title":"Smokey Brights live","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"Seabrook Town Hall"},{"category":"film","city":"Ocean Shores","dates":["2026-10-17","2026-10-18"],"id":"dark-stormy-film-fest","region":"os","source":"Greater Grays Harbor chamber calendar","title":"Dark \u0026 Stormy Nights Film Festival","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"Ocean Shores Cinema"},{"category":"community","city":"Westport","dates":["2026-10-19"],"id":"westport-blood-drive","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–4:00 PM","title":"Bloodworks Northwest blood drive","url":"https://westportgrayland-chamber.org/events/blood-drive-with-northwest-bloodworks/","venue":"Westport-Grayland Chamber office"},{"category":"music","city":"Ocean Shores","dates":["2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25"],"desc":"Oct 21 is at Galway Bay only; the Convention Center stages run Oct 22–25. The Mudmen play Galway Bay Thu 7 PM, Sat and Sun 2 PM.","featured":true,"id":"celtic-music-feis","region":"os","source":"Tourism Ocean Shores calendar","title":"Galway Bay Celtic Music Feis","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center and Galway Bay Irish Pub"},{"category":"family","city":"Aberdeen","dates":["2026-10-23","2026-10-24"],"id":"mermaid-festival","region":"ah","source":"Greater Grays Harbor chamber calendar","time":"11:00 AM–5:00 PM","title":"Fall Mermaid Festival","url":"https://chamber.graysharbor.org/events/calendar/2026-10-01","venue":"International Mermaid Museum, 1 S Arbor Rd"},{"category":"holiday","city":"Seabrook","dates":["2026-10-23","2026-10-24","2026-10-25"],"desc":"Costume parade and family trick-or-treating at the Town Center shops.","id":"seabrook-halloweekend","region":"os","source":"Greater Grays Harbor chamber calendar","title":"Seabrook Halloweekend","url":"https://chamber.graysharbor.org/events/details/seabrook-halloweekend-16791","verify":"The chamber lists Oct 23–25; Coastal Currents listed Fri 1 PM to Sat 10 PM only."},{"category":"holiday","city":"Aberdeen","cost":"Free","dates":["2026-10-24"],"id":"aberdeen-spooktacular","region":"ah","source":"GraysHarborTalk","time":"12:00–2:00 PM","title":"Aberdeen Spooktacular (downtown trick-or-treat)","url":"https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/","venue":"Downtown Aberdeen"},{"category":"holiday","city":"Aberdeen","cost":"Market free; paranormal investigation ticketed","dates":["2026-10-24"],"id":"wandering-shadows","region":"ah","source":"Grays Harbor Historical Seaport","time":"2:00–10:00 PM","title":"Wandering Shadows Dark Market \u0026 Ghost Walk","url":"https://historicalseaport.org/upcoming-events/","venue":"Grays Harbor Historical Seaport, 500 N Custer St"},{"category":"holiday","city":"Tokeland","dates":["2026-10-24","2026-10-25"],"id":"tokeland-nightmare","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–5:00 PM","title":"Nightmare Before Christmas","url":"https://westportgrayland-chamber.org/events/nightmare-before-christmas/"},{"category":"holiday","city":"Montesano","cost":"Free","dates":["2026-10-30"],"id":"montesano-trick-or-treat","region":"ev","source":"Montesano Chamber","time":"3:00–5:00 PM","title":"Downtown Montesano Trick-or-Treat","url":"https://montesanochamber.com/index.php/component/chamberevents/?view=events\u0026catid=11","venue":"Downtown businesses"},{"category":"holiday","city":"Elma","cost":"Free","dates":["2026-10-30"],"desc":"Pumpkin bowling, costume contest and a dance party.","id":"elma-trick-or-treat","region":"ev","source":"GraysHarborTalk","time":"3:00–6:00 PM","title":"Downtown Elma Trick-or-Treat","url":"https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/","venue":"Downtown Elma"},{"category":"film","city":"Hoquiam","dates":["2026-10-30"],"id":"7th-addams-family","region":"ah","source":"7th Street Theatre","time":"7:00 PM","title":"The Addams Family (1991)","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"food","city":"Lake Quinault","cost":"$60 adults, $40 kids","dates":["2026-10-30"],"id":"sorcerers-supper","region":"quinault","source":"GraysHarborTalk","time":"6:30 PM","title":"Sorcerer\u0027s Supper","url":"https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/","venue":"Lake Quinault Lodge"},{"category":"stage","city":"Aberdeen","dates":["2026-10-30","2026-10-31","2026-11-01","2026-11-06","2026-11-07","2026-11-08"],"id":"ghc-colorado","region":"ah","source":"Coastal Currents","time":"Fri–Sat 7:30 PM, Sun 2:00 PM","title":"GHC Fall Drama: \"Colorado\"","url":"https://coastal-currents.com/events/","venue":"Bishop Center, Grays Harbor College"},{"category":"holiday","city":"Ocean Shores","dates":["2026-10-31"],"id":"os-halloween-kids-party","region":"os","source":"Tourism Ocean Shores calendar","time":"6:00 PM","title":"Halloween Kids Party","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"holiday","city":"Westport","cost":"Free","dates":["2026-10-31"],"id":"trick-or-treat-docks","region":"sb","source":"Westport-Grayland Chamber","time":"5:30–7:30 PM","title":"Trick-or-Treat at the Docks","url":"https://westportgrayland-chamber.org/events/trick-or-treat-at-the-docks/","venue":"Westhaven Dr / Westport Marina"},{"category":"holiday","city":"Lake Quinault","cost":"Free","dates":["2026-10-31"],"id":"halloween-at-the-lodge","region":"quinault","source":"GraysHarborTalk","time":"4:00–6:00 PM","title":"Halloween at the Lodge","url":"https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/","venue":"Lake Quinault Lodge"},{"category":"market","city":"Aberdeen","dates":["2026-10-03"],"id":"st-mary-oktoberfest-vendor-fair","region":"ah","source":"allevents.in","time":"10:00 AM","title":"St. Mary School Oktoberfest Vendor Fair","url":"https://allevents.in/aberdeen-wa/all","venue":"518 N H St"},{"category":"community","city":"Hoquiam","dates":["2026-10-03"],"desc":"Suicide-prevention awareness walk.","id":"out-of-darkness-walk","region":"ah","source":"allevents.in","time":"11:00 AM","title":"Grays Harbor Out of the Darkness Walk","url":"https://allevents.in/hoquiam/all","venue":"Hoquiam High School track"},{"category":"outdoors","city":"Ocean Shores","dates":["2026-10-04"],"id":"hyak-homecoming-5k","region":"os","source":"allevents.in","time":"7:00 AM","title":"Hyak Homecoming 5K Fun Run/Walk","url":"https://allevents.in/ocean-shores/all","venue":"120 E Chance a la Mer NE"},{"category":"arts","city":"Aberdeen","dates":["2026-10-09"],"id":"springboard-craft-sip","region":"ah","source":"allevents.in","time":"5:30 PM","title":"Craft and Sip","url":"https://allevents.in/aberdeen-wa/all","venue":"Springboard Coffee Company"},{"category":"arts","city":"Ocean Shores","dates":["2026-10-19"],"id":"corks-paint-sip-1019","region":"os","source":"allevents.in","time":"6:00–8:00 PM","title":"Paint and Sip at Corks \u0026 Taps","url":"https://allevents.in/ocean-shores/all","venue":"Corks \u0026 Taps, 130 Oyhut Bay Blvd SW"},{"category":"arts","city":"Aberdeen","dates":["2026-10-25"],"id":"mount-olympus-paint-sip-1025","region":"ah","source":"allevents.in","time":"3:00 PM","title":"Paint and Sip at Mount Olympus Brewing","url":"https://allevents.in/aberdeen-wa/all","venue":"Mount Olympus Brewing"},{"category":"nightlife","city":"Ocean Shores","dates":["2026-10-31"],"desc":"Halloween night party, 8 PM to midnight.","id":"qbr-monster-bash","region":"os","source":"allevents.in","time":"8:00 PM","title":"Monster Bash 2026","url":"https://allevents.in/ocean-shores/all","venue":"Quinault Beach Resort \u0026 Casino"},{"category":"holiday","city":"Hoquiam","dates":["2026-10-31"],"id":"ymca-harvest-carnival","region":"ah","source":"allevents.in","time":"2:00 PM","title":"YMCA Harvest Carnival","url":"https://allevents.in/hoquiam/all","venue":"YMCA, 2500 Simpson Ave"},{"category":"music","city":"Montesano","dates":["2026-10-31"],"id":"gepettos-head-over-feet","region":"ev","source":"allevents.in","time":"8:00 PM","title":"Head Over Feet (Alanis Morissette tribute)","url":"https://allevents.in/montesano/all","venue":"Gepetto\u0027s Italian Restaurant \u0026 Sports Bar"},{"category":"arts","city":"Aberdeen","dates":["2026-11-06"],"id":"ghc-fall-gala-reception","region":"ah","source":"Coastal Currents","time":"6:00 PM","title":"Fall Gala Art Exhibition opening reception","url":"https://coastal-currents.com/events/","venue":"Grays Harbor College"},{"category":"food","city":"Ocean Shores","dates":["2026-11-07","2026-11-08"],"id":"top-taste-wa","region":"os","source":"Tourism Ocean Shores calendar","time":"10:00 AM","title":"TOP Taste of Washington","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"film","city":"Hoquiam","dates":["2026-11-07","2026-11-08"],"id":"7th-north-by-northwest","region":"ah","source":"7th Street Theatre","time":"Sat 7:00 PM, Sun 2:00 PM","title":"North by Northwest (1959)","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"market","city":"Westport","dates":["2026-11-07"],"id":"junk-queens-open-house","region":"sb","source":"Greater Grays Harbor chamber calendar","time":"10:00 AM","title":"Junk Queens Tackle Box Holiday Open House","url":"https://chamber.graysharbor.org/events/calendar/2026-11-01","venue":"2681 Westhaven Dr"},{"category":"music","city":"McCleary","dates":["2026-11-07"],"id":"mccleary-the-mistaken","region":"ev","source":"Coastal Currents","time":"7:00 PM","title":"The Mistaken in concert","url":"https://coastal-currents.com/events/","venue":"McCleary Museum"},{"category":"food","city":"Lake Quinault","dates":["2026-11-07"],"id":"quinault-murder-mystery","region":"quinault","source":"Coastal Currents","time":"5:00–8:00 PM","title":"Murder Mystery Dinner","url":"https://coastal-currents.com/events/","venue":"Lake Quinault Lodge"},{"category":"music","city":"Hoquiam","dates":["2026-11-11"],"id":"hhs-veterans-concert","region":"ah","source":"7th Street Theatre","time":"2:00 PM \u0026 7:00 PM","title":"HHS Veterans Day Concert","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"festival","city":"Ocean Shores","dates":["2026-11-13","2026-11-14"],"id":"sasquatch-summit","region":"os","source":"Coastal Currents","title":"Sasquatch Summit","url":"https://coastal-currents.com/events/","venue":"Quinault Beach Resort \u0026 Casino"},{"category":"nightlife","city":"Lake Quinault","dates":["2026-11-14"],"id":"phantom-of-the-lodge","region":"quinault","source":"Coastal Currents","time":"5:00–8:00 PM","title":"Phantom of the Lodge Masquerade Ball","url":"https://coastal-currents.com/events/","venue":"Lake Quinault Lodge"},{"category":"music","city":"Aberdeen","dates":["2026-11-19"],"id":"navy-band-nw","region":"ah","source":"Coastal Currents","time":"7:00 PM","title":"US Navy Band Northwest","url":"https://coastal-currents.com/events/","venue":"Bishop Center, Grays Harbor College"},{"category":"community","city":"Ocean Shores","dates":["2026-11-20"],"id":"os-turkey-bingo","region":"os","source":"Tourism Ocean Shores calendar","time":"5:00 PM","title":"Turkey Bingo","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"nightlife","city":"Ocean Shores","dates":["2026-11-21"],"id":"harbor-havoc","region":"os","source":"Tourism Ocean Shores calendar","time":"6:00 PM","title":"Rogue Wrestling: Harbor Havoc – Feast \u0026 Fury","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"market","city":"Ocean Shores","dates":["2026-11-21"],"id":"silver-bells-bazaar","region":"os","source":"Greater Grays Harbor chamber calendar","time":"10:00 AM","title":"Silver Bells Christmas Bazaar","url":"https://chamber.graysharbor.org/events/calendar/2026-11-01","venue":"Oyhut Bay Event Center, 300 Lodge Ave SW"},{"category":"holiday","city":"Westport","dates":["2026-11-21"],"id":"deck-the-docks","region":"sb","source":"Greater Grays Harbor chamber calendar","title":"Deck the Docks","url":"https://chamber.graysharbor.org/events/calendar/2026-11-01","venue":"Westport Marina","verify":"Start time unclear on the chamber listing."},{"category":"market","city":"Elma","dates":["2026-11-21","2026-11-22"],"id":"country-christmas-bazaar","region":"ev","source":"Coastal Currents","time":"Sat 8:00 AM–5:00 PM, Sun 10:00 AM–3:00 PM","title":"Country Christmas Bazaar","url":"https://coastal-currents.com/events/","venue":"Grays Harbor County Fairgrounds"},{"category":"music","city":"Aberdeen","dates":["2026-11-22"],"id":"gh-symphony-we-the-people","region":"ah","source":"Coastal Currents","time":"7:00 PM","title":"Grays Harbor Symphony: \"We the People\"","url":"https://coastal-currents.com/events/","venue":"Bishop Center, Grays Harbor College"},{"category":"outdoors","city":"Seabrook","dates":["2026-11-26"],"id":"seabrook-turkey-trot","region":"os","source":"Coastal Currents","time":"9:30 AM","title":"Seabrook Turkey Trot","url":"https://coastal-currents.com/events/"},{"category":"holiday","city":"Seabrook","dates":["2026-11-27"],"id":"seabrook-tree-lighting","region":"os","source":"Coastal Currents","time":"5:00–6:00 PM","title":"Seabrook Tree Lighting","url":"https://coastal-currents.com/events/","venue":"Town Center"},{"category":"market","city":"Ocean Shores","dates":["2026-11-27","2026-11-28","2026-11-29"],"id":"winter-fanta-sea","region":"os","source":"Tourism Ocean Shores calendar","time":"Fri 12–5 PM, Sat–Sun 10 AM–3 PM","title":"Winter Fanta-Sea Craft Fair","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"holiday","city":"Seabrook","dates":["2026-11-27","2026-11-28","2026-11-29","2026-12-04","2026-12-05","2026-12-06","2026-12-11","2026-12-12","2026-12-13","2026-12-18","2026-12-19","2026-12-20"],"id":"seabrook-jolly-days","region":"os","series":true,"source":"Coastal Currents","time":"Fri–Sun","title":"Jolly Days","url":"https://coastal-currents.com/events/"},{"category":"stage","city":"Aberdeen","dates":["2026-11-27","2026-11-28","2026-12-04","2026-12-05","2026-12-06","2026-12-11","2026-12-12","2026-12-13"],"id":"driftwood-haunted-hill","region":"ah","source":"Coastal Currents","time":"Fri–Sat 7:30 PM, Sun 2:00 PM","title":"\"The House on Haunted Hill\"","url":"https://coastal-currents.com/events/","venue":"Driftwood Theatre"},{"category":"film","city":"Hoquiam","dates":["2026-11-27","2026-11-28"],"id":"7th-polar-express","region":"ah","source":"7th Street Theatre","time":"7:00 PM","title":"The Polar Express (2004)","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"outdoors","city":"Westport","from":"2026-11-01","id":"wildfloats","region":"sb","source":"Westport-Grayland Chamber","title":"#Wildfloats glass float hunt","to":"2027-04-30","url":"https://westportgrayland-chamber.org/events/wildfloats/","venue":"Westport beaches"},{"category":"arts","city":"Aberdeen","from":"2026-11-06","id":"ghc-fall-gala-exhibit","region":"ah","source":"Coastal Currents","title":"Fall Gala Art Exhibition","to":"2026-12-11","url":"https://coastal-currents.com/events/","venue":"Grays Harbor College"},{"category":"outdoors","city":"Seabrook","from":"2026-11-27","id":"seabrook-glass-float-find","region":"os","source":"Coastal Currents","title":"Winter Glass Float Find","to":"2027-01-01","url":"https://coastal-currents.com/events/"},{"category":"community","city":"Hoquiam","dates":["2026-11-20"],"id":"ymca-turkey-bingo","region":"ah","source":"allevents.in","time":"6:30 PM","title":"YMCA Turkey Bingo","url":"https://allevents.in/hoquiam/all","venue":"YMCA, 2500 Simpson Ave"},{"category":"film","city":"Hoquiam","dates":["2026-12-05"],"id":"7th-elf","region":"ah","source":"7th Street Theatre","time":"7:00 PM","title":"Elf (2003)","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"holiday","city":"Westport","dates":["2026-12-05"],"id":"santa-by-the-sea","region":"sb","source":"Westport-Grayland Chamber","time":"10:30 AM–12:00 PM","title":"Santa by the Sea","url":"https://westportgrayland-chamber.org/events/santa-by-the-sea/","venue":"Westport Marina / Maritime Museum"},{"category":"holiday","city":"Montesano","dates":["2026-12-10","2026-12-11","2026-12-12","2026-12-13"],"desc":"Holiday events all weekend and the evening lighted parade. 2026 theme: Red, White \u0026 Christmas.","featured":true,"id":"montesano-festival-of-lights","region":"ev","source":"Montesano Chamber","title":"Montesano Festival of Lights","url":"https://montesanochamber.com/index.php/component/chamberevents/?view=events\u0026catid=11"},{"category":"holiday","city":"Grayland","dates":["2026-12-12"],"id":"grayland-day-with-santa","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–2:00 PM","title":"A Day with Santa","url":"https://westportgrayland-chamber.org/events/a-day-with-santa/","venue":"Grayland Fire Hall"},{"category":"market","city":"Westport","dates":["2026-12-12","2026-12-13"],"id":"ocosta-holiday-bazaar","region":"sb","source":"Westport-Grayland Chamber","time":"10:00 AM–5:00 PM","title":"Holiday Weekend Bazaar","url":"https://westportgrayland-chamber.org/events/holiday-weekend-bazaar/","venue":"Ocosta Rec Hall"},{"category":"stage","city":"Hoquiam","dates":["2026-12-12","2026-12-13"],"id":"gh-dance-winter-recital","region":"ah","source":"7th Street Theatre","time":"2:00 PM","title":"Grays Harbor Dance Winter Recital: The Nutcracker","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"film","city":"Hoquiam","dates":["2026-12-19","2026-12-20"],"id":"7th-white-christmas","region":"ah","source":"7th Street Theatre","time":"Sat 7:00 PM, Sun 2:00 PM","title":"White Christmas (1954)","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"stage","city":"Hoquiam","dates":["2026-12-27"],"id":"dancehouse-winter-showcase","region":"ah","source":"7th Street Theatre","time":"1:00 PM","title":"The Dancehouse Winter Showcase","url":"https://www.7thstreettheatre.com/movies-events","venue":"7th Street Theatre"},{"category":"holiday","city":"Westport","dates":["2026-12-31"],"id":"westport-nye-fireworks","region":"sb","source":"Westport-Grayland Chamber","time":"9:00 PM","title":"New Year\u0027s Eve Fireworks","url":"https://westportgrayland-chamber.org/events/westport-new-years-eve-fireworks/","venue":"Westport Marina"},{"category":"music","city":"Aberdeen","dates":["2026-12-03"],"id":"ghc-steel-drums","region":"ah","source":"allevents.in","time":"1:00 PM","title":"GHC Steel Drums performance","url":"https://allevents.in/aberdeen-wa/all","venue":"Grays Harbor College"},{"category":"music","city":"Aberdeen","dates":["2026-12-03"],"id":"ghc-jazz-concert","region":"ah","source":"allevents.in","time":"7:00 PM","title":"GHC Jazz Choir \u0026 Jazz Band Concert","url":"https://allevents.in/aberdeen-wa/all","venue":"Bishop Center, Grays Harbor College"},{"category":"community","city":"Ocean Shores","dates":["2026-12-05","2026-12-06"],"desc":"Tabletop gaming convention.","id":"harbor-dice-con","region":"os","source":"Tourism Ocean Shores calendar","time":"Sat 8:00 AM–9:30 PM, Sun 8:00 AM–8:00 PM","title":"Harbor Dice Con 2026","url":"https://tourismoceanshores.com/event-calendar/","venue":"Ocean Shores Convention Center"},{"category":"music","city":"Aberdeen","dates":["2026-12-06"],"id":"civic-choir-winter-wonderland","region":"ah","source":"allevents.in","time":"2:00 PM","title":"Civic Choir \u0026 Concert Band: Winter Wonderland","url":"https://allevents.in/aberdeen-wa/all","venue":"Bishop Center, Grays Harbor College"},{"category":"holiday","city":"Ocean Shores","dates":["2026-12-31"],"id":"os-nye-beach-bash","region":"os","source":"allevents.in","time":"6:00 PM","title":"New Year\u0027s Eve Beach Bash","url":"https://allevents.in/ocean-shores/all","venue":"Ocean Shores Convention Center"}],"partners":{"names":["Springboard Coffee"],"label":"Sponsored Listing"},"feeds":[{"file":"calendar.ics","name":"All of Grays Harbor"},{"file":"ah.ics","name":"Hoquiam · Aberdeen"},{"file":"os.ics","name":"Ocean Shores · Seabrook · Copalis"},{"file":"sb.ics","name":"Westport · Grayland · Tokeland"},{"file":"ev.ics","name":"Montesano · Elma · McCleary"},{"file":"quinault.ics","name":"Lake Quinault · Amanda Park"}],"discord":"https://discord.gg/M7AbfBuTsn"};</script>
+<script>
+const REGIONS = [
+  {id:"all", name:"Everywhere"},
+  {id:"ah", name:"Hoquiam · Aberdeen"},
+  {id:"os", name:"Ocean Shores · Seabrook · Copalis"},
+  {id:"sb", name:"Westport · Grayland · Tokeland"},
+  {id:"ev", name:"Montesano · Elma · McCleary"},
+  {id:"quinault", name:"Lake Quinault · Amanda Park"}
+];
+const RNAME = Object.fromEntries(REGIONS.map(r=>[r.id,r.name]));
+RNAME.all = "Countywide";
+const CATS = {festival:"Festivals",music:"Live music",film:"Movies",stage:"Theatre & dance",family:"Family",holiday:"Holiday",market:"Markets & bazaars",food:"Food & drink",outdoors:"Outdoors",arts:"Arts & museums",community:"Community",nightlife:"Trivia, bingo & nights out"};
+const $ = s=>document.querySelector(s);
+const pad = n=>String(n).padStart(2,"0");
+const iso = d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parse = s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const TODAY = iso(new Date());
+const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const color = r=>`var(--r-${r||"all"})`;
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl = u=>/^https?:\/\//i.test(u||"")?u:"";
+
+let state = {region:"all", view:"agenda", cat:"", series:true, monthCursor:null, selDay:null};
+let months = {}, manual = {}, hidden = {}, db = null, canWrite = true, loaded = false;
+// Sponsored Listings: events mentioning one of these names are highlighted in gold.
+let partners = {label:"Sponsored Listing", names:["Springboard Coffee"]};
+function isPartner(e){ const hay=[e.title,e.venue,e.desc].join(" ").toLowerCase(); return (partners.names||[]).some(n=>n&&hay.includes(String(n).toLowerCase())); }
+try{ const s=JSON.parse(localStorage.getItem("hh-prefs")||"{}"); Object.assign(state,{view:s.view||"agenda",series:s.series!==false,cat:s.cat||""}); }catch(e){}
+const h = location.hash.replace("#","");
+if (REGIONS.some(r=>r.id===h)) state.region=h; else { try{ const s=JSON.parse(localStorage.getItem("hh-prefs")||"{}"); if(s.region) state.region=s.region; }catch(e){} }
+function savePrefs(){ try{ localStorage.setItem("hh-prefs",JSON.stringify({region:state.region,view:state.view,series:state.series,cat:state.cat})); }catch(e){} }
+
+// ---------- controls ----------
+function buildControls(){
+  $("#regions").innerHTML = REGIONS.map(r=>`<button type="button" class="chip" data-r="${r.id}" style="--c:${color(r.id)}" aria-pressed="${state.region===r.id}">${r.id==="all"?"":`<span class="sw"></span>`}${esc(r.name)}</button>`).join("");
+  $("#regions").onclick = e=>{const b=e.target.closest("[data-r]"); if(!b) return; state.region=b.dataset.r; history.replaceState(null,"",state.region==="all"?location.pathname:"#"+state.region); savePrefs(); render();};
+  $("#cat").innerHTML = `<option value="">All categories</option>`+Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+  $("#cat").value = state.cat; $("#cat").onchange=e=>{state.cat=e.target.value; savePrefs(); render();};
+  $("#series").checked = state.series; $("#series").onchange=e=>{state.series=e.target.checked; savePrefs(); render();};
+  $("#vAgenda").onclick=()=>{state.view="agenda";savePrefs();render();};
+  $("#vMonth").onclick=()=>{state.view="month";savePrefs();render();};
+  $("#prev").onclick=()=>{state.monthCursor=new Date(state.monthCursor.getFullYear(),state.monthCursor.getMonth()-1,1);state.selDay=null;render();};
+  $("#next").onclick=()=>{state.monthCursor=new Date(state.monthCursor.getFullYear(),state.monthCursor.getMonth()+1,1);state.selDay=null;render();};
+  $("#fRegion").innerHTML = REGIONS.filter(r=>r.id!=="all").map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")+`<option value="all">Countywide</option>`;
+  $("#fCat").innerHTML = Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+  $("#fRegion").value = state.region==="all"?"ah":state.region;
+  $("#addForm").addEventListener("submit", addEvent);
+  const n=new Date(); state.monthCursor=new Date(n.getFullYear(),n.getMonth(),1);
+}
+
+// ---------- data ----------
+function allEvents(){
+  const list=[];
+  for (const m of Object.values(months)) for (const e of (m.events||[])) list.push(e);
+  for (const e of Object.values(manual)) list.push(e);
+  return list;
+}
+function visible(e, ignoreSeries){
+  if (hidden[e.id]) return false;
+  if (state.region!=="all" && e.region!==state.region && e.region!=="all") return false;
+  if (state.cat && e.category!==state.cat) return false;
+  if (!ignoreSeries && !state.series && e.series) return false;
+  return true;
+}
+function occurrences(from, to){
+  const out={};
+  for (const e of allEvents()){
+    if (!visible(e) || !e.dates) continue;
+    for (const d of e.dates){ if (d>=from && d<=to) (out[d]=out[d]||[]).push(e); }
+  }
+  for (const d in out) out[d].sort((a,b)=>(a.series?1:0)-(b.series?1:0) || (isPartner(b)?1:0)-(isPartner(a)?1:0) || (b.featured?1:0)-(a.featured?1:0) || timeKey(a)-timeKey(b));
+  return out;
+}
+function timeKey(e){ const m=/(\d{1,2})(?::(\d\d))?\s*([AP])M/i.exec(e.time||""); if(!m) return 9999; let h=+m[1]%12; if(m[3].toUpperCase()==="P") h+=12; return h*60+(+m[2]||0); }
+
+// ---------- render ----------
+function evHTML(e, opts={}){
+  const url=safeUrl(e.url);
+  const label = isPartner(e)?`✨ ${esc(e.title)} ✨`:esc(e.title);
+  const title = url?`<a href="${esc(url)}" target="_blank" rel="noopener">${label}</a>`:label;
+  const bits=[e.time&&`<b>${esc(e.time)}</b>`, esc([e.venue,e.city].filter(Boolean).join(", ")), e.cost&&esc(e.cost)].filter(Boolean).join(" · ");
+  const area = state.region==="all"||e.region==="all" ? `<span class="tag">${esc(RNAME[e.region]||"")}</span>`:"";
+  const tags = (isPartner(e)?`<span class="tag partner">${esc(partners.label||"Sponsored Listing")}</span>`:"")+(e.featured?`<span class="tag feat">Big weekend</span>`:"")+(e.manual?`<span class="tag">Added by you</span>`:"")+area;
+  const multi = e.dates&&e.dates.length>1&&!e.series&&opts.date ? ` <span class="msg">(day ${e.dates.indexOf(opts.date)+1} of ${e.dates.length})</span>`:"";
+  const act = canWrite ? (e.manual?`<button class="x" data-del="${esc(e.id)}" title="Delete this event">Delete</button>`:`<button class="x" data-hide="${esc(e.id)}" title="Hide this event">Hide</button>`) : "";
+  return `<div class="ev${e.series?" series":""}${isPartner(e)?" partner":""}" style="--c:${color(e.region)}"><span class="bar4"></span><div>
+    <div class="t">${title}${multi}${tags}</div>
+    ${bits?`<div class="meta">${bits}</div>`:""}
+    ${e.desc&&!e.series?`<div class="desc">${esc(e.desc)}</div>`:""}
+    ${e.verify?`<div class="verify">Check first: ${esc(e.verify)}</div>`:""}
+  </div>${act}</div>`;
+}
+function weekLabel(d){
+  const mon=addDays(d,-((d.getDay()+6)%7)), sun=addDays(mon,6);
+  const t=parse(TODAY), thisMon=addDays(t,-((t.getDay()+6)%7));
+  const diff=Math.round((mon-thisMon)/864e5/7);
+  const range=`${MON[mon.getMonth()]} ${mon.getDate()} – ${mon.getMonth()===sun.getMonth()?"":MON[sun.getMonth()]+" "}${sun.getDate()}`;
+  return diff===0?`This week · ${range}`:diff===1?`Next week · ${range}`:`Week of ${range}`;
+}
+function renderAgenda(){
+  const from=TODAY, to=iso(addDays(parse(TODAY),62));
+  const occ=occurrences(from,to);
+  const days=Object.keys(occ).sort();
+  let html="", curWeek=null, n=0;
+  for (const d of days){
+    const dt=parse(d), wk=iso(addDays(dt,-((dt.getDay()+6)%7)));
+    if (wk!==curWeek){ if(curWeek) html+=`</div>`; html+=`<div class="week"><h2>${weekLabel(dt)}</h2>`; curWeek=wk; }
+    html+=`<div class="day${d===TODAY?" today":""}"><div class="dlabel"><div class="dow">${d===TODAY?"Today":DOW[dt.getDay()]}</div><div class="dnum">${dt.getDate()}</div><div class="mon">${MON[dt.getMonth()]}</div></div><div class="evs">${occ[d].map(e=>evHTML(e,{date:d})).join("")}</div></div>`;
+    n+=occ[d].length;
+  }
+  if (curWeek) html+=`</div>`;
+  $("#agenda").innerHTML = html || (loaded?`<div class="notice">Nothing listed for this filter in the next two months.</div>`:"");
+  $("#count").textContent = loaded?`${n} listings · next 2 months`:"";
+}
+function renderMonth(){
+  const c=state.monthCursor, first=new Date(c.getFullYear(),c.getMonth(),1);
+  const start=addDays(first,-first.getDay()), end=addDays(start,41);
+  const occ=occurrences(iso(start),iso(end));
+  $("#mtitle").textContent=`${MONTHS[c.getMonth()]} ${c.getFullYear()}`;
+  let html=DOW.map(d=>`<div class="dh">${d}</div>`).join("");
+  let n=0;
+  for (let i=0;i<42;i++){
+    const d=addDays(start,i), k=iso(d), list=occ[k]||[], out=d.getMonth()!==c.getMonth();
+    if(!out) n+=list.length;
+    if (i===35 && out) break;
+    html+=`<button type="button" class="cell${out?" out":""}${k===TODAY?" today":""}${state.selDay===k?" sel":""}" data-day="${k}" aria-label="${DOW[d.getDay()]} ${MON[d.getMonth()]} ${d.getDate()}, ${list.length} events">
+      <span class="n">${d.getDate()}</span>
+      ${list.slice(0,3).map(e=>`<span class="pill${e.series?" series":""}${isPartner(e)?" partner":""}" style="--c:${color(e.region)}">${isPartner(e)?"✨ "+esc(e.title)+" ✨":esc(e.title)}</span>`).join("")}
+      ${list.length>3?`<span class="more">+${list.length-3} more</span>`:""}
+      <span class="dots">${list.slice(0,6).map(e=>`<i class="${isPartner(e)?"partner":""}" style="--c:${color(e.region)}"></i>`).join("")}</span></button>`;
+  }
+  $("#grid").innerHTML=html;
+  $("#grid").onclick=e=>{const b=e.target.closest("[data-day]"); if(!b) return; state.selDay=b.dataset.day; render();};
+  const sd=state.selDay;
+  if (sd && occ[sd]){ const dt=parse(sd); $("#dayview").innerHTML=`<h3>${DOW[dt.getDay()]}, ${MONTHS[dt.getMonth()]} ${dt.getDate()}</h3><div class="evs">${occ[sd].map(e=>evHTML(e,{date:sd})).join("")}</div>`; }
+  else $("#dayview").innerHTML = sd?`<p class="msg">Nothing listed that day.</p>`:`<p class="msg">Tap a day to see its events.</p>`;
+  $("#count").textContent = loaded?`${n} listings in ${MONTHS[c.getMonth()]}`:"";
+}
+function renderOngoing(){
+  const to=iso(addDays(parse(TODAY),62));
+  const list=allEvents().filter(e=>e.from&&visible(e,true)&&e.from<=to&&(e.to||e.from)>=TODAY).sort((a,b)=>a.from.localeCompare(b.from));
+  $("#ongoing").hidden=!list.length;
+  const fmt=s=>{const d=parse(s);return `${MON[d.getMonth()]} ${d.getDate()}`};
+  $("#ongoingList").innerHTML=list.map(e=>{const u=safeUrl(e.url);return `<li style="--c:${color(e.region)}">${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(e.title)}</a>`:esc(e.title)} <span class="when">${e.from>TODAY?"from "+fmt(e.from)+" ":""}until ${fmt(e.to||e.from)}</span>${e.city?` <span class="when">· ${esc(e.city)}</span>`:""}</li>`}).join("");
+}
+function renderHidden(){
+  const ids=Object.keys(hidden);
+  $("#hiddenBox").innerHTML = ids.length?`Hidden events (${ids.length}):<ul>${ids.map(id=>`<li>${esc(hidden[id].title||id)} ${canWrite?`<button class="x" data-unhide="${esc(id)}">Show again</button>`:""}</li>`).join("")}</ul>`:"";
+}
+function render(){
+  document.querySelectorAll("#regions .chip").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.r===state.region)));
+  $("#vAgenda").setAttribute("aria-pressed",String(state.view==="agenda"));
+  $("#vMonth").setAttribute("aria-pressed",String(state.view==="month"));
+  $("#agenda").hidden=state.view!=="agenda"; $("#month").hidden=state.view!=="month";
+  renderOngoing();
+  if (state.view==="agenda") renderAgenda(); else renderMonth();
+  renderHidden();
+  const stamps=Object.values(months).map(m=>m.updatedAt).filter(Boolean).sort();
+  if (stamps.length){ const d=new Date(stamps[stamps.length-1]); $("#stamp").textContent=`Grays Harbor · updated ${MON[d.getMonth()]} ${d.getDate()}`; }
+}
+
+// ---------- writes ----------
+document.addEventListener("click", async e=>{
+  const hb=e.target.closest("[data-hide]"), ub=e.target.closest("[data-unhide]"), db_=e.target.closest("[data-del]");
+  if (!db) return;
+  try{
+    if (hb){ const id=hb.dataset.hide; const ev=allEvents().find(x=>x.id===id); await db.doc("hidden/"+id).set({title:ev?ev.title:id, hiddenAt:new Date().toISOString()}); }
+    if (ub){ await db.doc("hidden/"+ub.dataset.unhide).delete(); }
+    if (db_){ await db.doc("manual/"+db_.dataset.del).delete(); }
+  }catch(err){ writeFailed(err); }
+});
+async function addEvent(ev){
+  ev.preventDefault();
+  const msg=$("#fMsg");
+  if (!db){ msg.textContent="Saving needs the calendar database, which isn't available in this view."; return; }
+  const start=$("#fDate").value, endv=$("#fEnd").value||start;
+  if (!start){ msg.textContent="Pick a date."; return; }
+  if (endv<start){ msg.textContent="The last day can't be before the first day."; return; }
+  const dates=[]; for(let d=parse(start); iso(d)<=endv && dates.length<31; d=addDays(d,1)) dates.push(iso(d));
+  const id="m-"+start+"-"+Math.random().toString(36).slice(2,8);
+  const doc={id,title:$("#fTitle").value.trim(),dates,region:$("#fRegion").value,category:$("#fCat").value,manual:true,source:"Added by hand",addedAt:new Date().toISOString()};
+  for (const [k,sel] of [["time","#fTime"],["city","#fCity"],["venue","#fVenue"],["url","#fUrl"],["desc","#fDesc"]]){ const v=$(sel).value.trim(); if(v) doc[k]=v; }
+  try{ await db.doc("manual/"+id).set(doc); msg.textContent=`Saved "${doc.title}".`; ev.target.reset(); $("#fRegion").value=doc.region; }
+  catch(err){ writeFailed(err); }
+}
+function writeFailed(err){
+  if (err&&err.code==="invalid_argument"){ canWrite=false; $("#fMsg").textContent="You can view this calendar but not change it."; render(); }
+  else $("#fMsg").textContent="Couldn't save just now. Try again in a moment.";
+}
+
+// ---------- reading options: colors + larger text (remembered per visitor) ----------
+const rootEl = document.documentElement;
+const hostTheme = rootEl.getAttribute("data-theme");   // the viewer app may set one; "Automatic" restores it
+const THEMES = ["auto","light","dark"], THEME_LABEL = {auto:"Colors: Automatic", light:"Colors: Light", dark:"Colors: Dark"};
+function applyTheme(t){
+  if (t==="auto"){ if (hostTheme) rootEl.setAttribute("data-theme",hostTheme); else rootEl.removeAttribute("data-theme"); }
+  else rootEl.setAttribute("data-theme",t);
+  $("#themeLabel").textContent = THEME_LABEL[t];
+}
+function applySize(big){ if (big) rootEl.setAttribute("data-size","large"); else rootEl.removeAttribute("data-size"); $("#sizeBtn").setAttribute("aria-pressed",String(big)); }
+let themePref="auto", bigText=false;
+try{ themePref = localStorage.getItem("hh-theme")||"auto"; bigText = localStorage.getItem("hh-size")==="large"; }catch(e){}
+if (!THEMES.includes(themePref)) themePref="auto";
+applyTheme(themePref); applySize(bigText);
+$("#themeBtn").onclick=()=>{ themePref=THEMES[(THEMES.indexOf(themePref)+1)%THEMES.length]; applyTheme(themePref); try{localStorage.setItem("hh-theme",themePref);}catch(e){} };
+$("#sizeBtn").onclick=()=>{ bigText=!bigText; applySize(bigText); try{localStorage.setItem("hh-size",bigText?"large":"normal");}catch(e){} };
+
+// ---------- boot ----------
+buildControls(); render();
+const status=$("#status");
+if (window.HH_STATIC){
+  // Stand-alone public copy: events are built into the page; nothing can be saved here.
+  months = {all:{events:window.HH_STATIC.events||[], updatedAt:window.HH_STATIC.updatedAt}};
+  if (window.HH_STATIC.partners) partners = window.HH_STATIC.partners;
+  if (safeUrl(window.HH_STATIC.discord)) { $("#discordLink").href = window.HH_STATIC.discord; $("#joinDiscord").hidden = false; }
+  loaded = true; canWrite = false; $("#addBox").hidden = true; $("#addHint").hidden = true;
+  const subs = window.HH_STATIC.feeds||[];
+  if (subs.length){ $("#subscribe").hidden=false; $("#subList").innerHTML = subs.map(f=>`<li><a href="${esc(f.file)}">${esc(f.name)}</a> <span class="msg">· ${esc(location.origin+location.pathname.replace(/[^/]*$/,"")+f.file)}</span></li>`).join(""); }
+  render();
+} else (async()=>{
+  const c = window.claude && await window.claude.use("db").catch(()=>null);
+  if (!c){ status.hidden=false; status.textContent="The event list loads from this calendar's database, which isn't available in this view. Open the calendar on claude.ai to see it."; $("#addBox").hidden=true; return; }
+  db=c;
+  const u = await window.claude.use("user").catch(()=>null);
+  if (u && typeof u.can==="function"){ try{ const w=await u.can("data.write"); if (w===false){ canWrite=false; $("#addBox").hidden=true; } }catch(e){} }
+  const onErr = err=>{ if(err&&err.code==="revoked") return; status.hidden=false; status.textContent="Live updates stopped. Reload the page to reconnect."; };
+  db.collection("months").onSnapshot(s=>{ months={}; s.docs.forEach(d=>months[d.id]=d.data()); loaded=true; render(); }, onErr);
+  db.collection("manual").onSnapshot(s=>{ manual={}; s.docs.forEach(d=>manual[d.id]=d.data()); render(); }, onErr);
+  db.doc("config/partners").onSnapshot(s=>{ if (s.exists){ const d=s.data(); if (Array.isArray(d.names)) { partners={label:d.label||partners.label, names:d.names}; render(); } } }, onErr);
+  db.collection("hidden").onSnapshot(s=>{ hidden={}; s.docs.forEach(d=>hidden[d.id]=d.data()); render(); }, onErr);
+})();
+</script>
+
+</html>

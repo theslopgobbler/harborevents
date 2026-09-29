@@ -1,0 +1,2475 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Harbor Events//Grays Harbor events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Harbor Events: All of Grays Harbor
+X-WR-TIMEZONE:America/Los_Angeles
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:corks-trivia-20260929@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20260930T010000Z
+DTEND:20260930T030000Z
+SUMMARY:Tuesday Trivia at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-trivia-20261013@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261014T010000Z
+DTEND:20261014T030000Z
+SUMMARY:Tuesday Trivia at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-trivia-20261027@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261028T010000Z
+DTEND:20261028T030000Z
+SUMMARY:Tuesday Trivia at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-trivia-20261110@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261111T020000Z
+DTEND:20261111T040000Z
+SUMMARY:Tuesday Trivia at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-trivia-20261124@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261125T020000Z
+DTEND:20261125T040000Z
+SUMMARY:Tuesday Trivia at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20260930@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20260930
+DTEND;VALUE=DATE:20261001
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261007@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261007
+DTEND;VALUE=DATE:20261008
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261014@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261014
+DTEND;VALUE=DATE:20261015
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261021@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261021
+DTEND;VALUE=DATE:20261022
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261028@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261028
+DTEND;VALUE=DATE:20261029
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261104@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261104
+DTEND;VALUE=DATE:20261105
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261111@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261118@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261125@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261125
+DTEND;VALUE=DATE:20261126
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wine-down-wednesday-20261202@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261202
+DTEND;VALUE=DATE:20261203
+SUMMARY:Wine Down Wednesday
+LOCATION:Oyhut Bay Grill and Corks & Taps\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:oyhut-musical-trivia-0929-20260929@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20260929
+DTEND;VALUE=DATE:20260930
+SUMMARY:Musical Trivia at Oyhut Bay Event Center
+LOCATION:Oyhut Bay Event Center\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/details/musical-trivia
+ -at-the-oyhut-bay-event-center-16946\nSource: Greater Grays Harbor chamb
+ er calendar
+URL:https://chamber.graysharbor.org/events/details/musical-trivia-at-the-
+ oyhut-bay-event-center-16946
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:chapman-farms-pumpkins@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20260928
+DTEND;VALUE=DATE:20261101
+SUMMARY:Chapman Farms pumpkin patch
+LOCATION:239 Brady Loop Rd E\, Montesano
+DESCRIPTION:Daily 9:00 AM–6:00 PM\nFree admission\; free hay and straw 
+ mazes\nhttps://www.graysharbortalk.com/2026/09/14/2026-pumpkin-patches-i
+ n-grays-harbor-and-surrounding-areas/\nSource: GraysHarborTalk
+URL:https://www.graysharbortalk.com/2026/09/14/2026-pumpkin-patches-in-gr
+ ays-harbor-and-surrounding-areas/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20260930@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261001T010000Z
+DTEND:20261001T030000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261007@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261008T010000Z
+DTEND:20261008T030000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261014@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261015T010000Z
+DTEND:20261015T030000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261021@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261022T010000Z
+DTEND:20261022T030000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261028@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261029T010000Z
+DTEND:20261029T030000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261104@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261105T020000Z
+DTEND:20261105T040000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261111@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261112T020000Z
+DTEND:20261112T040000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261118@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261119T020000Z
+DTEND:20261119T040000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261125@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261126T020000Z
+DTEND:20261126T040000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-open-mic-20261202@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261203T020000Z
+DTEND:20261203T040000Z
+SUMMARY:Open Mic Wednesdays at Gepetto's
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:6:00 PM\nHosted by Dogger.\nhttps://allevents.in/montesano/al
+ l\nSource: allevents.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:westport-charter-derby@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20260928
+DTEND;VALUE=DATE:20261019
+SUMMARY:Westport Charter Boat Association Fishing Derby
+LOCATION:Westport Marina\, Westport
+DESCRIPTION:Season-long charter derby (began March 8)\; runs through Oct 
+ 18.\nhttps://westportgrayland-chamber.org/events/\nSource: Westport-Gray
+ land Chamber
+URL:https://westportgrayland-chamber.org/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-bingo-20261006@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261007T010000Z
+DTEND:20261007T030000Z
+SUMMARY:Bingo at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-bingo-20261020@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261021T010000Z
+DTEND:20261021T030000Z
+SUMMARY:Bingo at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-bingo-20261103@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261104T020000Z
+DTEND:20261104T040000Z
+SUMMARY:Bingo at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-bingo-20261117@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261118T020000Z
+DTEND:20261118T040000Z
+SUMMARY:Bingo at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-bingo-20261201@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261202T020000Z
+DTEND:20261202T040000Z
+SUMMARY:Bingo at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261004T010000Z
+DTEND:20261004T030000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261010@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T010000Z
+DTEND:20261011T030000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T010000Z
+DTEND:20261018T030000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261025T010000Z
+DTEND:20261025T030000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T010000Z
+DTEND:20261101T030000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T020000Z
+DTEND:20261108T040000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261114@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261115T020000Z
+DTEND:20261115T040000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261121@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261122T020000Z
+DTEND:20261122T040000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261128@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261129T020000Z
+DTEND:20261129T040000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:shaun-beebe-oyhut-20261205@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261206T020000Z
+DTEND:20261206T040000Z
+SUMMARY:Shaun Beebe live at Oyhut Bay Grill
+LOCATION:Oyhut Bay Grill\, 404 Salmonberry Ln SW\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://chamber.graysharbor.org/events/calendar/\nSo
+ urce: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:first-friday-aberdeen-20261002@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T000000Z
+DTEND:20261003T030000Z
+SUMMARY:First Friday Art Walk
+LOCATION:Downtown Aberdeen / Aberdeen Art Center\, Aberdeen
+DESCRIPTION:5:00–8:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:first-friday-aberdeen-20261106@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261107T010000Z
+DTEND:20261107T040000Z
+SUMMARY:First Friday Art Walk
+LOCATION:Downtown Aberdeen / Aberdeen Art Center\, Aberdeen
+DESCRIPTION:5:00–8:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:first-friday-aberdeen-20261204@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261205T010000Z
+DTEND:20261205T040000Z
+SUMMARY:First Friday Art Walk
+LOCATION:Downtown Aberdeen / Aberdeen Art Center\, Aberdeen
+DESCRIPTION:5:00–8:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261002@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T023000Z
+DTEND:20261003T043000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261004T023000Z
+DTEND:20261004T043000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261009@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261010T023000Z
+DTEND:20261010T043000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261010@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T023000Z
+DTEND:20261011T043000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261011@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T210000Z
+DTEND:20261011T230000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261016@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261017T023000Z
+DTEND:20261017T043000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T023000Z
+DTEND:20261018T043000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-i-love-you-20261018@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T210000Z
+DTEND:20261018T230000Z
+SUMMARY:"I Love You\, You're Perfect\, Now Change"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nMusical comedy revue.\nhttps
+ ://coastal-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-autumn-artwalk-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T180000Z
+DTEND:20261003T220000Z
+SUMMARY:Seabrook Autumn Artwalk
+LOCATION:Seabrook Town Center\, Seabrook
+DESCRIPTION:11:00 AM–3:00 PM\nLocal makers\, live art demos and display
+ s in shops and select homes.\nhttps://chamber.graysharbor.org/events/det
+ ails/seabrook-autumn-artwalk-16790\nSource: Greater Grays Harbor chamber
+  calendar
+URL:https://chamber.graysharbor.org/events/details/seabrook-autumn-artwal
+ k-16790
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:oyhut-pumpkin-patch-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T190000Z
+DTEND:20261003T220000Z
+SUMMARY:Pumpkin Patch at Oyhut Bay
+LOCATION:Oyhut Bay Seaside Resort\, 300 Lodge Ave SW\, Ocean Shores
+DESCRIPTION:12:00–3:00 PM\nhttps://chamber.graysharbor.org/events/detai
+ ls/pumpkin-patch-at-oyhut-bay-17203\nSource: Greater Grays Harbor chambe
+ r calendar
+URL:https://chamber.graysharbor.org/events/details/pumpkin-patch-at-oyhut
+ -bay-17203
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:oyhut-pumpkin-patch-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261024T190000Z
+DTEND:20261024T220000Z
+SUMMARY:Pumpkin Patch at Oyhut Bay
+LOCATION:Oyhut Bay Seaside Resort\, 300 Lodge Ave SW\, Ocean Shores
+DESCRIPTION:12:00–3:00 PM\nhttps://chamber.graysharbor.org/events/detai
+ ls/pumpkin-patch-at-oyhut-bay-17203\nSource: Greater Grays Harbor chambe
+ r calendar
+URL:https://chamber.graysharbor.org/events/details/pumpkin-patch-at-oyhut
+ -bay-17203
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cosmopolis-dollar-auction-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261004T000000Z
+DTEND:20261004T020000Z
+SUMMARY:Cosmopolis Lions Club Dollar Auction
+LOCATION:601 2nd St\, Cosmopolis\, Cosmopolis
+DESCRIPTION:5:00 PM\nhttps://chamber.graysharbor.org/events/calendar/2026
+ -10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ericka-corban-bishop-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261004T023000Z
+DTEND:20261004T043000Z
+SUMMARY:Ericka Corban in concert
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:7:30 PM\nhttps://coastal-currents.com/events/\nSource: Coasta
+ l Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:bling-bones-boots-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261004T010000Z
+DTEND:20261004T060000Z
+SUMMARY:Bling\, Bones & Boots Gala
+LOCATION:Saltwater Saloon\, Westport
+DESCRIPTION:6:00–11:00 PM\nhttps://westportgrayland-chamber.org/events/
+ bling-bones-boots-gala/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/bling-bones-boots-gala/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:swap-meet-oct-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261003
+DTEND;VALUE=DATE:20261004
+SUMMARY:Indoor Swap Meet
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:Monthly October–April swap meet: collectibles\, tools\, vin
+ tage finds.\nhttps://coastal-currents.com/events/\nSource: Coastal Curre
+ nts
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:swap-meet-oct-20261004@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261005
+SUMMARY:Indoor Swap Meet
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:Monthly October–April swap meet: collectibles\, tools\, vin
+ tage finds.\nhttps://coastal-currents.com/events/\nSource: Coastal Curre
+ nts
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:quinault-mushroom-fest-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T160000Z
+DTEND:20261003T230000Z
+SUMMARY:Quinault Rainforest Mushroom Festival
+LOCATION:Lake Quinault School\, 6130 US-101\, Amanda Park
+DESCRIPTION:9:00 AM–4:00 PM\nhttps://chamber.graysharbor.org/events/det
+ ails/quinault-rainforest-mushroom-festival-10-03-2026-16939\nSource: Gre
+ ater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/details/quinault-rainforest-mu
+ shroom-festival-10-03-2026-16939
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:circus-of-horror-20261007@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261008T010000Z
+DTEND:20261008T030000Z
+SUMMARY:Circus of Horror (live show)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:6:00 PM\nCheck first: The theatre's own site lists Circus of 
+ Horror on Sept 16\; the chamber lists Oct 7. Check before going.\nhttps:
+ //chamber.graysharbor.org/events/calendar/2026-10-01\nSource: Greater Gr
+ ays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:messy-jessys-halloween-bingo-20261007@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261008T000000Z
+DTEND:20261008T030000Z
+SUMMARY:Halloween Bingo
+LOCATION:Messy Jessy's Bar and Grill\, 212 S I St\, Aberdeen
+DESCRIPTION:5:00–8:00 PM\nFree card for costumes\nhttps://www.graysharb
+ ortalk.com/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-h
+ alloween-events/\nSource: GraysHarborTalk
+URL:https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-
+ grays-harbor-and-other-halloween-events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:justin-hayes-comedy-20261009@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261010T040000Z
+DTEND:20261010T060000Z
+SUMMARY:Comedy with Justin Hayes
+LOCATION:Messy Jessy's Bar and Grill\, Aberdeen
+DESCRIPTION:9:00 PM\nhttps://allevents.in/aberdeen-wa/all\nSource: alleve
+ nts.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cranberry-cookoff-20261009@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261009T190000Z
+DTEND:20261010T003000Z
+SUMMARY:Cranberry Festival Cook-Off
+LOCATION:Grayland Community Hall\, Grayland
+DESCRIPTION:12:00–5:30 PM\nhttps://westportgrayland-chamber.org/events/
+ cranberry-festival-cookoff/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/cranberry-festival-cookof
+ f/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cranberry-harvest-festival-20261010@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261010T170000Z
+DTEND:20261011T000000Z
+SUMMARY:33rd Annual Cranberry Harvest Festival
+LOCATION:Grayland Community Hall\, Grayland
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/cranberry-harvest-festival/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/cranberry-harvest-festiva
+ l/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cranberry-harvest-festival-20261011@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T170000Z
+DTEND:20261012T000000Z
+SUMMARY:33rd Annual Cranberry Harvest Festival
+LOCATION:Grayland Community Hall\, Grayland
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/cranberry-harvest-festival/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/cranberry-harvest-festiva
+ l/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:firefly-parade-20261010@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T020000Z
+DTEND:20261011T040000Z
+SUMMARY:33rd Annual Firefly Parade
+LOCATION:Grayland Community Hall\, 2071 Cranberry Rd\, Grayland
+DESCRIPTION:7:00 PM\nhttps://chamber.graysharbor.org/events/calendar/2026
+ -10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:bog-jog-20261011@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T160000Z
+DTEND:20261011T180000Z
+SUMMARY:The Bog Jog
+LOCATION:Grayland
+DESCRIPTION:9:00 AM\nRun/walk through the cranberry bogs.\nhttps://westpo
+ rtgrayland-chamber.org/events/bog-jog/\nSource: Westport-Grayland Chambe
+ r
+URL:https://westportgrayland-chamber.org/events/bog-jog/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:cosmopolis-coho-derby-20261010@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261010T160000Z
+DTEND:20261010T180000Z
+SUMMARY:Cosmopolis Lions Inaugural Coho Salmon Derby
+LOCATION:Cosmopolis
+DESCRIPTION:9:00 AM\nhttps://chamber.graysharbor.org/events/calendar/2026
+ -10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:mccleary-genealogy-20261010@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261010T170000Z
+DTEND:20261010T220000Z
+SUMMARY:McCleary Historical Society Genealogy Conference
+LOCATION:McCleary Museum\, McCleary
+DESCRIPTION:10:00 AM–3:00 PM\nhttps://coastal-currents.com/events/\nSou
+ rce: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:free-museum-day-20261011@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261011
+DTEND;VALUE=DATE:20261012
+SUMMARY:America 250: Free museum admission day
+LOCATION:Participating museums\, Countywide
+DESCRIPTION:Polson\, Mermaid Museum\, Chehalis Valley\, McCleary\, Coasta
+ l Interpretive Center\, Museum of North Beach\, Running Anvil and more.\
+ nCheck first: Coastal Currents lists the November date as Nov 8\; the ch
+ amber lists Nov 15.\nhttps://chamber.graysharbor.org/events/calendar/202
+ 6-10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:free-museum-day-20261115@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:America 250: Free museum admission day
+LOCATION:Participating museums\, Countywide
+DESCRIPTION:Polson\, Mermaid Museum\, Chehalis Valley\, McCleary\, Coasta
+ l Interpretive Center\, Museum of North Beach\, Running Anvil and more.\
+ nCheck first: Coastal Currents lists the November date as Nov 8\; the ch
+ amber lists Nov 15.\nhttps://chamber.graysharbor.org/events/calendar/202
+ 6-10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:indigenous-peoples-day-qbr-20261011@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261011T180000Z
+DTEND:20261011T200000Z
+SUMMARY:Indigenous Peoples' Day Celebration
+LOCATION:Quinault Beach Resort & Casino\, Great Hall\, Ocean Shores
+DESCRIPTION:11:00 AM\nhttps://chamber.graysharbor.org/events/calendar/202
+ 6-10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:welsh-pony-show-20261016@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261016
+DTEND;VALUE=DATE:20261017
+SUMMARY:Welsh Pony & Cob Society of Washington show
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:welsh-pony-show-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261017
+DTEND;VALUE=DATE:20261018
+SUMMARY:Welsh Pony & Cob Society of Washington show
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:welsh-pony-show-20261018@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261019
+SUMMARY:Welsh Pony & Cob Society of Washington show
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:kila-hana-fall-market-20261016@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261016T170000Z
+DTEND:20261016T230000Z
+SUMMARY:Fall Fair Market
+LOCATION:Kila Hana Camperland\, Grayland
+DESCRIPTION:10:00 AM–4:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/fall-fair-market/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/fall-fair-market/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:kila-hana-fall-market-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261017T170000Z
+DTEND:20261017T230000Z
+SUMMARY:Fall Fair Market
+LOCATION:Kila Hana Camperland\, Grayland
+DESCRIPTION:10:00 AM–4:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/fall-fair-market/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/fall-fair-market/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:urban-unglued-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261017T170000Z
+DTEND:20261018T000000Z
+SUMMARY:Urban Unglued market
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://tourismoceanshores.com/event-cale
+ ndar/\nSource: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:urban-unglued-20261018@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T170000Z
+DTEND:20261019T000000Z
+SUMMARY:Urban Unglued market
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://tourismoceanshores.com/event-cale
+ ndar/\nSource: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:toast-the-harbor-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261017T210000Z
+DTEND:20261018T030000Z
+SUMMARY:Toast the Harbor wine festival
+LOCATION:Quinault Beach Resort & Casino\, Ocean Shores
+DESCRIPTION:2:00–8:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:south-beach-mushroom-fest-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261017T170000Z
+DTEND:20261018T000000Z
+SUMMARY:3rd Annual South Beach Mushroom Festival
+LOCATION:Grayland Community Hall\, Grayland
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/mushroom-festival/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/mushroom-festival/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-frankenstein-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T020000Z
+DTEND:20261018T040000Z
+SUMMARY:Frankenstein (1931)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:Sat 7:00 PM\, Sun 2:00 PM\nhttps://www.7thstreettheatre.com/m
+ ovies-events\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-frankenstein-20261018@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T210000Z
+DTEND:20261018T230000Z
+SUMMARY:Frankenstein (1931)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:Sat 7:00 PM\, Sun 2:00 PM\nhttps://www.7thstreettheatre.com/m
+ ovies-events\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:smokey-brights-seabrook-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261018T020000Z
+DTEND:20261018T040000Z
+SUMMARY:Smokey Brights live
+LOCATION:Seabrook Town Hall\, Seabrook
+DESCRIPTION:7:00 PM\nhttps://chamber.graysharbor.org/events/calendar/2026
+ -10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:dark-stormy-film-fest-20261017@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261017
+DTEND;VALUE=DATE:20261018
+SUMMARY:Dark & Stormy Nights Film Festival
+LOCATION:Ocean Shores Cinema\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/2026-10-01\nS
+ ource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:dark-stormy-film-fest-20261018@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261019
+SUMMARY:Dark & Stormy Nights Film Festival
+LOCATION:Ocean Shores Cinema\, Ocean Shores
+DESCRIPTION:https://chamber.graysharbor.org/events/calendar/2026-10-01\nS
+ ource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:westport-blood-drive-20261019@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261019T170000Z
+DTEND:20261019T230000Z
+SUMMARY:Bloodworks Northwest blood drive
+LOCATION:Westport-Grayland Chamber office\, Westport
+DESCRIPTION:10:00 AM–4:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/blood-drive-with-northwest-bloodworks/\nSource: Westport-Grayland Cha
+ mber
+URL:https://westportgrayland-chamber.org/events/blood-drive-with-northwes
+ t-bloodworks/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:celtic-music-feis-20261021@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261021
+DTEND;VALUE=DATE:20261022
+SUMMARY:Galway Bay Celtic Music Feis
+LOCATION:Ocean Shores Convention Center and Galway Bay Irish Pub\, Ocean 
+ Shores
+DESCRIPTION:Oct 21 is at Galway Bay only\; the Convention Center stages r
+ un Oct 22–25. The Mudmen play Galway Bay Thu 7 PM\, Sat and Sun 2 PM.\
+ nhttps://tourismoceanshores.com/event-calendar/\nSource: Tourism Ocean S
+ hores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:celtic-music-feis-20261022@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261022
+DTEND;VALUE=DATE:20261023
+SUMMARY:Galway Bay Celtic Music Feis
+LOCATION:Ocean Shores Convention Center and Galway Bay Irish Pub\, Ocean 
+ Shores
+DESCRIPTION:Oct 21 is at Galway Bay only\; the Convention Center stages r
+ un Oct 22–25. The Mudmen play Galway Bay Thu 7 PM\, Sat and Sun 2 PM.\
+ nhttps://tourismoceanshores.com/event-calendar/\nSource: Tourism Ocean S
+ hores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:celtic-music-feis-20261023@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261023
+DTEND;VALUE=DATE:20261024
+SUMMARY:Galway Bay Celtic Music Feis
+LOCATION:Ocean Shores Convention Center and Galway Bay Irish Pub\, Ocean 
+ Shores
+DESCRIPTION:Oct 21 is at Galway Bay only\; the Convention Center stages r
+ un Oct 22–25. The Mudmen play Galway Bay Thu 7 PM\, Sat and Sun 2 PM.\
+ nhttps://tourismoceanshores.com/event-calendar/\nSource: Tourism Ocean S
+ hores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:celtic-music-feis-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261024
+DTEND;VALUE=DATE:20261025
+SUMMARY:Galway Bay Celtic Music Feis
+LOCATION:Ocean Shores Convention Center and Galway Bay Irish Pub\, Ocean 
+ Shores
+DESCRIPTION:Oct 21 is at Galway Bay only\; the Convention Center stages r
+ un Oct 22–25. The Mudmen play Galway Bay Thu 7 PM\, Sat and Sun 2 PM.\
+ nhttps://tourismoceanshores.com/event-calendar/\nSource: Tourism Ocean S
+ hores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:celtic-music-feis-20261025@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261025
+DTEND;VALUE=DATE:20261026
+SUMMARY:Galway Bay Celtic Music Feis
+LOCATION:Ocean Shores Convention Center and Galway Bay Irish Pub\, Ocean 
+ Shores
+DESCRIPTION:Oct 21 is at Galway Bay only\; the Convention Center stages r
+ un Oct 22–25. The Mudmen play Galway Bay Thu 7 PM\, Sat and Sun 2 PM.\
+ nhttps://tourismoceanshores.com/event-calendar/\nSource: Tourism Ocean S
+ hores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:mermaid-festival-20261023@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261023T180000Z
+DTEND:20261024T000000Z
+SUMMARY:Fall Mermaid Festival
+LOCATION:International Mermaid Museum\, 1 S Arbor Rd\, Aberdeen
+DESCRIPTION:11:00 AM–5:00 PM\nhttps://chamber.graysharbor.org/events/ca
+ lendar/2026-10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:mermaid-festival-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261024T180000Z
+DTEND:20261025T000000Z
+SUMMARY:Fall Mermaid Festival
+LOCATION:International Mermaid Museum\, 1 S Arbor Rd\, Aberdeen
+DESCRIPTION:11:00 AM–5:00 PM\nhttps://chamber.graysharbor.org/events/ca
+ lendar/2026-10-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-10-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-halloweekend-20261023@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261023
+DTEND;VALUE=DATE:20261024
+SUMMARY:Seabrook Halloweekend
+LOCATION:Seabrook
+DESCRIPTION:Costume parade and family trick-or-treating at the Town Cente
+ r shops.\nCheck first: The chamber lists Oct 23–25\; Coastal Currents 
+ listed Fri 1 PM to Sat 10 PM only.\nhttps://chamber.graysharbor.org/even
+ ts/details/seabrook-halloweekend-16791\nSource: Greater Grays Harbor cha
+ mber calendar
+URL:https://chamber.graysharbor.org/events/details/seabrook-halloweekend-
+ 16791
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-halloweekend-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261024
+DTEND;VALUE=DATE:20261025
+SUMMARY:Seabrook Halloweekend
+LOCATION:Seabrook
+DESCRIPTION:Costume parade and family trick-or-treating at the Town Cente
+ r shops.\nCheck first: The chamber lists Oct 23–25\; Coastal Currents 
+ listed Fri 1 PM to Sat 10 PM only.\nhttps://chamber.graysharbor.org/even
+ ts/details/seabrook-halloweekend-16791\nSource: Greater Grays Harbor cha
+ mber calendar
+URL:https://chamber.graysharbor.org/events/details/seabrook-halloweekend-
+ 16791
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-halloweekend-20261025@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261025
+DTEND;VALUE=DATE:20261026
+SUMMARY:Seabrook Halloweekend
+LOCATION:Seabrook
+DESCRIPTION:Costume parade and family trick-or-treating at the Town Cente
+ r shops.\nCheck first: The chamber lists Oct 23–25\; Coastal Currents 
+ listed Fri 1 PM to Sat 10 PM only.\nhttps://chamber.graysharbor.org/even
+ ts/details/seabrook-halloweekend-16791\nSource: Greater Grays Harbor cha
+ mber calendar
+URL:https://chamber.graysharbor.org/events/details/seabrook-halloweekend-
+ 16791
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:aberdeen-spooktacular-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261024T190000Z
+DTEND:20261024T210000Z
+SUMMARY:Aberdeen Spooktacular (downtown trick-or-treat)
+LOCATION:Downtown Aberdeen\, Aberdeen
+DESCRIPTION:12:00–2:00 PM\nFree\nhttps://www.graysharbortalk.com/2026/0
+ 9/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/\
+ nSource: GraysHarborTalk
+URL:https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-
+ grays-harbor-and-other-halloween-events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:wandering-shadows-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261024T210000Z
+DTEND:20261025T050000Z
+SUMMARY:Wandering Shadows Dark Market & Ghost Walk
+LOCATION:Grays Harbor Historical Seaport\, 500 N Custer St\, Aberdeen
+DESCRIPTION:2:00–10:00 PM\nMarket free\; paranormal investigation ticke
+ ted\nhttps://historicalseaport.org/upcoming-events/\nSource: Grays Harbo
+ r Historical Seaport
+URL:https://historicalseaport.org/upcoming-events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tokeland-nightmare-20261024@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261024T170000Z
+DTEND:20261025T000000Z
+SUMMARY:Nightmare Before Christmas
+LOCATION:Tokeland
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/nightmare-before-christmas/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/nightmare-before-christma
+ s/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tokeland-nightmare-20261025@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261025T170000Z
+DTEND:20261026T000000Z
+SUMMARY:Nightmare Before Christmas
+LOCATION:Tokeland
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/nightmare-before-christmas/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/nightmare-before-christma
+ s/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:montesano-trick-or-treat-20261030@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261030T220000Z
+DTEND:20261031T000000Z
+SUMMARY:Downtown Montesano Trick-or-Treat
+LOCATION:Downtown businesses\, Montesano
+DESCRIPTION:3:00–5:00 PM\nFree\nhttps://montesanochamber.com/index.php/
+ component/chamberevents/?view=events&catid=11\nSource: Montesano Chamber
+URL:https://montesanochamber.com/index.php/component/chamberevents/?view=
+ events&catid=11
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:elma-trick-or-treat-20261030@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261030T220000Z
+DTEND:20261031T010000Z
+SUMMARY:Downtown Elma Trick-or-Treat
+LOCATION:Downtown Elma\, Elma
+DESCRIPTION:3:00–6:00 PM\nPumpkin bowling\, costume contest and a dance
+  party.\nFree\nhttps://www.graysharbortalk.com/2026/09/17/2026-trick-or-
+ treating-in-grays-harbor-and-other-halloween-events/\nSource: GraysHarbo
+ rTalk
+URL:https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-
+ grays-harbor-and-other-halloween-events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-addams-family-20261030@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261031T020000Z
+DTEND:20261031T040000Z
+SUMMARY:The Addams Family (1991)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:7:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:sorcerers-supper-20261030@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261031T013000Z
+DTEND:20261031T033000Z
+SUMMARY:Sorcerer's Supper
+LOCATION:Lake Quinault Lodge\, Lake Quinault
+DESCRIPTION:6:30 PM\n$60 adults\, $40 kids\nhttps://www.graysharbortalk.c
+ om/2026/09/17/2026-trick-or-treating-in-grays-harbor-and-other-halloween
+ -events/\nSource: GraysHarborTalk
+URL:https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-
+ grays-harbor-and-other-halloween-events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-colorado-20261030@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261031T023000Z
+DTEND:20261031T043000Z
+SUMMARY:GHC Fall Drama: "Colorado"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-colorado-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T023000Z
+DTEND:20261101T043000Z
+SUMMARY:GHC Fall Drama: "Colorado"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-colorado-20261101@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T220000Z
+DTEND:20261102T000000Z
+SUMMARY:GHC Fall Drama: "Colorado"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-colorado-20261106@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261107T033000Z
+DTEND:20261107T053000Z
+SUMMARY:GHC Fall Drama: "Colorado"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-colorado-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T033000Z
+DTEND:20261108T053000Z
+SUMMARY:GHC Fall Drama: "Colorado"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-colorado-20261108@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T220000Z
+DTEND:20261109T000000Z
+SUMMARY:GHC Fall Drama: "Colorado"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:os-halloween-kids-party-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T010000Z
+DTEND:20261101T030000Z
+SUMMARY:Halloween Kids Party
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://tourismoceanshores.com/event-calendar/\nSour
+ ce: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:trick-or-treat-docks-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T003000Z
+DTEND:20261101T023000Z
+SUMMARY:Trick-or-Treat at the Docks
+LOCATION:Westhaven Dr / Westport Marina\, Westport
+DESCRIPTION:5:30–7:30 PM\nFree\nhttps://westportgrayland-chamber.org/ev
+ ents/trick-or-treat-at-the-docks/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/trick-or-treat-at-the-doc
+ ks/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:halloween-at-the-lodge-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261031T230000Z
+DTEND:20261101T010000Z
+SUMMARY:Halloween at the Lodge
+LOCATION:Lake Quinault Lodge\, Lake Quinault
+DESCRIPTION:4:00–6:00 PM\nFree\nhttps://www.graysharbortalk.com/2026/09
+ /17/2026-trick-or-treating-in-grays-harbor-and-other-halloween-events/\n
+ Source: GraysHarborTalk
+URL:https://www.graysharbortalk.com/2026/09/17/2026-trick-or-treating-in-
+ grays-harbor-and-other-halloween-events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:st-mary-oktoberfest-vendor-fair-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T170000Z
+DTEND:20261003T190000Z
+SUMMARY:St. Mary School Oktoberfest Vendor Fair
+LOCATION:518 N H St\, Aberdeen
+DESCRIPTION:10:00 AM\nhttps://allevents.in/aberdeen-wa/all\nSource: allev
+ ents.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:out-of-darkness-walk-20261003@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261003T180000Z
+DTEND:20261003T200000Z
+SUMMARY:Grays Harbor Out of the Darkness Walk
+LOCATION:Hoquiam High School track\, Hoquiam
+DESCRIPTION:11:00 AM\nSuicide-prevention awareness walk.\nhttps://alleven
+ ts.in/hoquiam/all\nSource: allevents.in
+URL:https://allevents.in/hoquiam/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hyak-homecoming-5k-20261004@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261004T140000Z
+DTEND:20261004T160000Z
+SUMMARY:Hyak Homecoming 5K Fun Run/Walk
+LOCATION:120 E Chance a la Mer NE\, Ocean Shores
+DESCRIPTION:7:00 AM\nhttps://allevents.in/ocean-shores/all\nSource: allev
+ ents.in
+URL:https://allevents.in/ocean-shores/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:springboard-craft-sip-20261009@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261010T003000Z
+DTEND:20261010T023000Z
+SUMMARY:Craft and Sip
+LOCATION:Springboard Coffee Company\, Aberdeen
+DESCRIPTION:5:30 PM\nhttps://allevents.in/aberdeen-wa/all\nSource: alleve
+ nts.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:corks-paint-sip-1019-20261019@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261020T010000Z
+DTEND:20261020T030000Z
+SUMMARY:Paint and Sip at Corks & Taps
+LOCATION:Corks & Taps\, 130 Oyhut Bay Blvd SW\, Ocean Shores
+DESCRIPTION:6:00–8:00 PM\nhttps://allevents.in/ocean-shores/all\nSource
+ : allevents.in
+URL:https://allevents.in/ocean-shores/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:mount-olympus-paint-sip-1025-20261025@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261025T220000Z
+DTEND:20261026T000000Z
+SUMMARY:Paint and Sip at Mount Olympus Brewing
+LOCATION:Mount Olympus Brewing\, Aberdeen
+DESCRIPTION:3:00 PM\nhttps://allevents.in/aberdeen-wa/all\nSource: alleve
+ nts.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:qbr-monster-bash-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T030000Z
+DTEND:20261101T050000Z
+SUMMARY:Monster Bash 2026
+LOCATION:Quinault Beach Resort & Casino\, Ocean Shores
+DESCRIPTION:8:00 PM\nHalloween night party\, 8 PM to midnight.\nhttps://a
+ llevents.in/ocean-shores/all\nSource: allevents.in
+URL:https://allevents.in/ocean-shores/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ymca-harvest-carnival-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261031T210000Z
+DTEND:20261031T230000Z
+SUMMARY:YMCA Harvest Carnival
+LOCATION:YMCA\, 2500 Simpson Ave\, Hoquiam
+DESCRIPTION:2:00 PM\nhttps://allevents.in/hoquiam/all\nSource: allevents.
+ in
+URL:https://allevents.in/hoquiam/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gepettos-head-over-feet-20261031@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261101T030000Z
+DTEND:20261101T050000Z
+SUMMARY:Head Over Feet (Alanis Morissette tribute)
+LOCATION:Gepetto's Italian Restaurant & Sports Bar\, Montesano
+DESCRIPTION:8:00 PM\nhttps://allevents.in/montesano/all\nSource: allevent
+ s.in
+URL:https://allevents.in/montesano/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-fall-gala-reception-20261106@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261107T020000Z
+DTEND:20261107T040000Z
+SUMMARY:Fall Gala Art Exhibition opening reception
+LOCATION:Grays Harbor College\, Aberdeen
+DESCRIPTION:6:00 PM\nhttps://coastal-currents.com/events/\nSource: Coasta
+ l Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:top-taste-wa-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261107T180000Z
+DTEND:20261107T200000Z
+SUMMARY:TOP Taste of Washington
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:10:00 AM\nhttps://tourismoceanshores.com/event-calendar/\nSou
+ rce: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:top-taste-wa-20261108@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T180000Z
+DTEND:20261108T200000Z
+SUMMARY:TOP Taste of Washington
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:10:00 AM\nhttps://tourismoceanshores.com/event-calendar/\nSou
+ rce: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-north-by-northwest-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T030000Z
+DTEND:20261108T050000Z
+SUMMARY:North by Northwest (1959)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:Sat 7:00 PM\, Sun 2:00 PM\nhttps://www.7thstreettheatre.com/m
+ ovies-events\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-north-by-northwest-20261108@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T220000Z
+DTEND:20261109T000000Z
+SUMMARY:North by Northwest (1959)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:Sat 7:00 PM\, Sun 2:00 PM\nhttps://www.7thstreettheatre.com/m
+ ovies-events\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:junk-queens-open-house-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261107T180000Z
+DTEND:20261107T200000Z
+SUMMARY:Junk Queens Tackle Box Holiday Open House
+LOCATION:2681 Westhaven Dr\, Westport
+DESCRIPTION:10:00 AM\nhttps://chamber.graysharbor.org/events/calendar/202
+ 6-11-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-11-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:mccleary-the-mistaken-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T030000Z
+DTEND:20261108T050000Z
+SUMMARY:The Mistaken in concert
+LOCATION:McCleary Museum\, McCleary
+DESCRIPTION:7:00 PM\nhttps://coastal-currents.com/events/\nSource: Coasta
+ l Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:quinault-murder-mystery-20261107@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261108T010000Z
+DTEND:20261108T040000Z
+SUMMARY:Murder Mystery Dinner
+LOCATION:Lake Quinault Lodge\, Lake Quinault
+DESCRIPTION:5:00–8:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:hhs-veterans-concert-20261111@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261111T220000Z
+DTEND:20261112T000000Z
+SUMMARY:HHS Veterans Day Concert
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:2:00 PM & 7:00 PM\nhttps://www.7thstreettheatre.com/movies-ev
+ ents\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:sasquatch-summit-20261113@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+SUMMARY:Sasquatch Summit
+LOCATION:Quinault Beach Resort & Casino\, Ocean Shores
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:sasquatch-summit-20261114@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
+SUMMARY:Sasquatch Summit
+LOCATION:Quinault Beach Resort & Casino\, Ocean Shores
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:phantom-of-the-lodge-20261114@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261115T010000Z
+DTEND:20261115T040000Z
+SUMMARY:Phantom of the Lodge Masquerade Ball
+LOCATION:Lake Quinault Lodge\, Lake Quinault
+DESCRIPTION:5:00–8:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:navy-band-nw-20261119@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261120T030000Z
+DTEND:20261120T050000Z
+SUMMARY:US Navy Band Northwest
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:7:00 PM\nhttps://coastal-currents.com/events/\nSource: Coasta
+ l Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:os-turkey-bingo-20261120@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261121T010000Z
+DTEND:20261121T030000Z
+SUMMARY:Turkey Bingo
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:5:00 PM\nhttps://tourismoceanshores.com/event-calendar/\nSour
+ ce: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:harbor-havoc-20261121@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261122T020000Z
+DTEND:20261122T040000Z
+SUMMARY:Rogue Wrestling: Harbor Havoc – Feast & Fury
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://tourismoceanshores.com/event-calendar/\nSour
+ ce: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:silver-bells-bazaar-20261121@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261121T180000Z
+DTEND:20261121T200000Z
+SUMMARY:Silver Bells Christmas Bazaar
+LOCATION:Oyhut Bay Event Center\, 300 Lodge Ave SW\, Ocean Shores
+DESCRIPTION:10:00 AM\nhttps://chamber.graysharbor.org/events/calendar/202
+ 6-11-01\nSource: Greater Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-11-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:deck-the-docks-20261121@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261121
+DTEND;VALUE=DATE:20261122
+SUMMARY:Deck the Docks
+LOCATION:Westport Marina\, Westport
+DESCRIPTION:Check first: Start time unclear on the chamber listing.\nhttp
+ s://chamber.graysharbor.org/events/calendar/2026-11-01\nSource: Greater 
+ Grays Harbor chamber calendar
+URL:https://chamber.graysharbor.org/events/calendar/2026-11-01
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:country-christmas-bazaar-20261121@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261121T160000Z
+DTEND:20261122T010000Z
+SUMMARY:Country Christmas Bazaar
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:Sat 8:00 AM–5:00 PM\, Sun 10:00 AM–3:00 PM\nhttps://coast
+ al-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:country-christmas-bazaar-20261122@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261122T180000Z
+DTEND:20261122T230000Z
+SUMMARY:Country Christmas Bazaar
+LOCATION:Grays Harbor County Fairgrounds\, Elma
+DESCRIPTION:Sat 8:00 AM–5:00 PM\, Sun 10:00 AM–3:00 PM\nhttps://coast
+ al-currents.com/events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gh-symphony-we-the-people-20261122@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261123T030000Z
+DTEND:20261123T050000Z
+SUMMARY:Grays Harbor Symphony: "We the People"
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:7:00 PM\nhttps://coastal-currents.com/events/\nSource: Coasta
+ l Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-turkey-trot-20261126@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261126T173000Z
+DTEND:20261126T193000Z
+SUMMARY:Seabrook Turkey Trot
+LOCATION:Seabrook
+DESCRIPTION:9:30 AM\nhttps://coastal-currents.com/events/\nSource: Coasta
+ l Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-tree-lighting-20261127@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261128T010000Z
+DTEND:20261128T020000Z
+SUMMARY:Seabrook Tree Lighting
+LOCATION:Town Center\, Seabrook
+DESCRIPTION:5:00–6:00 PM\nhttps://coastal-currents.com/events/\nSource:
+  Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:winter-fanta-sea-20261127@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261127T200000Z
+DTEND:20261128T010000Z
+SUMMARY:Winter Fanta-Sea Craft Fair
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:Fri 12–5 PM\, Sat–Sun 10 AM–3 PM\nhttps://tourismoceans
+ hores.com/event-calendar/\nSource: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:winter-fanta-sea-20261128@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261128T180000Z
+DTEND:20261128T230000Z
+SUMMARY:Winter Fanta-Sea Craft Fair
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:Fri 12–5 PM\, Sat–Sun 10 AM–3 PM\nhttps://tourismoceans
+ hores.com/event-calendar/\nSource: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:winter-fanta-sea-20261129@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261129T180000Z
+DTEND:20261129T230000Z
+SUMMARY:Winter Fanta-Sea Craft Fair
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:Fri 12–5 PM\, Sat–Sun 10 AM–3 PM\nhttps://tourismoceans
+ hores.com/event-calendar/\nSource: Tourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261127@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261128@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261128
+DTEND;VALUE=DATE:20261129
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261129@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261129
+DTEND;VALUE=DATE:20261130
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261204@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261205@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261205
+DTEND;VALUE=DATE:20261206
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261206@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261206
+DTEND;VALUE=DATE:20261207
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261211@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261212@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261212
+DTEND;VALUE=DATE:20261213
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261213@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261213
+DTEND;VALUE=DATE:20261214
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261218@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261218
+DTEND;VALUE=DATE:20261219
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261219@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261219
+DTEND;VALUE=DATE:20261220
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-jolly-days-20261220@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261220
+DTEND;VALUE=DATE:20261221
+SUMMARY:Jolly Days
+LOCATION:Seabrook
+DESCRIPTION:Fri–Sun\nhttps://coastal-currents.com/events/\nSource: Coas
+ tal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261127@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261128T033000Z
+DTEND:20261128T053000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261128@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261129T033000Z
+DTEND:20261129T053000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261204@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261205T033000Z
+DTEND:20261205T053000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261205@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261206T033000Z
+DTEND:20261206T053000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261206@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261206T220000Z
+DTEND:20261207T000000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261211@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261212T033000Z
+DTEND:20261212T053000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261212@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261213T033000Z
+DTEND:20261213T053000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:driftwood-haunted-hill-20261213@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261213T220000Z
+DTEND:20261214T000000Z
+SUMMARY:"The House on Haunted Hill"
+LOCATION:Driftwood Theatre\, Aberdeen
+DESCRIPTION:Fri–Sat 7:30 PM\, Sun 2:00 PM\nhttps://coastal-currents.com
+ /events/\nSource: Coastal Currents
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-polar-express-20261127@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261128T030000Z
+DTEND:20261128T050000Z
+SUMMARY:The Polar Express (2004)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:7:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-polar-express-20261128@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261129T030000Z
+DTEND:20261129T050000Z
+SUMMARY:The Polar Express (2004)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:7:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-fall-gala-exhibit@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261106
+DTEND;VALUE=DATE:20261212
+SUMMARY:Fall Gala Art Exhibition
+LOCATION:Grays Harbor College\, Aberdeen
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:seabrook-glass-float-find@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20270102
+SUMMARY:Winter Glass Float Find
+LOCATION:Seabrook
+DESCRIPTION:https://coastal-currents.com/events/\nSource: Coastal Current
+ s
+URL:https://coastal-currents.com/events/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ymca-turkey-bingo-20261120@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261121T023000Z
+DTEND:20261121T043000Z
+SUMMARY:YMCA Turkey Bingo
+LOCATION:YMCA\, 2500 Simpson Ave\, Hoquiam
+DESCRIPTION:6:30 PM\nhttps://allevents.in/hoquiam/all\nSource: allevents.
+ in
+URL:https://allevents.in/hoquiam/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-elf-20261205@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261206T030000Z
+DTEND:20261206T050000Z
+SUMMARY:Elf (2003)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:7:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:santa-by-the-sea-20261205@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261205T183000Z
+DTEND:20261205T200000Z
+SUMMARY:Santa by the Sea
+LOCATION:Westport Marina / Maritime Museum\, Westport
+DESCRIPTION:10:30 AM–12:00 PM\nhttps://westportgrayland-chamber.org/eve
+ nts/santa-by-the-sea/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/santa-by-the-sea/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:montesano-festival-of-lights-20261210@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+SUMMARY:Montesano Festival of Lights
+LOCATION:Montesano
+DESCRIPTION:Holiday events all weekend and the evening lighted parade. 20
+ 26 theme: Red\, White & Christmas.\nhttps://montesanochamber.com/index.p
+ hp/component/chamberevents/?view=events&catid=11\nSource: Montesano Cham
+ ber
+URL:https://montesanochamber.com/index.php/component/chamberevents/?view=
+ events&catid=11
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:montesano-festival-of-lights-20261211@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+SUMMARY:Montesano Festival of Lights
+LOCATION:Montesano
+DESCRIPTION:Holiday events all weekend and the evening lighted parade. 20
+ 26 theme: Red\, White & Christmas.\nhttps://montesanochamber.com/index.p
+ hp/component/chamberevents/?view=events&catid=11\nSource: Montesano Cham
+ ber
+URL:https://montesanochamber.com/index.php/component/chamberevents/?view=
+ events&catid=11
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:montesano-festival-of-lights-20261212@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261212
+DTEND;VALUE=DATE:20261213
+SUMMARY:Montesano Festival of Lights
+LOCATION:Montesano
+DESCRIPTION:Holiday events all weekend and the evening lighted parade. 20
+ 26 theme: Red\, White & Christmas.\nhttps://montesanochamber.com/index.p
+ hp/component/chamberevents/?view=events&catid=11\nSource: Montesano Cham
+ ber
+URL:https://montesanochamber.com/index.php/component/chamberevents/?view=
+ events&catid=11
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:montesano-festival-of-lights-20261213@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART;VALUE=DATE:20261213
+DTEND;VALUE=DATE:20261214
+SUMMARY:Montesano Festival of Lights
+LOCATION:Montesano
+DESCRIPTION:Holiday events all weekend and the evening lighted parade. 20
+ 26 theme: Red\, White & Christmas.\nhttps://montesanochamber.com/index.p
+ hp/component/chamberevents/?view=events&catid=11\nSource: Montesano Cham
+ ber
+URL:https://montesanochamber.com/index.php/component/chamberevents/?view=
+ events&catid=11
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:grayland-day-with-santa-20261212@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261212T180000Z
+DTEND:20261212T220000Z
+SUMMARY:A Day with Santa
+LOCATION:Grayland Fire Hall\, Grayland
+DESCRIPTION:10:00 AM–2:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/a-day-with-santa/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/a-day-with-santa/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ocosta-holiday-bazaar-20261212@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261212T180000Z
+DTEND:20261213T010000Z
+SUMMARY:Holiday Weekend Bazaar
+LOCATION:Ocosta Rec Hall\, Westport
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/holiday-weekend-bazaar/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/holiday-weekend-bazaar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ocosta-holiday-bazaar-20261213@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261213T180000Z
+DTEND:20261214T010000Z
+SUMMARY:Holiday Weekend Bazaar
+LOCATION:Ocosta Rec Hall\, Westport
+DESCRIPTION:10:00 AM–5:00 PM\nhttps://westportgrayland-chamber.org/even
+ ts/holiday-weekend-bazaar/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/holiday-weekend-bazaar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gh-dance-winter-recital-20261212@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261212T220000Z
+DTEND:20261213T000000Z
+SUMMARY:Grays Harbor Dance Winter Recital: The Nutcracker
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:2:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gh-dance-winter-recital-20261213@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261213T220000Z
+DTEND:20261214T000000Z
+SUMMARY:Grays Harbor Dance Winter Recital: The Nutcracker
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:2:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-white-christmas-20261219@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261220T030000Z
+DTEND:20261220T050000Z
+SUMMARY:White Christmas (1954)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:Sat 7:00 PM\, Sun 2:00 PM\nhttps://www.7thstreettheatre.com/m
+ ovies-events\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:7th-white-christmas-20261220@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261220T220000Z
+DTEND:20261221T000000Z
+SUMMARY:White Christmas (1954)
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:Sat 7:00 PM\, Sun 2:00 PM\nhttps://www.7thstreettheatre.com/m
+ ovies-events\nSource: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:dancehouse-winter-showcase-20261227@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261227T210000Z
+DTEND:20261227T230000Z
+SUMMARY:The Dancehouse Winter Showcase
+LOCATION:7th Street Theatre\, Hoquiam
+DESCRIPTION:1:00 PM\nhttps://www.7thstreettheatre.com/movies-events\nSour
+ ce: 7th Street Theatre
+URL:https://www.7thstreettheatre.com/movies-events
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:westport-nye-fireworks-20261231@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20270101T050000Z
+DTEND:20270101T070000Z
+SUMMARY:New Year's Eve Fireworks
+LOCATION:Westport Marina\, Westport
+DESCRIPTION:9:00 PM\nhttps://westportgrayland-chamber.org/events/westport
+ -new-years-eve-fireworks/\nSource: Westport-Grayland Chamber
+URL:https://westportgrayland-chamber.org/events/westport-new-years-eve-fi
+ reworks/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-steel-drums-20261203@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261203T210000Z
+DTEND:20261203T230000Z
+SUMMARY:GHC Steel Drums performance
+LOCATION:Grays Harbor College\, Aberdeen
+DESCRIPTION:1:00 PM\nhttps://allevents.in/aberdeen-wa/all\nSource: alleve
+ nts.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ghc-jazz-concert-20261203@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261204T030000Z
+DTEND:20261204T050000Z
+SUMMARY:GHC Jazz Choir & Jazz Band Concert
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:7:00 PM\nhttps://allevents.in/aberdeen-wa/all\nSource: alleve
+ nts.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:harbor-dice-con-20261205@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261205T160000Z
+DTEND:20261206T053000Z
+SUMMARY:Harbor Dice Con 2026
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:Sat 8:00 AM–9:30 PM\, Sun 8:00 AM–8:00 PM\nTabletop gamin
+ g convention.\nhttps://tourismoceanshores.com/event-calendar/\nSource: T
+ ourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:harbor-dice-con-20261206@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261206T160000Z
+DTEND:20261207T040000Z
+SUMMARY:Harbor Dice Con 2026
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:Sat 8:00 AM–9:30 PM\, Sun 8:00 AM–8:00 PM\nTabletop gamin
+ g convention.\nhttps://tourismoceanshores.com/event-calendar/\nSource: T
+ ourism Ocean Shores calendar
+URL:https://tourismoceanshores.com/event-calendar/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:civic-choir-winter-wonderland-20261206@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20261206T220000Z
+DTEND:20261207T000000Z
+SUMMARY:Civic Choir & Concert Band: Winter Wonderland
+LOCATION:Bishop Center\, Grays Harbor College\, Aberdeen
+DESCRIPTION:2:00 PM\nhttps://allevents.in/aberdeen-wa/all\nSource: alleve
+ nts.in
+URL:https://allevents.in/aberdeen-wa/all
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:os-nye-beach-bash-20261231@harborhappenings
+DTSTAMP:20260929T125105Z
+DTSTART:20270101T020000Z
+DTEND:20270101T040000Z
+SUMMARY:New Year's Eve Beach Bash
+LOCATION:Ocean Shores Convention Center\, Ocean Shores
+DESCRIPTION:6:00 PM\nhttps://allevents.in/ocean-shores/all\nSource: allev
+ ents.in
+URL:https://allevents.in/ocean-shores/all
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
