@@ -96,15 +96,9 @@ footer{border-top:2px solid var(--line);padding-top:1rem;color:var(--ink-3);font
 </main>
 <script>
 // honor the visitor's color and text-size choices from the calendar page
-// same "Automatic" rule as the calendar: dark from sunset to sunrise in Grays Harbor
-function harborNight(){ const rad=Math.PI/180,dayMs=864e5,J1970=2440588,J2000=2451545,J0=0.0009,e=rad*23.4397,lw=rad*123.89,phi=rad*46.98;
-  const d=Date.now()/dayMs-0.5+J1970-J2000, n=Math.round(d-J0-lw/(2*Math.PI)), ds=J0+lw/(2*Math.PI)+n, M=rad*(357.5291+0.98560028*ds);
-  const L=M+rad*(1.9148*Math.sin(M)+0.02*Math.sin(2*M)+0.0003*Math.sin(3*M))+rad*102.9372+Math.PI, dec=Math.asin(Math.sin(e)*Math.sin(L));
-  const Jnoon=J2000+ds+0.0053*Math.sin(M)-0.0069*Math.sin(2*L), w=Math.acos((Math.sin(-0.833*rad)-Math.sin(phi)*Math.sin(dec))/(Math.cos(phi)*Math.cos(dec)));
-  const Jset=J2000+(J0+(w+lw)/(2*Math.PI)+n)+0.0053*Math.sin(M)-0.0069*Math.sin(2*L), Jrise=Jnoon-(Jset-Jnoon), ms=j=>(j+0.5-J1970)*dayMs;
-  return Date.now()<ms(Jrise)||Date.now()>=ms(Jset); }
+// Automatic = the device's light/dark setting (handled by the CSS); a saved Light/Dark choice wins
 let th=null; try{ th=localStorage.getItem("hh-theme"); }catch(e){}
-document.documentElement.setAttribute("data-theme", (th==="light"||th==="dark") ? th : (harborNight()?"dark":"light"));
+if (th==="light"||th==="dark") document.documentElement.setAttribute("data-theme",th);
 try{
 
      if(localStorage.getItem("hh-size")==="large") document.documentElement.setAttribute("data-size","large"); }catch(e){}
