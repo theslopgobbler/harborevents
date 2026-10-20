@@ -77,6 +77,7 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ai li{margin:3px 0}
 .now{margin-left:6px}
 .ai .photo-link{text-decoration:none}
+.ai .comps{font-weight:600;white-space:nowrap}
 .nowbtn{font:600 12px/1 var(--body);border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 8px;cursor:pointer;vertical-align:middle}
 .nowbtn.ok{border-style:solid;border-color:var(--estate);color:var(--estate)}
 .nowbtn.tight{border-style:solid;border-color:var(--garage);color:var(--garage)}
@@ -200,7 +201,7 @@ body{margin:0;font-size:15px}
 <script>
 (function(){
   const $=s=>document.querySelector(s);
-  let votes={}, mine={}, vision={}, reminders={}, prices={};
+  let votes={}, mine={}, vision={}, reminders={}, prices={}, comps={};
   try{reminders=JSON.parse(localStorage.getItem("hs.reminders")||"{}")||{}}catch(e){}
   // "2026-10-22T19:00" (Pacific, as written by the refresh) -> Date; "7:00 PM"
   function endDate(iso){if(!iso||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(iso))return null;const[d,tm]=iso.split("T");const[y,m,dd]=d.split("-").map(Number);const[h,mi]=tm.split(":").map(Number);return new Date(y,m-1,dd,h,mi);}
@@ -306,6 +307,11 @@ body{margin:0;font-size:15px}
       const tgt=findTarget(p,item); li.append(tgt?link(tgt,p.what+" ↗"):document.createTextNode(p.what));
       if(p.url){const ph=link(p.url,"\u{1F4F7}");ph.title="The photo the AI looked at (may not be the exact one)";ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
       if(p.why) li.append(document.createTextNode(" ("+p.why+")"));
+      // real eBay sold prices for this find, looked up on the eBay Research tab by the desktop script
+      const c=comps[String(p.search||p.what).toLowerCase().replace(/\s+/g," ").trim()];
+      if(c&&(c.median||c.avg)){const a=link(c.url||sold,"eBay sold ~"+money(c.median||c.avg)+(c.matched?" ("+c.matched+" like it)":c.n?" ("+c.n+" sold)":""));a.className="comps";
+        a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?": "+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
+        li.append(document.createTextNode(" · "),a);}
       li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null));
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
@@ -469,7 +475,7 @@ body{margin:0;font-size:15px}
   const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
   const K={get:n=>{try{return localStorage.getItem(n)}catch(e){return null}},set:(n,v)=>{try{v?localStorage.setItem(n,v):localStorage.removeItem(n)}catch(e){}}};
   function apply(j){
-    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{}; vision=j.vision||{}; prices=j.prices||{};
+    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{}; vision=j.vision||{}; prices=j.prices||{}; comps=j.comps||{};
     if(meta&&j.pushed&&!meta.lastRun) meta.lastRun=new Date(j.pushed).toISOString();
     render(); renderStatus();
     if(j.pushed&&!sales.length) $("#status").textContent="No sales in the list right now.";
