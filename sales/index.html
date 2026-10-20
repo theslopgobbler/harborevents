@@ -263,7 +263,10 @@ body{margin:0;font-size:15px}
   // eBay's cut on a typical sale: ~13.25% final value fee + $0.40 per order (rough; varies by category)
   const FEE=0.1325, FEE_FIXED=0.40, net=v=>Math.max(0,v*(1-FEE)-FEE_FIXED);
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
-  function priceChip(key,p,fallback){
+  function priceChip(key,p,fallback,c){
+    // judged against real eBay sales when there are 3+ close matches (the middle half of them), else the AI's guess
+    const ebay=c&&c.matched>=3&&c.low>0&&c.high>0; const src=ebay?"eBay sold, middle half of "+c.matched+" close matches":"the AI's estimate (not enough eBay matches yet)";
+    if(ebay) p={what:p.what,low:c.low,high:c.high};
     const w=el("span","now"); const saved=prices[key]; const cur=saved?saved[0]:fallback;
     const show=()=>{w.replaceChildren();
       const b=el("button","nowbtn");b.type="button";
@@ -272,7 +275,7 @@ body{margin:0;font-size:15px}
         const st=cur>hi?"over":cur>lo?"tight":"ok";
         b.textContent="Now "+money(cur)+(st==="over"?" · over value":st==="tight"?" · thin margin":" · room to profit");
         b.className="nowbtn "+st;
-        b.title="Range after eBay fees: "+money(lo)+"–"+money(hi)+" (about 13.25% + $0.40 per sale)"+(saved?" · updated "+new Date(saved[1]).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"}):" · from the listing");}
+        b.title="Value: "+money(p.low)+"–"+money(p.high)+" from "+src+". After eBay fees: "+money(lo)+"–"+money(hi)+" (about 13.25% + $0.40 per sale)"+(saved?" · updated "+new Date(saved[1]).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"}):" · from the listing");}
       b.addEventListener("click",edit); w.append(b);};
     const edit=()=>{w.replaceChildren();
       const f=document.createElement("form");f.className="nowform";
@@ -295,6 +298,12 @@ body{margin:0;font-size:15px}
     (item.findLinks||[]).forEach(f=>{if(!f||!/^https?:/.test(f.url||""))return;let n=0;words(f.text).forEach(w=>{if(pw.has(w))n++;});if(n>bestN){bestN=n;best=f.url;}});
     return best||item.direct||item.url||"";
   }
+  // eBay search words for a find: the AI's own, else a short version of its description (a long one finds nothing)
+  function ebayWords(p){
+    if(p.search) return p.search;
+    const stop=new Set("a an and the of with in on for from to set lot pair some various assorted possibly likely looks like appears".split(" "));
+    return String(p.what||"").replace(/\([^)]*\)/g," ").replace(/[^\w'&-]+/g," ").split(/\s+/).filter(w=>w&&!stop.has(w.toLowerCase())).slice(0,5).join(" ");
+  }
   function aiBox(id,isLot,lotBid,item){
     const v=vision[id]; if(!v||(!v.seen&&!(v.picks||[]).length)) return null;
     const box=el("div","ai"); box.append(el("b",null,"Local AI saw"),document.createTextNode(v.seen||""));
@@ -302,17 +311,17 @@ body{margin:0;font-size:15px}
     const top=all.map((p,i)=>[p,i]).filter(([p])=>p.high>=5||/sign|autograph/i.test(p.what)).slice(0,5);
     if(top.length){const ul=el("ul");top.forEach(([p,i])=>{const li=el("li");
       // the range links to eBay sold listings for the AI's own search words: cheapest first, priciest first
-      const q=encodeURIComponent(p.search||p.what), sold="https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q;
+      const q=encodeURIComponent(ebayWords(p)), sold="https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q;
       li.append(link(sold+"&_sop=15","$"+Math.round(p.low)),document.createTextNode("–"),link(sold+"&_sop=16","$"+Math.round(p.high)),document.createTextNode(" · "));
       const tgt=findTarget(p,item); li.append(tgt?link(tgt,p.what+" ↗"):document.createTextNode(p.what));
       if(p.url){const ph=link(p.url,"\u{1F4F7}");ph.title="The photo the AI looked at (may not be the exact one)";ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
       if(p.why) li.append(document.createTextNode(" ("+p.why+")"));
       // real eBay sold prices for this find, looked up on the eBay Research tab by the desktop script
-      const c=comps[String(p.search||p.what).toLowerCase().replace(/\s+/g," ").trim()];
+      const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
       if(c&&(c.median||c.avg)){const a=link(c.url||sold,"eBay sold ~"+money(c.median||c.avg)+(c.matched?" ("+c.matched+" like it)":c.n?" ("+c.n+" sold)":""));a.className="comps";
-        a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?": "+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
+        a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?(c.matched>=3?", middle half of the close matches: ":": ")+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
         li.append(document.createTextNode(" · "),a);}
-      li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null));
+      li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c));
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
