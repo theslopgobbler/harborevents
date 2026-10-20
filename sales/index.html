@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Harbor Sale Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow route-sheet column — filters up top, in-person sales grouped by day, online auctions below */
+:root{
+  --bg:#eef1f3; --panel:#ffffff; --ink:#18212a; --muted:#5b6872; --line:#d3dade;
+  --sign:#e2541b; --estate:#16706a; --auction:#7a3e8c; --garage:#e2541b; --online:#3a5f9e;
+  --chip:#e3e8eb;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12171c; --panel:#1b232a; --ink:#e6ecef; --muted:#97a5ae; --line:#2c3740;
+  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171c; --panel:#1b232a; --ink:#e6ecef; --muted:#97a5ae; --line:#2c3740;
+  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:760px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+header{display:flex;flex-direction:column;gap:6px}
+h1{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;letter-spacing:.01em;margin:0;text-transform:uppercase;text-wrap:balance}
+h1 span{color:var(--sign)}
+.sub{color:var(--muted);margin:0;max-width:62ch}
+.status{font-size:13px;color:var(--muted)}
+.status b{color:var(--ink);font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:8px;z-index:5;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.chipbtn{font:600 13px/1 var(--body);padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.chipbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chipbtn:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--sign);outline-offset:2px}
+select{font:500 13px var(--body);padding:7px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.spacer{flex:1}
+h2{font-family:var(--display);font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 0;display:flex;align-items:baseline;gap:10px}
+h2 small{font-family:var(--body);font-size:13px;text-transform:none;letter-spacing:0;color:var(--muted);font-weight:400}
+.day{display:flex;flex-direction:column;gap:10px}
+.dayhead{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:2px}
+.dayhead.today{color:var(--sign);border-color:var(--sign)}
+.sale{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--c,var(--line));border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.sale[data-t="estate"]{--c:var(--estate)} .sale[data-t="garage"]{--c:var(--garage)} .sale[data-t="auction"]{--c:var(--auction)} .sale[data-t="online"]{--c:var(--online)}
+.top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.title{font-weight:600;font-size:16px;margin:0;min-width:0;overflow-wrap:anywhere}
+.when{font-family:var(--display);font-weight:600;font-size:15px;white-space:nowrap;color:var(--c);text-transform:uppercase;letter-spacing:.03em}
+.meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12.5px}
+.tag{background:var(--chip);border-radius:4px;padding:2px 7px;font-weight:600;font-variant-numeric:tabular-nums}
+.tag.type{background:var(--c);color:var(--panel)}
+.tag.local{color:var(--sign)}
+.addr{font-size:14px;color:var(--ink)}
+.addr a,.links a{color:var(--c);font-weight:600;text-underline-offset:2px}
+.sum{color:var(--muted);font-size:14px;margin:0;max-width:65ch}
+.links{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;align-items:center}
+.sale.hot{box-shadow:0 0 0 2px var(--sign) inset}
+.tag.find{background:var(--sign);color:var(--panel)}
+.votes{display:inline-flex;gap:6px;margin-left:auto}
+.vb{font:600 13px/1 var(--body);border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:5px 9px;cursor:pointer;font-variant-numeric:tabular-nums}
+.vb[aria-pressed="true"].up{background:var(--estate);border-color:var(--estate);color:var(--panel)}
+.vb[aria-pressed="true"].down{background:var(--sign);border-color:var(--sign);color:var(--panel)}
+.vb:focus-visible{outline:2px solid var(--sign);outline-offset:2px}
+.tag.wild{background:var(--auction);color:var(--panel)}
+.lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.finds{font-size:14px;margin:0;padding:6px 10px;border-radius:4px;background:var(--chip);max-width:65ch}
+.finds b{color:var(--sign);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:13px;margin-right:6px}
+.lot{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;min-width:0}
+.lot.hot{box-shadow:0 0 0 2px var(--sign) inset}
+.lot a.lt{font-weight:600;color:var(--ink);text-underline-offset:2px;overflow-wrap:anywhere;min-width:0}
+.lot .bid{font-family:var(--display);font-weight:600;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lot .ln{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.lot .ln b{color:var(--sign);font-weight:600}
+.empty{background:var(--panel);border:1px dashed var(--line);border-radius:6px;padding:20px;color:var(--muted)}
+.foot{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+@media (max-width:480px){h1{font-size:32px}.top{flex-direction:column;gap:2px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+body{margin:0;font-size:15px}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.gate{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gate input{font:500 15px var(--body);padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);min-width:0;flex:1 1 220px}
+.gate .err{flex-basis:100%;color:var(--sign);font-size:13px;margin:0}
+.signout{background:none;border:0;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer;padding:0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Harbor <span>Sale</span> Finder</h1>
+    <p class="sub">Estate sales, garage and yard sales, and estate auctions within driving range of Hoquiam. Updated Wednesday and Friday mornings; miles are approximate road distance from Hoquiam.</p>
+    <div class="status" id="status">Loading sales…</div>
+  </header>
+
+  <form class="gate" id="gate" hidden>
+    <label for="key">Key</label>
+    <input id="key" type="password" autocomplete="current-password" placeholder="Enter your sales key">
+    <button class="chipbtn" type="submit" id="go">Open</button>
+    <p class="err" id="gerr" hidden></p>
+  </form>
+
+  <div class="filters" role="toolbar" aria-label="Filters">
+    <button class="chipbtn" id="f-all" data-type="all" aria-pressed="true">All</button>
+    <button class="chipbtn" id="f-estate" data-type="estate" aria-pressed="false">Estate</button>
+    <button class="chipbtn" id="f-garage" data-type="garage" aria-pressed="false">Garage / yard</button>
+    <button class="chipbtn" id="f-auction" data-type="auction" aria-pressed="false">Auctions</button>
+    <button class="chipbtn" id="f-finds" data-type="finds" aria-pressed="false">Good finds</button>
+    <span class="spacer"></span>
+    <label for="dist" class="status">Within</label>
+    <select id="dist">
+      <option value="25">25 mi</option>
+      <option value="40">40 mi</option>
+      <option value="65" selected>65 mi</option>
+      <option value="999">Any</option>
+    </select>
+  </div>
+
+  <section id="inperson" aria-labelledby="h-in">
+    <h2 id="h-in">In person <small id="c-in"></small></h2>
+    <div id="days" class="day"></div>
+  </section>
+
+  <section id="online-sec" aria-labelledby="h-on">
+    <h2 id="h-on">Online auctions <small>bid from home, local pickup</small></h2>
+    <div id="online" class="day"></div>
+  </section>
+
+  <section id="lots-sec" aria-labelledby="h-lots" hidden>
+    <h2 id="h-lots">Lots to watch <small>single HiBid lots within 100 mi, best first</small></h2>
+    <div id="lots" class="day"></div>
+  </section>
+
+  <p class="foot"><button class="signout" id="signout" type="button" hidden>Forget key on this device</button> Sources checked: EstateSales.NET, EstateSales.org, YardSaleSearch, Craigslist Olympic Peninsula, HiBid (Mercury Auctions, CTM Unlimited and others). Many Grays Harbor yard sales are only posted in Facebook groups, which this list can't read. Always confirm times on the original listing before driving out.</p>
+</div>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  let votes={}, mine={};
+  try{mine=JSON.parse(localStorage.getItem("hs.myVotes")||"{}")||{}}catch(e){}
+  function voter(){try{let v=localStorage.getItem("hs.voter");if(!v){v="v"+Math.random().toString(36).slice(2,12)+Date.now().toString(36);localStorage.setItem("hs.voter",v)}return v}catch(e){return "anon"+Math.random().toString(36).slice(2,10)}}
+  function voteBar(item,title,kind){
+    const w=el("span","votes"); const mk=(dir,sym,lab)=>{const b=el("button","vb "+dir);b.type="button";b.setAttribute("aria-label",lab);
+      const v=votes[item]||[0,0], n=dir==="up"?v[0]:v[1]; b.textContent=sym+(n?" "+n:""); b.setAttribute("aria-pressed",String(mine[item]===(dir==="up"?1:-1)));
+      b.addEventListener("click",()=>castVote(item,dir==="up"?1:-1,title,kind));return b;};
+    w.append(mk("up","\u{1F44D}","Thumbs up: more like this"),mk("down","\u{1F44E}","Thumbs down: less like this"));return w;}
+  async function castVote(item,v,title,kind){
+    const key=localStorage.getItem("hs.key"); if(!key) return;
+    const nv=mine[item]===v?0:v, prev=mine[item]||0;
+    const t=votes[item]?[...votes[item]]:[0,0]; if(prev===1)t[0]--; if(prev===-1)t[1]--; if(nv===1)t[0]++; if(nv===-1)t[1]++;
+    votes[item]=t; if(nv) mine[item]=nv; else delete mine[item];
+    try{localStorage.setItem("hs.myVotes",JSON.stringify(mine))}catch(e){}
+    render();
+    try{const r=await fetch(RELAY+"/sales-vote",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({item,voter:voter(),vote:nv,title:String(title||"").slice(0,200),kind:kind||""})});
+      if(r.ok){const j=await r.json();votes[item]=[j.up,j.down];render();}}catch(e){}
+  }
+  let sales=[], lots=[], meta=null, ftype="all", fdist=65;
+  try{const v=localStorage.getItem("hsf-dist"); if(v){fdist=+v; $("#dist").value=v;}}catch(e){}
+
+  function today(){const d=new Date();return d.toLocaleDateString("en-CA",{timeZone:"America/Los_Angeles"});}
+  function parse(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);}
+  function fmtDay(s){return parse(s).toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});}
+  function short(s){return parse(s).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});}
+  function dayDiff(a,b){return Math.round((parse(b)-parse(a))/864e5);}
+  const label={estate:"Estate sale",garage:"Garage / yard",auction:"Auction",online:"Online auction"};
+  function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+  function link(href,text){const a=el("a",null,text);a.href=href;a.target="_blank";a.rel="noopener";return a;}
+
+  function card(s,t){
+    const c=el("article","sale"+((s.interest||0)>=2?" hot":"")); c.dataset.t=s.type;
+    const top=el("div","top"); top.append(el("h3","title",s.title));
+    let when="";
+    if(s.type==="online"){const n=dayDiff(t,s.end); when= n<=0?"Ends today":n===1?"Ends tomorrow":"Ends "+short(s.end);}
+    else if(s.start===s.end){when=s.hours||"";}
+    else {when=(s.start<=t?"Thru ":"Starts ")+short(s.start<=t?s.end:s.start);}
+    if(s.type==="online"&&s.hours) when+=" · "+s.hours;
+    top.append(el("div","when",when)); c.append(top);
+    const m=el("div","meta");
+    if(s.wild) m.append(el("span","tag wild","Wild card"));
+    if((s.interest||0)>=2) m.append(el("span","tag find",s.interest>=3?"Top pick":"Worth a look"));
+    const ty=el("span","tag type",label[s.type]||s.type); m.append(ty);
+    m.append(el("span","tag"+(s.dist<=30?" local":""),(s.dist!=null?s.dist+" mi · ":"")+s.town));
+    if(s.organizer) m.append(el("span","tag",s.organizer));
+    c.append(m);
+    if(s.type!=="online"){
+      const a=el("div","addr");
+      if(s.address){a.append(link("https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(s.address+", "+s.town+", WA"),s.address));}
+      else a.append(document.createTextNode("Address posted on listing"));
+      if(s.hours&&s.start!==s.end) a.append(document.createTextNode(" · "+s.hours));
+      c.append(a);
+    }
+    if(s.finds){const f=el("p","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds));c.append(f);}
+    if(s.summary) c.append(el("p","sum",s.summary));
+    const l=el("div","links"); if(s.url) l.append(link(s.url,"Open listing ↗"));
+    l.append(voteBar(s.id,s.title,s.type));
+    if(s.source) l.append(el("span","status","via "+s.source)); c.append(l);
+    return c;
+  }
+
+  function render(){
+    const t=today();
+    const vis=sales.filter(s=>s.end>=t && (s.dist==null||s.dist<=fdist) &&
+      (ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild))));
+    const inp=vis.filter(s=>s.type!=="online"), onl=vis.filter(s=>s.type==="online");
+    const days=$("#days"); days.replaceChildren();
+    const groups={};
+    inp.forEach(s=>{const k=s.start<t?t:s.start;(groups[k]=groups[k]||[]).push(s);});
+    Object.keys(groups).sort().forEach(k=>{
+      const h=el("div","dayhead"+(k===t?" today":""),(k===t?"Today · ":"")+fmtDay(k));
+      days.append(h);
+      groups[k].sort((a,b)=>((b.interest||0)-(a.interest||0))||((a.dist??99)-(b.dist??99))).forEach(s=>days.append(card(s,t)));
+    });
+    if(!inp.length) days.append(el("div","empty",sales.length?"No in-person sales match these filters. Try a wider distance.":"No sales loaded yet. The next refresh will fill this list."));
+    $("#c-in").textContent=inp.length?inp.length+" sale"+(inp.length>1?"s":""):"";
+    const on=$("#online"); on.replaceChildren();
+    onl.sort((a,b)=>a.end.localeCompare(b.end)).forEach(s=>on.append(card(s,t)));
+    $("#online-sec").hidden=!onl.length;
+    const lv=lots.filter(x=>!x.closes||x.closes>=t).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
+    const L=$("#lots"); L.replaceChildren();
+    lv.forEach(x=>{const d=el("div","lot"+((x.score||0)>=3?" hot":""));d.append(link(x.url,x.title));
+      d.firstChild.className="lt";
+      d.append(el("div","bid",(x.bid||"$0")+(x.closes?" · "+(x.closes===t?"today":short(x.closes)):"")));
+      const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
+      if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
+      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);L.append(d);});
+    $("#lots-sec").hidden=!lv.length;
+  }
+
+  function renderStatus(){
+    const st=$("#status");
+    if(!meta){st.textContent=sales.length+" listings";return;}
+    st.replaceChildren();
+    st.append(document.createTextNode("Last refreshed "));
+    const b=el("b",null,new Date(meta.lastRun).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}));
+    st.append(b);
+    if(meta.note) st.append(document.createTextNode(" · "+meta.note));
+    if(meta.fbLastRun) st.append(document.createTextNode(" · Facebook checked "+new Date(meta.fbLastRun).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"})+(meta.fbNote?" ("+meta.fbNote+")":"")));
+  }
+
+  document.querySelectorAll(".chipbtn").forEach(b=>b.addEventListener("click",()=>{
+    ftype=b.dataset.type; document.querySelectorAll(".chipbtn").forEach(x=>x.setAttribute("aria-pressed",x===b));render();}));
+  $("#dist").addEventListener("change",e=>{fdist=+e.target.value;try{localStorage.setItem("hsf-dist",e.target.value)}catch(_){};render();});
+
+  const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
+  const K={get:n=>{try{return localStorage.getItem(n)}catch(e){return null}},set:(n,v)=>{try{v?localStorage.setItem(n,v):localStorage.removeItem(n)}catch(e){}}};
+  function apply(j){
+    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{};
+    if(meta&&j.pushed&&!meta.lastRun) meta.lastRun=new Date(j.pushed).toISOString();
+    render(); renderStatus();
+    if(j.pushed&&!sales.length) $("#status").textContent="No sales in the list right now.";
+    if(!j.pushed) $("#status").textContent="Nothing published yet. The next morning update will fill this in.";
+  }
+  async function load(){
+    const key=K.get("hs.key");
+    $("#gate").hidden=!!key; $("#signout").hidden=!key;
+    if(!key){$("#status").textContent="Enter your key to see the list."; return;}
+    $("#status").textContent="Loading sales…";
+    try{
+      const r=await fetch(RELAY+"/sales",{headers:{"X-Sales-Key":key},cache:"no-store"});
+      if(r.status===403){K.set("hs.key",null);$("#gate").hidden=false;$("#signout").hidden=true;$("#gerr").textContent="That key didn't work.";$("#gerr").hidden=false;$("#status").textContent="Enter your key to see the list.";return;}
+      if(!r.ok) throw new Error(r.status);
+      apply(await r.json());
+    }catch(e){$("#status").textContent="Couldn't reach the list right now. Reload to try again.";}
+  }
+  $("#gate").addEventListener("submit",e=>{e.preventDefault();const v=$("#key").value.trim();if(!v)return;K.set("hs.key",v);$("#key").value="";$("#gerr").hidden=true;load();});
+  $("#signout").addEventListener("click",()=>{K.set("hs.key",null);K.set("hs.writeKey",null);sales=[];lots=[];meta=null;render();load();});
+  // the desktop update calls this in its browser (it holds the write key there): replaces the published list
+  window.hsPush=async function(data){
+    const key=K.get("hs.key"), wk=K.get("hs.writeKey");
+    if(!key||!wk) return {ok:false,error:"no key or write key saved in this browser"};
+    const r=await fetch(RELAY+"/sales",{method:"POST",headers:{"X-Sales-Key":key,"X-Sales-Write-Key":wk,"Content-Type":"application/json"},body:JSON.stringify(data)});
+    const t=await r.text(); if(r.ok) load(); return {ok:r.ok,status:r.status,body:t};
+  };
+  render(); load();
+})();
+</script>
+</body>
+</html>
