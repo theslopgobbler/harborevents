@@ -13,16 +13,16 @@
 :root{
   --bg:#eef1f3; --panel:#ffffff; --ink:#18212a; --muted:#5b6872; --line:#d3dade;
   --sign:#e2541b; --estate:#16706a; --auction:#7a3e8c; --garage:#e2541b; --online:#3a5f9e;
-  --chip:#e3e8eb;
+  --chip:#e3e8eb; --bad:#c62a22;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#12171c; --panel:#1b232a; --ink:#e6ecef; --muted:#97a5ae; --line:#2c3740;
-  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; color-scheme:dark}}
+  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; --bad:#ff5a4f; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12171c; --panel:#1b232a; --ink:#e6ecef; --muted:#97a5ae; --line:#2c3740;
-  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; color-scheme:dark}
+  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; --bad:#ff5a4f; color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
 .wrap{max-width:760px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
 header{display:flex;flex-direction:column;gap:6px}
@@ -74,6 +74,24 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ai{font-size:13.5px;margin:0;padding:6px 10px;border-radius:4px;border:1px dashed var(--online);max-width:65ch}
 .ai b{color:var(--online);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:12.5px;margin-right:6px}
 .ai ul{margin:4px 0 0;padding-left:18px}
+.ai li{margin:3px 0}
+.now{margin-left:6px}
+.ai .photo-link{text-decoration:none}
+.nowbtn{font:600 12px/1 var(--body);border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 8px;cursor:pointer;vertical-align:middle}
+.nowbtn.ok{border-style:solid;border-color:var(--estate);color:var(--estate)}
+.nowbtn.tight{border-style:solid;border-color:var(--garage);color:var(--garage)}
+.nowbtn.over{border-style:solid;border-color:var(--bad);color:var(--panel);background:var(--bad)}
+.nowform{display:inline-flex;gap:4px;vertical-align:middle}
+.nowform input{width:76px;font:500 13px var(--body);padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.ai li .votes{margin-left:6px;vertical-align:middle}
+.ai li .vb{padding:2px 7px;font-size:12px}
+.ai .signout{display:block;margin-top:6px;font-size:12.5px}
+.work{margin-top:6px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.thumbs{display:flex;flex-wrap:wrap;gap:6px}
+.thumbs a{position:relative;display:block;width:84px;height:84px;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--chip)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs span{position:absolute;left:3px;top:3px;background:var(--ink);color:var(--panel);font:600 11px/1 var(--body);padding:2px 4px;border-radius:3px}
+.work pre{margin:0;max-height:260px;overflow:auto;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px;white-space:pre-wrap;overflow-wrap:anywhere}
 .ai li{font-variant-numeric:tabular-nums}
 .lot .ai{grid-column:1/-1}
 .tag.wild{background:var(--auction);color:var(--panel)}
@@ -155,7 +173,7 @@ body{margin:0;font-size:15px}
       <p class="what" id="why-what"></p>
       <div class="chips" id="why-chips"></div>
       <label for="why-t" class="status">Anything else (optional)</label>
-      <textarea id="why-t" maxlength="400" placeholder="e.g. good books but too far to drive"></textarea>
+      <textarea id="why-t" maxlength="400" placeholder="e.g. good books but too far to drive, or: it is actually a Bleach box set"></textarea>
       <div class="row"><button class="chipbtn" type="button" id="why-skip">Skip</button><button class="chipbtn" type="submit" id="why-send" aria-pressed="true">Send</button></div>
     </form>
   </dialog>
@@ -182,7 +200,7 @@ body{margin:0;font-size:15px}
 <script>
 (function(){
   const $=s=>document.querySelector(s);
-  let votes={}, mine={}, vision={}, reminders={};
+  let votes={}, mine={}, vision={}, reminders={}, prices={};
   try{reminders=JSON.parse(localStorage.getItem("hs.reminders")||"{}")||{}}catch(e){}
   // "2026-10-22T19:00" (Pacific, as written by the refresh) -> Date; "7:00 PM"
   function endDate(iso){if(!iso||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(iso))return null;const[d,tm]=iso.split("T");const[y,m,dd]=d.split("-").map(Number);const[h,mi]=tm.split(":").map(Number);return new Date(y,m-1,dd,h,mi);}
@@ -241,14 +259,72 @@ body{margin:0;font-size:15px}
     delete reminders[r.id]; try{localStorage.setItem("hs.reminders",JSON.stringify(reminders))}catch(e){}
     $("#rem").close(); render();
   }
-  function aiBox(id){
+  // eBay's cut on a typical sale: ~13.25% final value fee + $0.40 per order (rough; varies by category)
+  const FEE=0.1325, FEE_FIXED=0.40, net=v=>Math.max(0,v*(1-FEE)-FEE_FIXED);
+  function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
+  function priceChip(key,p,fallback){
+    const w=el("span","now"); const saved=prices[key]; const cur=saved?saved[0]:fallback;
+    const show=()=>{w.replaceChildren();
+      const b=el("button","nowbtn");b.type="button";
+      if(cur==null){b.textContent="+ currently at";b.setAttribute("aria-label","Enter the current price for "+p.what);}
+      else{const lo=net(p.low), hi=net(p.high);
+        const st=cur>hi?"over":cur>lo?"tight":"ok";
+        b.textContent="Now "+money(cur)+(st==="over"?" · over value":st==="tight"?" · thin margin":" · room to profit");
+        b.className="nowbtn "+st;
+        b.title="Range after eBay fees: "+money(lo)+"–"+money(hi)+" (about 13.25% + $0.40 per sale)"+(saved?" · updated "+new Date(saved[1]).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"}):" · from the listing");}
+      b.addEventListener("click",edit); w.append(b);};
+    const edit=()=>{w.replaceChildren();
+      const f=document.createElement("form");f.className="nowform";
+      const inp=document.createElement("input");inp.type="text";inp.inputMode="decimal";inp.placeholder="$";inp.value=cur!=null?String(cur):"";inp.setAttribute("aria-label","Current price");
+      const ok=el("button","vb","Save");ok.type="submit";
+      f.append(inp,ok);w.append(f);inp.focus();
+      f.addEventListener("submit",async e=>{e.preventDefault();const raw=inp.value.replace(/[$,\s]/g,"");const v=raw===""?null:Number(raw);
+        if(v!=null&&!(v>=0)){inp.setCustomValidity("Enter a dollar amount");inp.reportValidity();return;}
+        try{const r=await fetch(RELAY+"/sales-price",{method:"POST",headers:{"X-Sales-Key":localStorage.getItem("hs.key")||"","Content-Type":"application/json"},body:JSON.stringify({key,price:v})});
+          if(r.ok){if(v==null)delete prices[key];else prices[key]=[v,Date.now()];}}catch(err){}
+        render();});
+      inp.addEventListener("keydown",e=>{if(e.key==="Escape")show();});};
+    show(); return w;
+  }
+  // where an AI find should take you: the lot it's in (a findLinks entry sharing words with it), else the auction or listing
+  function findTarget(p,item){
+    if(!item) return "";
+    const words=w=>new Set(String(w||"").toLowerCase().match(/[a-z0-9]{4,}/g)||[]);
+    const pw=words(p.what+" "+(p.search||"")); let best=null, bestN=0;
+    (item.findLinks||[]).forEach(f=>{if(!f||!/^https?:/.test(f.url||""))return;let n=0;words(f.text).forEach(w=>{if(pw.has(w))n++;});if(n>bestN){bestN=n;best=f.url;}});
+    return best||item.direct||item.url||"";
+  }
+  function aiBox(id,isLot,lotBid,item){
     const v=vision[id]; if(!v||(!v.seen&&!(v.picks||[]).length)) return null;
     const box=el("div","ai"); box.append(el("b",null,"Local AI saw"),document.createTextNode(v.seen||""));
-    const top=(v.picks||[]).filter(p=>p.high>=5).slice(0,4);
-    if(top.length){const ul=el("ul");top.forEach(p=>{const li=el("li",null,"$"+Math.round(p.low)+"–"+Math.round(p.high)+" · ");
-      li.append(p.url?link(p.url,p.what+" ↗"):document.createTextNode(p.what)); if(p.why) li.append(document.createTextNode(" ("+p.why+")")); ul.append(li);});box.append(ul);}
-    box.title="From the vision model on Chris's desktop, looking at the listing photos. Rough guesses.";
+    const all=v.picks||[];
+    const top=all.map((p,i)=>[p,i]).filter(([p])=>p.high>=5||/sign|autograph/i.test(p.what)).slice(0,5);
+    if(top.length){const ul=el("ul");top.forEach(([p,i])=>{const li=el("li");
+      // the range links to eBay sold listings for the AI's own search words: cheapest first, priciest first
+      const q=encodeURIComponent(p.search||p.what), sold="https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q;
+      li.append(link(sold+"&_sop=15","$"+Math.round(p.low)),document.createTextNode("–"),link(sold+"&_sop=16","$"+Math.round(p.high)),document.createTextNode(" · "));
+      const tgt=findTarget(p,item); li.append(tgt?link(tgt,p.what+" ↗"):document.createTextNode(p.what));
+      if(p.url){const ph=link(p.url,"\u{1F4F7}");ph.title="The photo the AI looked at (may not be the exact one)";ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
+      if(p.why) li.append(document.createTextNode(" ("+p.why+")"));
+      li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null));
+      li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
+    const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
+    box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
     return box;
+  }
+  async function showWork(id,box,btn){
+    const old=box.querySelector(".work"); if(old){old.remove();btn.textContent="Show work";return;}
+    btn.textContent="Loading…";
+    try{const r=await fetch(RELAY+"/sales-vision?item="+encodeURIComponent(id),{headers:{"X-Sales-Key":localStorage.getItem("hs.key")||""}});
+      if(!r.ok) throw new Error(r.status); const v=await r.json();
+      const w=el("div","work");
+      w.append(el("p","status",(v.model||"model")+" · "+(v.photos||0)+" photos · "+new Date(v.at).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})));
+      const th=el("div","thumbs");(v.shots||[]).forEach((u,i)=>{const a=link(u,"");const im=document.createElement("img");im.src=u;im.alt="Photo "+(i+1);im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);a.append(el("span",null,String(i+1)));th.append(a);});
+      w.append(th);
+      let raw=v.raw||""; try{raw=JSON.stringify(JSON.parse(raw),null,2)}catch(e){}
+      const pre=el("pre",null,raw||"(no raw answer saved for this one)"); w.append(pre);
+      box.append(w); btn.textContent="Hide work";
+    }catch(e){btn.textContent="Show work (not available yet)";}
   }
   try{mine=JSON.parse(localStorage.getItem("hs.myVotes")||"{}")||{}}catch(e){}
   function voter(){try{let v=localStorage.getItem("hs.voter");if(!v){v="v"+Math.random().toString(36).slice(2,12)+Date.now().toString(36);localStorage.setItem("hs.voter",v)}return v}catch(e){return "anon"+Math.random().toString(36).slice(2,10)}}
@@ -268,17 +344,19 @@ body{margin:0;font-size:15px}
       if(r.ok){const j=await r.json();votes[item]=[j.up,j.down];render();}}catch(e){}
     if(nv) askWhy(item,nv,title,kind);
   }
+  const AI_CHIPS={"-1":["Wrong item","Value way off (too high)","Value way off (too low)","Not worth listing","Can't tell from the photo"],
+                  "1":["Right item","Value looks right","Great catch"]};
   const CHIPS={"-1":["Too far","Not my kind of stuff","Too pricey","Already over / wrong info","Junk / low value"],
                "1":["Great category","Close by","Looks underpriced","Specific item I want","Good wild card"]};
   let whyCtx=null;
   function askWhy(item,v,title,kind){
     const d=$("#why"); if(!d||typeof d.showModal!=="function") return;
     whyCtx={item,v,title,kind,picked:new Set()};
-    $("#why-h").textContent=v>0?"What did you like?":"What's wrong with it?";
+    $("#why-h").textContent=kind==="ai-pick"?(v>0?"What did the AI get right?":"What did the AI get wrong?"):(v>0?"What did you like?":"What's wrong with it?");
     $("#why-what").textContent=title||"";
     $("#why-t").value="";
     const box=$("#why-chips"); box.replaceChildren();
-    CHIPS[String(v)].forEach(c=>{const b=el("button","chipbtn",c);b.type="button";b.setAttribute("aria-pressed","false");
+    (kind==="ai-pick"?AI_CHIPS:CHIPS)[String(v)].forEach(c=>{const b=el("button","chipbtn",c);b.type="button";b.setAttribute("aria-pressed","false");
       b.addEventListener("click",()=>{const on=!whyCtx.picked.has(c);on?whyCtx.picked.add(c):whyCtx.picked.delete(c);b.setAttribute("aria-pressed",String(on));});box.append(b);});
     try{d.showModal();}catch(e){}
   }
@@ -333,7 +411,7 @@ body{margin:0;font-size:15px}
       const fl=(s.findLinks||[]).filter(x=>x&&x.url&&/^https?:/.test(x.url)).slice(0,8);
       if(fl.length){const ul=el("ul");fl.forEach(x=>{const li=el("li");li.append(link(x.url,(x.text||"Item")+" ↗"));ul.append(li);});f.append(ul);}
       c.append(f);}
-    const ai=aiBox(s.id); if(ai) c.append(ai);
+    const ai=aiBox(s.id,false,null,s); if(ai) c.append(ai);
     if(s.summary) c.append(el("p","sum",s.summary));
     const l=el("div","links");
     if(s.direct&&/^https?:/.test(s.direct)){l.append(link(s.direct,(s.type==="online"||s.type==="auction"?"Open auction":"Open sale page")+" ↗")); if(s.url) l.append(link(s.url,"listing ↗"));}
@@ -369,7 +447,7 @@ body{margin:0;font-size:15px}
       d.append(el("div","bid",(x.bid||"$0")+(x.closes?" · ends "+(x.closes===t?"today":short(x.closes))+(endTime(x.closesAt)?" "+endTime(x.closesAt):""):"")));
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
-      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id);if(ai)d.append(ai);L.append(d);});
+      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id,true,parseFloat(String(x.bid||"").replace(/[$,]/g,""))||null,x);if(ai)d.append(ai);L.append(d);});
     $("#lots-sec").hidden=!lv.length;
   }
 
@@ -391,7 +469,7 @@ body{margin:0;font-size:15px}
   const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
   const K={get:n=>{try{return localStorage.getItem(n)}catch(e){return null}},set:(n,v)=>{try{v?localStorage.setItem(n,v):localStorage.removeItem(n)}catch(e){}}};
   function apply(j){
-    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{}; vision=j.vision||{};
+    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{}; vision=j.vision||{}; prices=j.prices||{};
     if(meta&&j.pushed&&!meta.lastRun) meta.lastRun=new Date(j.pushed).toISOString();
     render(); renderStatus();
     if(j.pushed&&!sales.length) $("#status").textContent="No sales in the list right now.";
