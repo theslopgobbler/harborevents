@@ -63,6 +63,18 @@ h2 small{font-family:var(--body);font-size:13px;text-transform:none;letter-spaci
 .vb[aria-pressed="true"].up{background:var(--estate);border-color:var(--estate);color:var(--panel)}
 .vb[aria-pressed="true"].down{background:var(--sign);border-color:var(--sign);color:var(--panel)}
 .vb:focus-visible{outline:2px solid var(--sign);outline-offset:2px}
+dialog.why{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:16px;width:min(420px,calc(100vw - 32px));max-width:none}
+dialog.why::backdrop{background:rgba(0,0,0,.45)}
+dialog.why h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:18px;margin:0 0 2px}
+dialog.why .what{color:var(--muted);font-size:13px;margin:0 0 10px}
+dialog.why .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+dialog.why textarea{width:100%;min-height:70px;font:400 14px var(--body);padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);resize:vertical}
+dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.ai{font-size:13.5px;margin:0;padding:6px 10px;border-radius:4px;border:1px dashed var(--online);max-width:65ch}
+.ai b{color:var(--online);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:12.5px;margin-right:6px}
+.ai ul{margin:4px 0 0;padding-left:18px}
+.ai li{font-variant-numeric:tabular-nums}
+.lot .ai{grid-column:1/-1}
 .tag.wild{background:var(--auction);color:var(--panel)}
 .lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .finds{font-size:14px;margin:0;padding:6px 10px;border-radius:4px;background:var(--chip);max-width:65ch}
@@ -134,13 +146,32 @@ body{margin:0;font-size:15px}
     <div id="lots" class="day"></div>
   </section>
 
+  <dialog class="why" id="why" aria-labelledby="why-h">
+    <form method="dialog" id="why-f">
+      <h3 id="why-h">Why?</h3>
+      <p class="what" id="why-what"></p>
+      <div class="chips" id="why-chips"></div>
+      <label for="why-t" class="status">Anything else (optional)</label>
+      <textarea id="why-t" maxlength="400" placeholder="e.g. good books but too far to drive"></textarea>
+      <div class="row"><button class="chipbtn" type="button" id="why-skip">Skip</button><button class="chipbtn" type="submit" id="why-send" aria-pressed="true">Send</button></div>
+    </form>
+  </dialog>
+
   <p class="foot"><button class="signout" id="signout" type="button" hidden>Forget key on this device</button> Sources checked: EstateSales.NET, EstateSales.org, YardSaleSearch, Craigslist Olympic Peninsula, HiBid (Mercury Auctions, CTM Unlimited and others). Many Grays Harbor yard sales are only posted in Facebook groups, which this list can't read. Always confirm times on the original listing before driving out.</p>
 </div>
 
 <script>
 (function(){
   const $=s=>document.querySelector(s);
-  let votes={}, mine={};
+  let votes={}, mine={}, vision={};
+  function aiBox(id){
+    const v=vision[id]; if(!v||(!v.seen&&!(v.picks||[]).length)) return null;
+    const box=el("div","ai"); box.append(el("b",null,"Local AI saw"),document.createTextNode(v.seen||""));
+    const top=(v.picks||[]).filter(p=>p.high>=5).slice(0,4);
+    if(top.length){const ul=el("ul");top.forEach(p=>ul.append(el("li",null,"$"+Math.round(p.low)+"–"+Math.round(p.high)+" · "+p.what+(p.why?" ("+p.why+")":""))));box.append(ul);}
+    box.title="From the vision model on Chris's desktop, looking at the listing photos. Rough guesses.";
+    return box;
+  }
   try{mine=JSON.parse(localStorage.getItem("hs.myVotes")||"{}")||{}}catch(e){}
   function voter(){try{let v=localStorage.getItem("hs.voter");if(!v){v="v"+Math.random().toString(36).slice(2,12)+Date.now().toString(36);localStorage.setItem("hs.voter",v)}return v}catch(e){return "anon"+Math.random().toString(36).slice(2,10)}}
   function voteBar(item,title,kind){
@@ -155,9 +186,33 @@ body{margin:0;font-size:15px}
     votes[item]=t; if(nv) mine[item]=nv; else delete mine[item];
     try{localStorage.setItem("hs.myVotes",JSON.stringify(mine))}catch(e){}
     render();
-    try{const r=await fetch(RELAY+"/sales-vote",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({item,voter:voter(),vote:nv,title:String(title||"").slice(0,200),kind:kind||""})});
+    try{const r=await fetch(RELAY+"/sales-vote",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({item,voter:voter(),vote:nv,title:String(title||"").slice(0,200),kind:kind||"",note:""})});
       if(r.ok){const j=await r.json();votes[item]=[j.up,j.down];render();}}catch(e){}
+    if(nv) askWhy(item,nv,title,kind);
   }
+  const CHIPS={"-1":["Too far","Not my kind of stuff","Too pricey","Already over / wrong info","Junk / low value"],
+               "1":["Great category","Close by","Looks underpriced","Specific item I want","Good wild card"]};
+  let whyCtx=null;
+  function askWhy(item,v,title,kind){
+    const d=$("#why"); if(!d||typeof d.showModal!=="function") return;
+    whyCtx={item,v,title,kind,picked:new Set()};
+    $("#why-h").textContent=v>0?"What did you like?":"What's wrong with it?";
+    $("#why-what").textContent=title||"";
+    $("#why-t").value="";
+    const box=$("#why-chips"); box.replaceChildren();
+    CHIPS[String(v)].forEach(c=>{const b=el("button","chipbtn",c);b.type="button";b.setAttribute("aria-pressed","false");
+      b.addEventListener("click",()=>{const on=!whyCtx.picked.has(c);on?whyCtx.picked.add(c):whyCtx.picked.delete(c);b.setAttribute("aria-pressed",String(on));});box.append(b);});
+    try{d.showModal();}catch(e){}
+  }
+  async function sendWhy(){
+    const c=whyCtx; whyCtx=null; if(!c) return;
+    const note=[...c.picked,$("#why-t").value.trim()].filter(Boolean).join("; ");
+    if(!note) return;
+    const key=localStorage.getItem("hs.key"); if(!key) return;
+    try{await fetch(RELAY+"/sales-vote",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({item:c.item,voter:voter(),vote:c.v,title:String(c.title||"").slice(0,200),kind:c.kind||"",note})});}catch(e){}
+  }
+  $("#why-f").addEventListener("submit",()=>{sendWhy();});
+  $("#why-skip").addEventListener("click",()=>{whyCtx=null;$("#why").close();});
   let sales=[], lots=[], meta=null, ftype="all", fdist=65;
   try{const v=localStorage.getItem("hsf-dist"); if(v){fdist=+v; $("#dist").value=v;}}catch(e){}
 
@@ -194,6 +249,7 @@ body{margin:0;font-size:15px}
       c.append(a);
     }
     if(s.finds){const f=el("p","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds));c.append(f);}
+    const ai=aiBox(s.id); if(ai) c.append(ai);
     if(s.summary) c.append(el("p","sum",s.summary));
     const l=el("div","links"); if(s.url) l.append(link(s.url,"Open listing ↗"));
     l.append(voteBar(s.id,s.title,s.type));
@@ -226,7 +282,7 @@ body{margin:0;font-size:15px}
       d.append(el("div","bid",(x.bid||"$0")+(x.closes?" · "+(x.closes===t?"today":short(x.closes)):"")));
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
-      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);L.append(d);});
+      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id);if(ai)d.append(ai);L.append(d);});
     $("#lots-sec").hidden=!lv.length;
   }
 
@@ -248,7 +304,7 @@ body{margin:0;font-size:15px}
   const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
   const K={get:n=>{try{return localStorage.getItem(n)}catch(e){return null}},set:(n,v)=>{try{v?localStorage.setItem(n,v):localStorage.removeItem(n)}catch(e){}}};
   function apply(j){
-    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{};
+    sales=j.sales||[]; lots=j.lots||[]; meta=j.meta||null; votes=j.votes||{}; vision=j.vision||{};
     if(meta&&j.pushed&&!meta.lastRun) meta.lastRun=new Date(j.pushed).toISOString();
     render(); renderStatus();
     if(j.pushed&&!sales.length) $("#status").textContent="No sales in the list right now.";
