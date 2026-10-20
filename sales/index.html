@@ -26,6 +26,11 @@
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
 .wrap{max-width:760px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
 header{display:flex;flex-direction:column;gap:6px}
+.titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.textsize{font:700 15px/1 var(--body);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;flex:none}
+.textsize span{font-size:21px;margin-left:1px}
+.textsize[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+html.big body{zoom:1.22}
 h1{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;letter-spacing:.01em;margin:0;text-transform:uppercase;text-wrap:balance}
 h1 span{color:var(--sign)}
 .sub{color:var(--muted);margin:0;max-width:62ch}
@@ -127,7 +132,7 @@ body{margin:0;font-size:15px}
 
 <div class="wrap">
   <header>
-    <h1>Harbor <span>Sale</span> Finder</h1>
+    <div class="titlebar"><h1>Harbor <span>Sale</span> Finder</h1><button type="button" class="textsize" id="bigtext" aria-pressed="false" title="Bigger text">A<span>A</span></button></div>
     <p class="sub">Estate sales, garage and yard sales, and estate auctions within driving range of Hoquiam. Updated Wednesday and Friday mornings; miles are approximate road distance from Hoquiam.</p>
     <div class="status" id="status">Loading sales…</div>
   </header>
@@ -274,7 +279,7 @@ body{margin:0;font-size:15px}
     const w=el("span","now"); const saved=prices[key]; const cur=saved?saved[0]:fallback;
     const show=()=>{w.replaceChildren();
       const b=el("button","nowbtn");b.type="button";
-      if(cur==null){b.textContent=live?"\u21BB check bid":"+ currently at";b.setAttribute("aria-label",(live?"Check the live bid for ":"Enter the current price for ")+p.what);}
+      if(cur==null){b.textContent=live?"\u21BB check bid":"\u270E enter price";b.title=live?"Read the live bid from the auction site":"No live bid for this one (only Sound Auction Service and HiBid lots can be checked): type what it's going for";b.setAttribute("aria-label",(live?"Check the live bid for ":"Enter the current price for ")+p.what);}
       else{const lo=net(p.low), hi=net(p.high);
         const st=cur>hi?"over":cur>lo?"tight":"ok";
         b.textContent="Now "+money(cur)+(st==="over"?" · over value":st==="tight"?" · thin margin":" · room to profit");
@@ -524,6 +529,9 @@ body{margin:0;font-size:15px}
     const r=await fetch(RELAY+"/sales",{method:"POST",headers:{"X-Sales-Key":key,"X-Sales-Write-Key":wk,"Content-Type":"application/json"},body:JSON.stringify(data)});
     const t=await r.text(); if(r.ok) load(); return {ok:r.ok,status:r.status,body:t};
   };
+  // bigger text, remembered on this device (like the traffic map's BIGGER TEXT setting)
+  const bt=$("#bigtext"); const setBig=on=>{document.documentElement.classList.toggle("big",on);bt.setAttribute("aria-pressed",String(on));bt.title=on?"Normal text":"Bigger text";};
+  setBig(K.get("hs.bigText")==="1"); bt.addEventListener("click",()=>{const on=!document.documentElement.classList.contains("big");setBig(on);K.set("hs.bigText",on?"1":null);});
   render(); load();
 })();
 </script>
