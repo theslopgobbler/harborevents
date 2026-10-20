@@ -61,6 +61,7 @@ h2 small{font-family:var(--body);font-size:13px;text-transform:none;letter-spaci
 .votes{display:inline-flex;gap:6px;margin-left:auto}
 .vb{font:600 13px/1 var(--body);border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:5px 9px;cursor:pointer;font-variant-numeric:tabular-nums}
 .vb[aria-pressed="true"].up{background:var(--estate);border-color:var(--estate);color:var(--panel)}
+.vb[aria-pressed="true"].remind{background:var(--online);border-color:var(--online);color:var(--panel)}
 .vb[aria-pressed="true"].down{background:var(--sign);border-color:var(--sign);color:var(--panel)}
 .vb:focus-visible{outline:2px solid var(--sign);outline-offset:2px}
 dialog.why{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:16px;width:min(420px,calc(100vw - 32px));max-width:none}
@@ -78,6 +79,8 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .tag.wild{background:var(--auction);color:var(--panel)}
 .lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .finds{font-size:14px;margin:0;padding:6px 10px;border-radius:4px;background:var(--chip);max-width:65ch}
+.finds ul{margin:4px 0 0;padding-left:18px}
+.finds a,.ai a{color:var(--ink);font-weight:600;text-underline-offset:2px}
 .finds b{color:var(--sign);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:13px;margin-right:6px}
 .lot{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;min-width:0}
 .lot.hot{box-shadow:0 0 0 2px var(--sign) inset}
@@ -157,18 +160,93 @@ body{margin:0;font-size:15px}
     </form>
   </dialog>
 
+  <dialog class="why" id="rem" aria-labelledby="rem-h">
+    <h3 id="rem-h">Remind me</h3>
+    <p class="what" id="rem-what"></p>
+    <label class="status" style="display:flex;gap:8px;align-items:center;margin:4px 0 8px"><input type="checkbox" id="rem-discord" checked> Post in Discord (pings @everyone)</label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <input id="rem-phone" inputmode="tel" autocomplete="tel" placeholder="Text me: phone (optional)" aria-label="Phone number for a text" style="flex:1 1 150px;min-width:0;font:400 14px var(--body);padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)">
+      <select id="rem-carrier" aria-label="Carrier"><option value="tmobile">T-Mobile / Metro / Mint</option><option value="verizon">Verizon</option><option value="googlefi">Google Fi</option><option value="uscellular">US Cellular</option></select>
+    </div>
+    <label for="rem-who" class="status">Your name (shows in the reminder, optional)</label>
+    <input id="rem-who" maxlength="40" style="width:100%;font:400 14px var(--body);padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)">
+    <p class="status" style="margin:10px 0 6px">When? (tap one to set it)</p>
+    <div class="chips" id="rem-opts"></div>
+    <p class="status" id="rem-msg" hidden></p>
+    <div class="row"><button class="chipbtn" type="button" id="rem-cancel" hidden>Cancel reminder</button><button class="chipbtn" type="button" id="rem-close">Close</button></div>
+  </dialog>
+
   <p class="foot"><button class="signout" id="signout" type="button" hidden>Forget key on this device</button> Sources checked: EstateSales.NET, EstateSales.org, YardSaleSearch, Craigslist Olympic Peninsula, HiBid (Mercury Auctions, CTM Unlimited and others). Many Grays Harbor yard sales are only posted in Facebook groups, which this list can't read. Always confirm times on the original listing before driving out.</p>
 </div>
 
 <script>
 (function(){
   const $=s=>document.querySelector(s);
-  let votes={}, mine={}, vision={};
+  let votes={}, mine={}, vision={}, reminders={};
+  try{reminders=JSON.parse(localStorage.getItem("hs.reminders")||"{}")||{}}catch(e){}
+  // "2026-10-22T19:00" (Pacific, as written by the refresh) -> Date; "7:00 PM"
+  function endDate(iso){if(!iso||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(iso))return null;const[d,tm]=iso.split("T");const[y,m,dd]=d.split("-").map(Number);const[h,mi]=tm.split(":").map(Number);return new Date(y,m-1,dd,h,mi);}
+  function endTime(iso){const d=endDate(iso);return d?d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}):"";}
+  function remindable(s){return !!(s.end||s.start);}
+  function remindBtn(id,title,url,kind,endsAt,endDay,startDay){
+    const b=el("button","vb remind");b.type="button";const has=reminders[id]&&reminders[id].due>Date.now();
+    b.textContent=has?"\u23F0 Set":"\u23F0 Remind me";b.setAttribute("aria-pressed",String(!!has));
+    b.addEventListener("click",()=>openRemind({id,title,url,kind,endsAt,endDay,startDay}));return b;}
+  function at(day,h,m){if(!day)return null;const[y,mo,d]=day.split("-").map(Number);return new Date(y,mo-1,d,h,m||0);}
+  function remindOptions(r){
+    const o=[], now=Date.now(), end=endDate(r.endsAt);
+    if(r.kind==="auction"){
+      if(end){o.push(["1 hour before it ends",+end-3600000]);o.push(["15 minutes before it ends",+end-900000]);}
+      const md=at(r.endDay,8);if(md)o.push(["Morning it ends (8 AM)",+md]);
+      const db=at(r.endDay,18);if(db)o.push(["Evening before (6 PM)",+db-86400000]);
+    }else{
+      const st=at(r.startDay&&r.startDay>new Date().toISOString().slice(0,10)?r.startDay:null,7);if(st)o.push(["Morning it starts (7 AM)",+st]);
+      const db=at(r.startDay,18);if(db)o.push(["Evening before (6 PM)",+db-86400000]);
+      const ld=at(r.endDay,8);if(ld)o.push(["Morning of the last day (8 AM)",+ld]);
+    }
+    return o.filter(x=>x[1]>now+60000);
+  }
+  let remCtx=null;
+  function openRemind(r){
+    const d=$("#rem"); if(!d||typeof d.showModal!=="function") return;
+    remCtx=r; $("#rem-what").textContent=r.title||""; $("#rem-msg").hidden=true;
+    const box=$("#rem-opts"); box.replaceChildren(); const opts=remindOptions(r);
+    const ex=reminders[r.id]; $("#rem-cancel").hidden=!(ex&&ex.due>Date.now());
+    if(!opts.length) box.append(el("p","status","Too late to set a reminder for this one."));
+    opts.forEach(([lab,due],i)=>{const b=el("button","chipbtn",lab+" · "+new Date(due).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"}));
+      b.type="button";b.setAttribute("aria-pressed","false");b.addEventListener("click",()=>setRemind(due,b));box.append(b);});
+    try{$("#rem-who").value=localStorage.getItem("hs.who")||"";$("#rem-phone").value=localStorage.getItem("hs.phone")||"";$("#rem-carrier").value=localStorage.getItem("hs.carrier")||"tmobile";
+      const dc=localStorage.getItem("hs.discord");$("#rem-discord").checked=dc!=="0";}catch(e){}
+    try{d.showModal()}catch(e){}
+  }
+  async function setRemind(due,btn){
+    const r=remCtx; if(!r) return; const key=localStorage.getItem("hs.key"); if(!key) return;
+    const who=$("#rem-who").value.trim().slice(0,40), phone=$("#rem-phone").value.replace(/\D/g,""), carrier=$("#rem-carrier").value, discord=$("#rem-discord").checked;
+    if(phone&&phone.replace(/^1(?=\d{10}$)/,"").length!==10){$("#rem-msg").textContent="Phone needs 10 digits.";$("#rem-msg").hidden=false;return;}
+    if(!discord&&!phone){$("#rem-msg").textContent="Pick Discord or enter a phone number.";$("#rem-msg").hidden=false;return;}
+    try{localStorage.setItem("hs.who",who);localStorage.setItem("hs.phone",phone);localStorage.setItem("hs.carrier",carrier);localStorage.setItem("hs.discord",discord?"1":"0")}catch(e){}
+    const end=endDate(r.endsAt);
+    try{const res=await fetch(RELAY+"/sales-remind",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},
+        body:JSON.stringify({item:r.id,title:String(r.title||"").slice(0,200),url:r.url||"",due,ends:end?+end:null,who,discord,phone:phone||undefined,carrier:phone?carrier:undefined})});
+      const t=await res.text();
+      if(!res.ok){$("#rem-msg").textContent=res.status===503?"Reminders aren't switched on yet.":"Couldn't save the reminder ("+t+").";$("#rem-msg").hidden=false;return;}
+      const j=JSON.parse(t); reminders[r.id]={due,id:j.id}; try{localStorage.setItem("hs.reminders",JSON.stringify(reminders))}catch(e){}
+      $("#rem-msg").textContent="Reminder set for "+new Date(due).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})+": "+[discord?"Discord":"",phone?"text to …"+phone.slice(-4):""].filter(Boolean).join(" and ")+".";
+      $("#rem-msg").hidden=false; btn.setAttribute("aria-pressed","true"); render();
+    }catch(e){$("#rem-msg").textContent="Couldn't reach the server. Try again in a minute.";$("#rem-msg").hidden=false;}
+  }
+  async function cancelRemind(){
+    const r=remCtx, ex=r&&reminders[r.id]; if(!ex) return; const key=localStorage.getItem("hs.key");
+    try{await fetch(RELAY+"/sales-remind",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({cancel:ex.id})});}catch(e){}
+    delete reminders[r.id]; try{localStorage.setItem("hs.reminders",JSON.stringify(reminders))}catch(e){}
+    $("#rem").close(); render();
+  }
   function aiBox(id){
     const v=vision[id]; if(!v||(!v.seen&&!(v.picks||[]).length)) return null;
     const box=el("div","ai"); box.append(el("b",null,"Local AI saw"),document.createTextNode(v.seen||""));
     const top=(v.picks||[]).filter(p=>p.high>=5).slice(0,4);
-    if(top.length){const ul=el("ul");top.forEach(p=>ul.append(el("li",null,"$"+Math.round(p.low)+"–"+Math.round(p.high)+" · "+p.what+(p.why?" ("+p.why+")":""))));box.append(ul);}
+    if(top.length){const ul=el("ul");top.forEach(p=>{const li=el("li",null,"$"+Math.round(p.low)+"–"+Math.round(p.high)+" · ");
+      li.append(p.url?link(p.url,p.what+" ↗"):document.createTextNode(p.what)); if(p.why) li.append(document.createTextNode(" ("+p.why+")")); ul.append(li);});box.append(ul);}
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Rough guesses.";
     return box;
   }
@@ -212,6 +290,8 @@ body{margin:0;font-size:15px}
     try{await fetch(RELAY+"/sales-vote",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({item:c.item,voter:voter(),vote:c.v,title:String(c.title||"").slice(0,200),kind:c.kind||"",note})});}catch(e){}
   }
   $("#why-f").addEventListener("submit",()=>{sendWhy();});
+  $("#rem-close").addEventListener("click",()=>{$("#rem").close();});
+  $("#rem-cancel").addEventListener("click",cancelRemind);
   $("#why-skip").addEventListener("click",()=>{whyCtx=null;$("#why").close();});
   let sales=[], lots=[], meta=null, ftype="all", fdist=65;
   try{const v=localStorage.getItem("hsf-dist"); if(v){fdist=+v; $("#dist").value=v;}}catch(e){}
@@ -229,10 +309,11 @@ body{margin:0;font-size:15px}
     const c=el("article","sale"+((s.interest||0)>=2?" hot":"")); c.dataset.t=s.type;
     const top=el("div","top"); top.append(el("h3","title",s.title));
     let when="";
-    if(s.type==="online"){const n=dayDiff(t,s.end); when= n<=0?"Ends today":n===1?"Ends tomorrow":"Ends "+short(s.end);}
+    if(s.type==="online"){const n=dayDiff(t,s.end); when= n<=0?"Ends today":n===1?"Ends tomorrow":"Ends "+short(s.end);
+      const et=endTime(s.endsAt); if(et) when+=" · "+et;}
     else if(s.start===s.end){when=s.hours||"";}
     else {when=(s.start<=t?"Thru ":"Starts ")+short(s.start<=t?s.end:s.start);}
-    if(s.type==="online"&&s.hours) when+=" · "+s.hours;
+    if(s.type==="online"&&s.hours&&!endTime(s.endsAt)) when+=" · "+s.hours;
     top.append(el("div","when",when)); c.append(top);
     const m=el("div","meta");
     if(s.wild) m.append(el("span","tag wild","Wild card"));
@@ -248,10 +329,16 @@ body{margin:0;font-size:15px}
       if(s.hours&&s.start!==s.end) a.append(document.createTextNode(" · "+s.hours));
       c.append(a);
     }
-    if(s.finds){const f=el("p","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds));c.append(f);}
+    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds||""));
+      const fl=(s.findLinks||[]).filter(x=>x&&x.url&&/^https?:/.test(x.url)).slice(0,8);
+      if(fl.length){const ul=el("ul");fl.forEach(x=>{const li=el("li");li.append(link(x.url,(x.text||"Item")+" ↗"));ul.append(li);});f.append(ul);}
+      c.append(f);}
     const ai=aiBox(s.id); if(ai) c.append(ai);
     if(s.summary) c.append(el("p","sum",s.summary));
-    const l=el("div","links"); if(s.url) l.append(link(s.url,"Open listing ↗"));
+    const l=el("div","links");
+    if(s.direct&&/^https?:/.test(s.direct)){l.append(link(s.direct,(s.type==="online"||s.type==="auction"?"Open auction":"Open sale page")+" ↗")); if(s.url) l.append(link(s.url,"listing ↗"));}
+    else if(s.url) l.append(link(s.url,"Open listing ↗"));
+    if(remindable(s)) l.append(remindBtn(s.id,s.title,s.direct||s.url,s.type==="online"?"auction":"sale",s.endsAt,s.end,s.start));
     l.append(voteBar(s.id,s.title,s.type));
     if(s.source) l.append(el("span","status","via "+s.source)); c.append(l);
     return c;
@@ -279,10 +366,10 @@ body{margin:0;font-size:15px}
     const L=$("#lots"); L.replaceChildren();
     lv.forEach(x=>{const d=el("div","lot"+((x.score||0)>=3?" hot":""));d.append(link(x.url,x.title));
       d.firstChild.className="lt";
-      d.append(el("div","bid",(x.bid||"$0")+(x.closes?" · "+(x.closes===t?"today":short(x.closes)):"")));
+      d.append(el("div","bid",(x.bid||"$0")+(x.closes?" · ends "+(x.closes===t?"today":short(x.closes))+(endTime(x.closesAt)?" "+endTime(x.closesAt):""):"")));
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
-      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id);if(ai)d.append(ai);L.append(d);});
+      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id);if(ai)d.append(ai);L.append(d);});
     $("#lots-sec").hidden=!lv.length;
   }
 
@@ -297,8 +384,8 @@ body{margin:0;font-size:15px}
     if(meta.fbLastRun) st.append(document.createTextNode(" · Facebook checked "+new Date(meta.fbLastRun).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"})+(meta.fbNote?" ("+meta.fbNote+")":"")));
   }
 
-  document.querySelectorAll(".chipbtn").forEach(b=>b.addEventListener("click",()=>{
-    ftype=b.dataset.type; document.querySelectorAll(".chipbtn").forEach(x=>x.setAttribute("aria-pressed",x===b));render();}));
+  document.querySelectorAll(".filters .chipbtn").forEach(b=>b.addEventListener("click",()=>{
+    ftype=b.dataset.type; document.querySelectorAll(".filters .chipbtn").forEach(x=>x.setAttribute("aria-pressed",x===b));render();}));
   $("#dist").addEventListener("change",e=>{fdist=+e.target.value;try{localStorage.setItem("hsf-dist",e.target.value)}catch(_){};render();});
 
   const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
