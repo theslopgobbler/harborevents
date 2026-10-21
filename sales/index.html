@@ -339,6 +339,7 @@ body{margin:0;font-size:15px}
       if(c&&(c.median||c.avg)){const a=link(c.url||sold,"eBay sold ~"+money(c.median||c.avg)+(c.matched?" ("+c.matched+" like it)":c.n?" ("+c.n+" sold)":""));a.className="comps";
         a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?(c.matched>=3?", middle half of the close matches: ":": ")+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
         li.append(document.createTextNode(" · "),a);}
+      else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+(c.days||90)+" days: a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
       li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c,isLot&&i>0?"":lotUrl));
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
