@@ -83,6 +83,10 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .now{margin-left:6px}
 .ai .photo-link{text-decoration:none}
 .ai .comps{font-weight:600;white-space:nowrap}
+.ended{opacity:.55}.ended .when{color:var(--bad);font-weight:700}
+.deal{display:inline-block;margin-left:6px;font:700 12px/1 var(--body);padding:4px 8px;border-radius:999px;vertical-align:middle;white-space:nowrap}
+.deal.d-hot{background:#b3261e;color:#fff}.deal.d-ok{background:#1e6b3a;color:#fff}.deal.d-uni{background:#5b2a86;color:#fff}
+.deal.d-q{background:var(--line);color:var(--ink)}.deal.d-plain{border:1px solid var(--line);color:var(--muted)}
 .nowbtn{font:600 12px/1 var(--body);border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 8px;cursor:pointer;vertical-align:middle}
 .nowbtn.ok{border-style:solid;border-color:var(--estate);color:var(--estate)}
 .nowbtn.tight{border-style:solid;border-color:var(--garage);color:var(--garage)}
@@ -270,6 +274,40 @@ body{margin:0;font-size:15px}
   // eBay's cut on a typical sale: ~13.25% final value fee + $0.40 per order (rough; varies by category)
   const FEE=0.1325, FEE_FIXED=0.40, net=v=>Math.max(0,v*(1-FEE)-FEE_FIXED);
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
+  // ---- deal score: what an AI find is worth to Chris at today's price
+  // value = eBay sold median when 3+ close matches (else blended with / or just the AI's middle guess); cost = price plus
+  // the auction's buyer's premium; the return it must clear is higher for cheap items (a $2 card needs about 5x: $2 -> $10)
+  // and for slow sellers, lower for fast ones. 🔥 = 10x+ or $300+ profit at 1.5x+; ✅ = clears the bar; 🦄 = one of a kind
+  // or no sales to compare (check by hand); ❓ = no eBay sales and nothing special.
+  const PRINT=/lithograph|\bprint\b|poster|giclee|serigraph|reproduction/i;
+  const TIERS=[[0,5,5],[5,25,3],[25,100,2],[100,1e9,1.5]];
+  function dealOf(p,c,cur,item){
+    const mid=((+p.low||0)+(+p.high||0))/2;
+    const value=c&&c.median>0&&c.matched>=1?(c.matched>=3?c.median:(c.median+mid)/2):mid; // no close matches = AI guess only
+    const premium=item&&item.premium!=null?+item.premium:(item&&(item.type==="online"||item.type==="auction"||item.bid!=null||item.company)?20:0);
+    const generic=/card/i.test(p.what)&&!/autograph|signed|auto\b|graded|psa|bgs|magi nation|star trek|relic/i.test(p.what);
+    const speed=c&&(c.sell>=50||c.matched>=5)?"fast":(c&&c.n===0)||generic?"slow":"normal";
+    const k=speed==="slow"?1.5:speed==="fast"?0.85:1;
+    const one=(p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);
+    const nv=net(value);
+    if(c&&c.n===0) return one||(+p.high>=100&&!PRINT.test(p.what))?{tag:"🦄",text:"🦄 one of a kind? check by hand",why:"No eBay sales to compare"+(one?"; the AI thinks this is one-of-a-kind":"")}:{tag:"❓",text:"❓ no comps",why:"No eBay sales in 90 days and nothing marks it as special"};
+    if(!c&&one) return {tag:"🦄",text:"🦄 one of a kind: check by hand",why:"The AI thinks this is one-of-a-kind; no eBay prices checked yet"};
+    let maxT=0; TIERS.forEach(([lo,hi,r])=>{const t=Math.min(hi,nv/(r*k),nv-8);if(t>lo&&t>maxT)maxT=t;});
+    const maxBid=maxT>0?maxT/(1+premium/100):0;
+    const basis=(c&&c.matched>=3?"eBay sold median":c&&c.median?"eBay + AI blend":"AI guess")+" "+money(value)+", "+money(nv)+" after eBay fees"+(premium?", "+premium+"% buyer's premium":"")+", "+speed+" seller";
+    if(cur==null) return maxBid>0?{tag:"",text:"max bid "+money(maxBid),why:"Highest price that still clears the bar ("+basis+")"}:null;
+    const total=cur*(1+premium/100), mult=total>0?nv/total:Infinity, profit=nv-total;
+    const req=(TIERS.find(([lo,hi])=>total>lo&&total<=hi)||TIERS[0])[2]*k;
+    const x=isFinite(mult)?(mult>=10?Math.round(mult):mult.toFixed(1))+"×":"free";
+    const tail=maxBid>0?" · max "+money(maxBid):"";
+    const why=basis+"; your cost "+money(total)+" → "+money(profit)+" profit";
+    if(mult>=10||(profit>=300&&mult>=1.5)) return {tag:"🔥",text:"🔥 "+x+tail,why};
+    if(mult>=req&&profit>=8) return {tag:"✅",text:"✅ "+x+tail,why};
+    return {tag:"",text:x+" · past max",why:why+" (needs about "+req.toFixed(1)+"×)"};
+  }
+  function dealChip(d){if(!d)return null;const e=el("span","deal"+(d.tag?" d-"+({"🔥":"hot","✅":"ok","🦄":"uni","❓":"q"})[d.tag]:" d-plain"),d.text);e.title=d.why;return e;}
+  function bestTag(id,item){const v=vision[id];if(!v)return "";let t="";(v.picks||[]).forEach((p,i)=>{const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
+    const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||(d.tag==="🦄"&&t!=="🔥")))t=d.tag;});return t;}
   const LIVE=/^https:\/\/(www\.)?(soundauctionservice\.com\/auction\/\d+\/item\/|hibid\.com\/([a-z-]+\/)?lot\/\d+)/;
   function priceChip(key,p,fallback,c,lotUrl){
     const live=LIVE.test(lotUrl||"");
@@ -336,11 +374,13 @@ body{margin:0;font-size:15px}
       if(p.why) li.append(document.createTextNode(" ("+p.why+")"));
       // real eBay sold prices for this find, looked up on the eBay Research tab by the desktop script
       const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
-      if(c&&(c.median||c.avg)){const a=link(c.url||sold,"eBay sold ~"+money(c.median||c.avg)+(c.matched?" ("+c.matched+" like it)":c.n?" ("+c.n+" sold)":""));a.className="comps";
+      if(c&&c.matched===0&&c.n>0){const a=link(c.url||sold,"eBay: no close matches");a.className="comps";a.title="eBay's search found "+c.n+" sales, but none were this item (parts, accessories or other things), so there's no eBay price. Check by hand.";li.append(document.createTextNode(" · "),a);}
+      else if(c&&(c.median||c.avg)){const a=link(c.url||sold,"eBay sold ~"+money(c.median||c.avg)+(c.matched?" ("+c.matched+" like it)":c.n?" ("+c.n+" sold)":""));a.className="comps";
         a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?(c.matched>=3?", middle half of the close matches: ":": ")+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
         li.append(document.createTextNode(" · "),a);}
       else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+(c.days||90)+" days: a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
       li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c,isLot&&i>0?"":lotUrl));
+      {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:(isLot&&i===0?lotBid:null),item));if(d)li.append(d);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
@@ -417,8 +457,13 @@ body{margin:0;font-size:15px}
   function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
   function link(href,text){const a=el("a",null,text);a.href=href;a.target="_blank";a.rel="noopener";return a;}
 
+  // an auction is over once its stated close time (plus time for staggered/soft-close lots) has passed, or its end day has
+  function saleEnded(s,t){if(s.type!=="online"&&s.type!=="auction")return false;const e=endDate(s.endsAt);
+    return e?Date.now()>e.getTime()+150*60000:(s.end<t);}
+  function lotEnded(x,t){const e=endDate(x.closesAt);return e?Date.now()>e.getTime()+15*60000:(x.closes&&x.closes<t);}
   function card(s,t){
-    const c=el("article","sale"+((s.interest||0)>=2?" hot":"")); c.dataset.t=s.type;
+    const over=saleEnded(s,t);
+    const c=el("article","sale"+((s.interest||0)>=2?" hot":"")+(over?" ended":"")); c.dataset.t=s.type;
     const top=el("div","top"); top.append(el("h3","title",s.title));
     let when="";
     if(s.type==="online"){const n=dayDiff(t,s.end); when= n<=0?"Ends today":n===1?"Ends tomorrow":"Ends "+short(s.end);
@@ -426,6 +471,7 @@ body{margin:0;font-size:15px}
     else if(s.start===s.end){when=s.hours||"";}
     else {when=(s.start<=t?"Thru ":"Starts ")+short(s.start<=t?s.end:s.start);}
     if(s.type==="online"&&s.hours&&!endTime(s.endsAt)) when+=" · "+s.hours;
+    if(over) when="Bidding ended";
     top.append(el("div","when",when)); c.append(top);
     const m=el("div","meta");
     if(s.wild) m.append(el("span","tag wild","Wild card"));
@@ -450,7 +496,7 @@ body{margin:0;font-size:15px}
     const l=el("div","links");
     if(s.direct&&/^https?:/.test(s.direct)){l.append(link(s.direct,(s.type==="online"||s.type==="auction"?"Open auction":"Open sale page")+" ↗")); if(s.url) l.append(link(s.url,"listing ↗"));}
     else if(s.url) l.append(link(s.url,"Open listing ↗"));
-    if(remindable(s)) l.append(remindBtn(s.id,s.title,s.direct||s.url,s.type==="online"?"auction":"sale",s.endsAt,s.end,s.start));
+    if(remindable(s)&&!over) l.append(remindBtn(s.id,s.title,s.direct||s.url,s.type==="online"?"auction":"sale",s.endsAt,s.end,s.start));
     l.append(voteBar(s.id,s.title,s.type));
     if(s.source) l.append(el("span","status","via "+s.source)); c.append(l);
     return c;
@@ -459,7 +505,7 @@ body{margin:0;font-size:15px}
   function render(){
     const t=today();
     const vis=sales.filter(s=>s.end>=t && (s.dist==null||s.dist<=fdist) &&
-      (ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild))));
+      (ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild||bestTag(s.id,s)))));
     const inp=vis.filter(s=>s.type!=="online"), onl=vis.filter(s=>s.type==="online");
     const days=$("#days"); days.replaceChildren();
     const groups={};
@@ -476,12 +522,12 @@ body{margin:0;font-size:15px}
     $("#online-sec").hidden=!onl.length;
     const lv=lots.filter(x=>!x.closes||x.closes>=t).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
     const L=$("#lots"); L.replaceChildren();
-    lv.forEach(x=>{const d=el("div","lot"+((x.score||0)>=3?" hot":""));d.append(link(x.url,x.title));
+    lv.forEach(x=>{const over=lotEnded(x,t);const d=el("div","lot"+((x.score||0)>=3?" hot":"")+(over?" ended":""));d.append(link(x.url,x.title));
       d.firstChild.className="lt";
-      d.append(el("div","bid",(x.bid||"$0")+(x.closes?" · ends "+(x.closes===t?"today":short(x.closes))+(endTime(x.closesAt)?" "+endTime(x.closesAt):""):"")));
+      d.append(el("div","bid",over?"Bidding ended (last seen "+(x.bid||"$0")+")":(x.bid||"$0")+(x.closes?" · ends "+(x.closes===t?"today":short(x.closes))+(endTime(x.closesAt)?" "+endTime(x.closesAt):""):"")));
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
-      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id,true,parseFloat(String(x.bid||"").replace(/[$,]/g,""))||null,x);if(ai)d.append(ai);L.append(d);});
+      ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes&&!over) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id,true,parseFloat(String(x.bid||"").replace(/[$,]/g,""))||null,x);if(ai)d.append(ai);L.append(d);});
     $("#lots-sec").hidden=!lv.length;
   }
 
