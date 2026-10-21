@@ -88,7 +88,7 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ended{opacity:.55}.ended .when{color:var(--bad);font-weight:700}
 .deal{display:inline-block;margin-left:6px;font:700 12px/1 var(--body);padding:4px 8px;border-radius:999px;vertical-align:middle;white-space:nowrap}
 .deal.d-hot{background:#b3261e;color:#fff}.deal.d-ok{background:#1e6b3a;color:#fff}.deal.d-uni{background:#5b2a86;color:#fff}
-.deal.d-q{background:var(--line);color:var(--ink)}.deal.d-plain{border:1px solid var(--line);color:var(--muted)}
+.deal.d-mus{background:#6b4f1d;color:#fff}.deal.d-q{background:var(--line);color:var(--ink)}.deal.d-plain{border:1px solid var(--line);color:var(--muted)}
 .nowbtn{font:600 12px/1 var(--body);border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 8px;cursor:pointer;vertical-align:middle}
 .nowbtn.ok{border-style:solid;border-color:var(--estate);color:var(--estate)}
 .nowbtn.tight{border-style:solid;border-color:var(--garage);color:var(--garage)}
@@ -292,6 +292,7 @@ body{margin:0;font-size:15px}
     const k=speed==="slow"?1.5:speed==="fast"?0.85:1;
     const one=(p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);
     const nv=net(value);
+    if(p.museum||/\bivory\b|scrimshaw|human skull|anatomical skull|medical skull/i.test(p.what)) return {tag:"🏛",text:"🏛 museum piece, not for resale",why:"Human remains and ivory can't be sold on eBay/Amazon; flagged for the museum. Check provenance (never Native American or archaeological remains) and state law before buying."};
     if(c&&c.n===0) return one||(+p.high>=100&&!PRINT.test(p.what))?{tag:"🦄",text:"🦄 one of a kind? check by hand",why:"No eBay sales to compare"+(one?"; the AI thinks this is one-of-a-kind":"")}:{tag:"❓",text:"❓ no comps",why:"No eBay sales in 90 days and nothing marks it as special"};
     if(!c&&one) return {tag:"🦄",text:"🦄 one of a kind: check by hand",why:"The AI thinks this is one-of-a-kind; no eBay prices checked yet"};
     let maxT=0; TIERS.forEach(([lo,hi,r])=>{const t=Math.min(hi,nv/(r*k),nv-8);if(t>lo&&t>maxT)maxT=t;});
@@ -307,9 +308,9 @@ body{margin:0;font-size:15px}
     if(mult>=req&&profit>=8) return {tag:"✅",text:"✅ "+x+tail,why};
     return {tag:"",text:x+" · past max",why:why+" (needs about "+req.toFixed(1)+"×)"};
   }
-  function dealChip(d){if(!d)return null;const e=el("span","deal"+(d.tag?" d-"+({"🔥":"hot","✅":"ok","🦄":"uni","❓":"q"})[d.tag]:" d-plain"),d.text);e.title=d.why;return e;}
+  function dealChip(d){if(!d)return null;const e=el("span","deal"+(d.tag?" d-"+({"🔥":"hot","✅":"ok","🦄":"uni","❓":"q","🏛":"mus"})[d.tag]:" d-plain"),d.text);e.title=d.why;return e;}
   function bestTag(id,item){const v=vision[id];if(!v)return "";let t="";(v.picks||[]).forEach((p,i)=>{const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
-    const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||(d.tag==="🦄"&&t!=="🔥")))t=d.tag;});return t;}
+    const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||((d.tag==="🦄"||d.tag==="🏛")&&t!=="🔥")))t=d.tag;});return t;}
   const LIVE=/^https:\/\/(www\.)?(soundauctionservice\.com\/auction\/\d+\/item\/|hibid\.com\/([a-z-]+\/)?lot\/\d+)/;
   function priceChip(key,p,fallback,c,lotUrl){
     const live=LIVE.test(lotUrl||"");
