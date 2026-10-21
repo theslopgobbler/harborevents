@@ -386,15 +386,21 @@ body{margin:0;font-size:15px}
       {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:(isLot&&i===0?lotBid:null),item));if(d)li.append(d);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     const bk=v.books||[];
-    if(bk.length){const d=document.createElement("details");d.className="books";
-      const lo=bk.reduce((t,b)=>t+(+b.lo||0),0),hi=bk.reduce((t,b)=>t+(+b.hi||0),0);
-      const s=document.createElement("summary");s.textContent="\u{1F4DA} "+bk.length+" books read one by one · about "+money(lo)+"–"+money(hi)+" in all";d.append(s);
-      const ol=el("ol");bk.slice().sort((a,b)=>b.hi-a.hi).forEach(b=>{const li=el("li");
+    const lots={};bk.forEach(b=>{(lots[b.lot||"Books"]=lots[b.lot||"Books"]||[]).push(b);});
+    Object.entries(lots).sort((x,y)=>y[1].reduce((t,b)=>t+(+b.hi||0),0)-x[1].reduce((t,b)=>t+(+b.hi||0),0)).forEach(([name,list])=>{
+      const d=document.createElement("details");d.className="books";
+      const lo=list.reduce((t,b)=>t+(+b.lo||0),0),hi=list.reduce((t,b)=>t+(+b.hi||0),0);
+      const more=list.filter(b=>/^\(\d+ more/.test(b.t)).reduce((t,b)=>t+(+(b.t.match(/\d+/)||[0])[0]),0);
+      const kind=(list[0]&&list[0].k)||"books",cnt=list.length-list.filter(b=>/^\(\d+ more/.test(b.t)).length+more;
+      const icon=kind==="books"?"\u{1F4DA}":kind==="magazines"?"\u{1F4F0}":"\u{1F4D5}";
+      const s=document.createElement("summary");s.textContent=icon+" "+(name==="Books"?"":name+" · ")+cnt+" "+kind+(more?" ("+(cnt-more)+" read one by one)":" read one by one")+" · about "+money(lo)+"–"+money(hi)+(kind!=="books"?" at back-issue prices":"");d.append(s);
+      const ol=el("ol");list.slice().sort((a,b)=>b.hi-a.hi).forEach(b=>{const li=el("li");
+        if(/^\(\d+ more/.test(b.t)){li.textContent="$"+Math.round(b.lo)+"–"+Math.round(b.hi)+" · "+b.t;ol.append(li);return;}
         const q=encodeURIComponent((b.t+" "+(b.a||"")).trim());
         li.append(link("https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q,"$"+Math.round(b.lo)+"–"+Math.round(b.hi)),document.createTextNode(" · "+b.t+(b.a?" — "+b.a:"")+(b.ed?" ("+b.ed+")":"")+(b.why?" · "+b.why:"")));
         if(b.ph){const ph=link(b.ph,"\u{1F4F7}");ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
-        if(b.hi>=20) li.className="good";ol.append(li);});
-      d.append(ol);box.append(d);}
+        if(b.hi>=20||/key issue/.test(b.why||"")) li.className="good";ol.append(li);});
+      d.append(ol);box.append(d);});
     const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
     return box;
