@@ -311,30 +311,20 @@ body{margin:0;font-size:15px}
   function dealChip(d){if(!d)return null;const e=el("span","deal"+(d.tag?" d-"+({"🔥":"hot","✅":"ok","🦄":"uni","❓":"q","🏛":"mus"})[d.tag]:" d-plain"),d.text);e.title=d.why;return e;}
   function bestTag(id,item){const v=vision[id];if(!v)return "";let t="";(v.picks||[]).forEach((p,i)=>{const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
     const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||((d.tag==="🦄"||d.tag==="🏛")&&t!=="🔥")))t=d.tag;});return t;}
-  const LIVE=/^https:\/\/(www\.)?(soundauctionservice\.com\/auction\/\d+\/item\/|hibid\.com\/([a-z-]+\/)?lot\/\d+)/;
   function priceChip(key,p,fallback,c,lotUrl){
-    const live=LIVE.test(lotUrl||"");
     // judged against real eBay sales when there are 3+ close matches (the middle half of them), else the AI's guess
     const ebay=c&&c.matched>=3&&c.low>0&&c.high>0; const src=ebay?"eBay sold, middle half of "+c.matched+" close matches":"the AI's estimate (not enough eBay matches yet)";
     if(ebay) p={what:p.what,low:c.low,high:c.high};
     const w=el("span","now"); const saved=prices[key]; const cur=saved?saved[0]:fallback;
     const show=()=>{w.replaceChildren();
       const b=el("button","nowbtn");b.type="button";
-      if(cur==null){b.textContent=live?"\u21BB check bid":"\u270E enter price";b.title=live?"Read the live bid from the auction site":"No live bid for this one (only Sound Auction Service and HiBid lots can be checked): type what it's going for";b.setAttribute("aria-label",(live?"Check the live bid for ":"Enter the current price for ")+p.what);}
+      if(cur==null){b.textContent="\u270E enter price";b.title="Type what it's going for";b.setAttribute("aria-label","Enter the current price for "+p.what);}
       else{const lo=net(p.low), hi=net(p.high);
         const st=cur>hi?"over":cur>lo?"tight":"ok";
         b.textContent="Now "+money(cur)+(st==="over"?" · over value":st==="tight"?" · thin margin":" · room to profit");
         b.className="nowbtn "+st;
         b.title="Value: "+money(p.low)+"–"+money(p.high)+" from "+src+". After eBay fees: "+money(lo)+"–"+money(hi)+" (about 13.25% + $0.40 per sale)"+(saved?" · updated "+new Date(saved[1]).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"}):" · from the listing");}
-      if(live&&cur!=null) b.textContent="\u21BB "+b.textContent;
-      b.addEventListener("click",live?check:edit); w.append(b);
-      if(live){const e2=el("button","nowedit","\u270E");e2.type="button";e2.title="Type a price yourself";e2.setAttribute("aria-label","Type a price for "+p.what);e2.addEventListener("click",edit);w.append(e2);}};
-    // ask the relay for the lot's live bid (it reads the auction site; everyone sees the result)
-    const check=async()=>{const b=w.querySelector(".nowbtn");if(b){b.disabled=true;b.textContent="checking\u2026";}
-      try{const r=await fetch(RELAY+"/sales-bid?u="+encodeURIComponent(lotUrl)+"&k="+encodeURIComponent(key),{headers:{"X-Sales-Key":localStorage.getItem("hs.key")||""}});
-        if(!r.ok) throw new Error(await r.text());
-        const j=await r.json(); prices[key]=[j.bid,j.at]; render();
-      }catch(err){if(b){b.disabled=false;b.textContent="couldn't check \u2014 tap \u270E";b.title=String(err.message||err).slice(0,200);}}};
+      b.addEventListener("click",edit); w.append(b);};
     const edit=()=>{w.replaceChildren();
       const f=document.createElement("form");f.className="nowform";
       const inp=document.createElement("input");inp.type="text";inp.inputMode="decimal";inp.placeholder="$";inp.value=cur!=null?String(cur):"";inp.setAttribute("aria-label","Current price");
