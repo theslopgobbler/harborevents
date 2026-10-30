@@ -120,6 +120,10 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .finds{font-size:14px;margin:0;padding:6px 10px;border-radius:4px;background:var(--chip);max-width:65ch}
 .finds ul{margin:4px 0 0;padding-left:18px}
+.find-list li{margin:4px 0;line-height:1.35}
+.find-name{font-weight:700}
+.find-price{font-weight:700;white-space:nowrap}
+.find-intro{font-size:12px;opacity:.75;margin:2px 0 0}
 .finds a,.ai a{color:var(--ink);font-weight:600;text-underline-offset:2px}
 .finds b{color:var(--sign);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:13px;margin-right:6px}
 .lot{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;min-width:0}
@@ -512,6 +516,26 @@ body{margin:0;font-size:15px}
   function short(s){return parse(s).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});}
   function dayDiff(a,b){return Math.round((parse(b)-parse(a))/864e5);}
   const label={estate:"Estate sale",garage:"Garage / yard",auction:"Auction",online:"Online auction"};
+  // "Spotted" as a list: each find on its own line, its name in bold and its prices highlighted
+  function findsList(txt){
+    let t=String(txt||"").trim(),intro="";
+    const m=t.match(/^([^:;]{0,200}):\s*/);
+    if(m&&t.split(";").length>2){intro=m[1];t=t.slice(m[0].length);}
+    const parts=t.split(/;\s+/).map(x=>x.trim()).filter(Boolean);
+    if(parts.length<2) return null;
+    const frag=document.createDocumentFragment();
+    if(intro) frag.append(el("div","find-intro",intro));
+    const ul=el("ul","find-list");
+    const PRICE=/(~?\$[\d,]+(?:\.\d\d)?(?:\s*[-–]\s*\$?[\d,]+)?(?:\s*(?:each|pair))?|[≤→]\s*~?\$[\d,]+(?:\s*[-–]\s*\d+)?)/g;
+    parts.forEach(pt=>{const li=el("li");
+      const nm=(pt.match(/^(.+?)(?=,|\s[-–—]\s|\s\(|\s~?\$|$)/)||[pt,pt])[1];
+      li.append(el("span","find-name",nm));
+      const rest=pt.slice(nm.length);
+      rest.split(PRICE).forEach((bit,i)=>{ if(!bit) return; li.append(i%2?el("span","find-price",bit):document.createTextNode(bit)); });
+      ul.append(li);});
+    frag.append(ul);
+    return frag;
+  }
   function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
   function link(href,text){const a=el("a",null,text);a.href=href;a.target="_blank";a.rel="noopener";return a;}
 
@@ -545,7 +569,8 @@ body{margin:0;font-size:15px}
       if(s.hours&&s.start!==s.end) a.append(document.createTextNode(" · "+s.hours));
       c.append(a);
     }
-    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds||""));
+    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"));
+      const fl0=findsList(s.finds); if(fl0) f.append(fl0); else f.append(document.createTextNode(s.finds||""));
       const fl=(s.findLinks||[]).filter(x=>x&&x.url&&/^https?:/.test(x.url)).slice(0,8);
       if(fl.length){const ul=el("ul");fl.forEach(x=>{const li=el("li");li.append(link(x.url,(x.text||"Item")+" ↗"));ul.append(li);});f.append(ul);}
       c.append(f);}
