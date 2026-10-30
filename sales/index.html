@@ -519,14 +519,19 @@ body{margin:0;font-size:15px}
   // "Spotted" as a list: each find on its own line, its name in bold and its prices highlighted
   function findsList(txt){
     let t=String(txt||"").trim(),intro="";
-    const m=t.match(/^([^:;]{0,200}):\s*/);
-    if(m&&t.split(";").length>2){intro=m[1];t=t.slice(m[0].length);}
-    const parts=t.split(/;\s+/).map(x=>x.trim()).filter(Boolean);
+    // split on ';' (and find the intro's ':') only outside brackets: "(full size; eBay comps):" is one piece
+    const top=(str,ch)=>{const out=[];let d=0,st=0;for(let i=0;i<str.length;i++){const c=str[i];
+      if(c==="("||c==="[")d++;else if((c===")"||c==="]")&&d>0)d--;else if(c===ch&&d===0){out.push(i);}}return out;};
+    const colon=top(t,":")[0];
+    if(colon!==undefined&&colon<260&&top(t,";").length>1){intro=t.slice(0,colon).trim();t=t.slice(colon+1).trim();}
+    const cuts=top(t,";");const parts=[];let st=0;cuts.forEach(i=>{parts.push(t.slice(st,i));st=i+1;});parts.push(t.slice(st));
+    for(let i=0;i<parts.length;i++)parts[i]=parts[i].trim();
+    const kept=parts.filter(Boolean);parts.length=0;parts.push(...kept);
     if(parts.length<2) return null;
     const frag=document.createDocumentFragment();
     if(intro) frag.append(el("div","find-intro",intro));
     const ul=el("ul","find-list");
-    const PRICE=/(~?\$[\d,]+(?:\.\d\d)?(?:\s*[-–]\s*\$?[\d,]+)?(?:\s*(?:each|pair))?|[≤→]\s*~?\$[\d,]+(?:\s*[-–]\s*\d+)?)/g;
+    const PRICE=/(~?\$[\d,]*\d(?:\.\d\d)?(?:\s*[-–]\s*\$?[\d,]*\d)?(?:\s*(?:each|pair))?|[≤→]\s*~?\$[\d,]*\d(?:\s*[-–]\s*\d+)?)/g;
     parts.forEach(pt=>{const li=el("li");
       const nm=(pt.match(/^(.+?)(?=,|\s[-–—]\s|\s\(|\s~?\$|$)/)||[pt,pt])[1];
       li.append(el("span","find-name",nm));
