@@ -105,6 +105,14 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .thumbs a{position:relative;display:block;width:84px;height:84px;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--chip)}
 .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
 .thumbs span{position:absolute;left:3px;top:3px;background:var(--ink);color:var(--panel);font:600 11px/1 var(--body);padding:2px 4px;border-radius:3px}
+.work-pick{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-top:1px solid var(--line)}
+.work-pick img{width:110px;height:110px;object-fit:cover;border-radius:4px;display:block}
+.work-nophoto{width:110px;height:110px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:4px;font-size:12px;flex:none}
+.work-pick>a{flex:none}
+.work-h{margin:6px 0 0;font-weight:600}
+.work-muted{opacity:.7;font-size:.9em}
+.work details{margin-top:4px}
+.work ul{margin:4px 0 8px 18px;padding:0}
 .work pre{margin:0;max-height:260px;overflow:auto;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px;white-space:pre-wrap;overflow-wrap:anywhere}
 .ai li{font-variant-numeric:tabular-nums}
 .lot .ai{grid-column:1/-1}
@@ -395,17 +403,58 @@ body{margin:0;font-size:15px}
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
     return box;
   }
+  // "Show work": what the local vision model saw, laid out photo by photo instead of as raw JSON.
+  function workBatches(raw){
+    const out=[]; if(!raw) return out;
+    const parts=String(raw).split(/\[photos (\d+)-(\d+)\]\s*/);
+    const one=(txt,start)=>{const a=txt.indexOf("{"),b=txt.lastIndexOf("}"); if(a<0||b<=a) return;
+      try{out.push({start,j:JSON.parse(txt.slice(a,b+1))});}catch(e){}};
+    if(parts.length===1){one(parts[0],1);return out;}
+    for(let i=1;i+2<parts.length+1;i+=3) one(parts[i+2]||"",+parts[i]);
+    return out;
+  }
   async function showWork(id,box,btn){
     const old=box.querySelector(".work"); if(old){old.remove();btn.textContent="Show work";return;}
     btn.textContent="Loading…";
     try{const r=await fetch(RELAY+"/sales-vision?item="+encodeURIComponent(id),{headers:{"X-Sales-Key":localStorage.getItem("hs.key")||""}});
       if(!r.ok) throw new Error(r.status); const v=await r.json();
       const w=el("div","work");
-      w.append(el("p","status",(v.model||"model")+" · "+(v.photos||0)+" photos · "+new Date(v.at).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})));
-      const th=el("div","thumbs");(v.shots||[]).forEach((u,i)=>{const a=link(u,"");const im=document.createElement("img");im.src=u;im.alt="Photo "+(i+1);im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);a.append(el("span",null,String(i+1)));th.append(a);});
-      w.append(th);
-      let raw=v.raw||""; try{raw=JSON.stringify(JSON.parse(raw),null,2)}catch(e){}
-      const pre=el("pre",null,raw||"(no raw answer saved for this one)"); w.append(pre);
+      w.append(el("p","status",(v.model||"model")+" looked at "+(v.photos||0)+" photos · "+new Date(v.at).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})));
+      if(v.seen) w.append(el("p",null,v.seen));
+      // 1. its picks, each beside the photo it came from: check the photo matches what it claims
+      const picks=v.picks||[];
+      if(picks.length){
+        w.append(el("p","work-h","What it picked out. Check each photo really shows what it says:"));
+        picks.forEach(p=>{const row=el("div","work-pick");
+          if(p.url){const a=link(p.url,"");const im=document.createElement("img");im.src=p.url;im.alt=p.what||"photo";im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);row.append(a);}
+          else row.append(el("div","work-nophoto","no photo"));
+          const t=el("div");t.append(el("b",null,p.what||"?"));
+          t.append(document.createTextNode(" · its guess "+money(+p.low||0)+"–"+money(+p.high||0)+(p.unique?" · one-of-a-kind":"")));
+          if(p.why) t.append(el("div",null,"Why: "+p.why));
+          if(p.search) t.append(el("div","work-muted","Would search eBay for: "+p.search));
+          row.append(t);w.append(row);});
+      }else w.append(el("p",null,"It didn't pick out anything worth reselling."));
+      // 2. its notes on each group of photos, in plain lines
+      const batches=workBatches(v.raw);
+      if(batches.length){
+        const d=document.createElement("details");d.append(el("summary",null,"Its notes on each group of photos ("+batches.length+")"));
+        batches.forEach(b=>{const ps=(b.j.picks||[]);
+          const head=el("p",null);head.append(el("b",null,"Photos from #"+b.start+": "));head.append(document.createTextNode(b.j.seen||"(no summary)"));d.append(head);
+          if(ps.length){const ul=el("ul");ps.forEach(p=>{const n=parseInt(p.photo)||0;
+            ul.append(el("li",null,(n?"Photo "+(b.start+n-1)+": ":"")+(p.what||"?")+" ("+money(+p.low||0)+"–"+money(+p.high||0)+")"+(p.why?" · "+p.why:"")));});d.append(ul);}
+          else d.append(el("p","work-muted","nothing picked from these"));});
+        w.append(d);
+      }
+      // 3. every photo it was given, numbered
+      if((v.shots||[]).length){
+        const d=document.createElement("details");d.append(el("summary",null,"Photos it was given ("+v.shots.length+" shown)"));
+        const th=el("div","thumbs");v.shots.forEach((u,i)=>{const a=link(u,"");const im=document.createElement("img");im.src=u;im.alt="Photo "+(i+1);im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);a.append(el("span",null,String(i+1)));th.append(a);});
+        d.append(th);w.append(d);
+      }
+      // 4. the raw answer, tucked away for debugging only
+      if(v.raw){const d=document.createElement("details");d.append(el("summary","work-muted","Raw answer (for debugging)"));
+        let raw=v.raw; try{raw=JSON.stringify(JSON.parse(raw),null,2)}catch(e){}
+        d.append(el("pre",null,raw));w.append(d);}
       box.append(w); btn.textContent="Hide work";
     }catch(e){btn.textContent="Show work (not available yet)";}
   }
