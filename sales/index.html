@@ -105,14 +105,6 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .thumbs a{position:relative;display:block;width:84px;height:84px;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--chip)}
 .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
 .thumbs span{position:absolute;left:3px;top:3px;background:var(--ink);color:var(--panel);font:600 11px/1 var(--body);padding:2px 4px;border-radius:3px}
-.work-pick{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-top:1px solid var(--line)}
-.work-pick img{width:110px;height:110px;object-fit:cover;border-radius:4px;display:block}
-.work-nophoto{width:110px;height:110px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:4px;font-size:12px;flex:none}
-.work-pick>a{flex:none}
-.work-h{margin:6px 0 0;font-weight:600}
-.work-muted{opacity:.7;font-size:.9em}
-.work details{margin-top:4px}
-.work ul{margin:4px 0 8px 18px;padding:0}
 .work pre{margin:0;max-height:260px;overflow:auto;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px;white-space:pre-wrap;overflow-wrap:anywhere}
 .ai li{font-variant-numeric:tabular-nums}
 .lot .ai{grid-column:1/-1}
@@ -120,10 +112,6 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .finds{font-size:14px;margin:0;padding:6px 10px;border-radius:4px;background:var(--chip);max-width:65ch}
 .finds ul{margin:4px 0 0;padding-left:18px}
-.find-list li{margin:4px 0;line-height:1.35}
-.find-name{font-weight:700}
-.find-price{font-weight:700;white-space:nowrap}
-.find-intro{font-size:12px;opacity:.75;margin:2px 0 0}
 .finds a,.ai a{color:var(--ink);font-weight:600;text-underline-offset:2px}
 .finds b{color:var(--sign);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:13px;margin-right:6px}
 .lot{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;min-width:0}
@@ -144,7 +132,6 @@ body{margin:0;font-size:15px}
 .gate input{font:500 15px var(--body);padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);min-width:0;flex:1 1 220px}
 .gate .err{flex-basis:100%;color:var(--sign);font-size:13px;margin:0}
 .signout{background:none;border:0;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer;padding:0}
-  .find-photo{text-decoration:none;font-size:1.05em;margin-left:.15em}
 </style>
 </head>
 <body>
@@ -324,20 +311,30 @@ body{margin:0;font-size:15px}
   function dealChip(d){if(!d)return null;const e=el("span","deal"+(d.tag?" d-"+({"🔥":"hot","✅":"ok","🦄":"uni","❓":"q","🏛":"mus"})[d.tag]:" d-plain"),d.text);e.title=d.why;return e;}
   function bestTag(id,item){const v=vision[id];if(!v)return "";let t="";(v.picks||[]).forEach((p,i)=>{const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
     const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||((d.tag==="🦄"||d.tag==="🏛")&&t!=="🔥")))t=d.tag;});return t;}
+  const LIVE=/^https:\/\/(www\.)?(soundauctionservice\.com\/auction\/\d+\/item\/|hibid\.com\/([a-z-]+\/)?lot\/\d+)/;
   function priceChip(key,p,fallback,c,lotUrl){
+    const live=LIVE.test(lotUrl||"");
     // judged against real eBay sales when there are 3+ close matches (the middle half of them), else the AI's guess
     const ebay=c&&c.matched>=3&&c.low>0&&c.high>0; const src=ebay?"eBay sold, middle half of "+c.matched+" close matches":"the AI's estimate (not enough eBay matches yet)";
     if(ebay) p={what:p.what,low:c.low,high:c.high};
     const w=el("span","now"); const saved=prices[key]; const cur=saved?saved[0]:fallback;
     const show=()=>{w.replaceChildren();
       const b=el("button","nowbtn");b.type="button";
-      if(cur==null){b.textContent="\u270E enter price";b.title="Type what it's going for";b.setAttribute("aria-label","Enter the current price for "+p.what);}
+      if(cur==null){b.textContent=live?"\u21BB check bid":"\u270E enter price";b.title=live?"Read the live bid from the auction site":"No live bid for this one (only Sound Auction Service and HiBid lots can be checked): type what it's going for";b.setAttribute("aria-label",(live?"Check the live bid for ":"Enter the current price for ")+p.what);}
       else{const lo=net(p.low), hi=net(p.high);
         const st=cur>hi?"over":cur>lo?"tight":"ok";
         b.textContent="Now "+money(cur)+(st==="over"?" · over value":st==="tight"?" · thin margin":" · room to profit");
         b.className="nowbtn "+st;
         b.title="Value: "+money(p.low)+"–"+money(p.high)+" from "+src+". After eBay fees: "+money(lo)+"–"+money(hi)+" (about 13.25% + $0.40 per sale)"+(saved?" · updated "+new Date(saved[1]).toLocaleString("en-US",{weekday:"short",hour:"numeric",minute:"2-digit"}):" · from the listing");}
-      b.addEventListener("click",edit); w.append(b);};
+      if(live&&cur!=null) b.textContent="\u21BB "+b.textContent;
+      b.addEventListener("click",live?check:edit); w.append(b);
+      if(live){const e2=el("button","nowedit","\u270E");e2.type="button";e2.title="Type a price yourself";e2.setAttribute("aria-label","Type a price for "+p.what);e2.addEventListener("click",edit);w.append(e2);}};
+    // ask the relay for the lot's live bid (it reads the auction site; everyone sees the result)
+    const check=async()=>{const b=w.querySelector(".nowbtn");if(b){b.disabled=true;b.textContent="checking\u2026";}
+      try{const r=await fetch(RELAY+"/sales-bid?u="+encodeURIComponent(lotUrl)+"&k="+encodeURIComponent(key),{headers:{"X-Sales-Key":localStorage.getItem("hs.key")||""}});
+        if(!r.ok) throw new Error(await r.text());
+        const j=await r.json(); prices[key]=[j.bid,j.at]; render();
+      }catch(err){if(b){b.disabled=false;b.textContent="couldn't check \u2014 tap \u270E";b.title=String(err.message||err).slice(0,200);}}};
     const edit=()=>{w.replaceChildren();
       const f=document.createElement("form");f.className="nowform";
       const inp=document.createElement("input");inp.type="text";inp.inputMode="decimal";inp.placeholder="$";inp.value=cur!=null?String(cur):"";inp.setAttribute("aria-label","Current price");
@@ -355,9 +352,13 @@ body{margin:0;font-size:15px}
   function findTarget(p,item){
     if(p.link) return p.link; // the exact lot, when the AI looked through the auction's catalog
     if(!item) return "";
-    const words=w=>new Set(String(w||"").toLowerCase().match(/[a-z0-9]{4,}/g)||[]);
+    // only link a specific lot when the names really agree (2+ telling words, most of the link's own words);
+    // otherwise go to the sale itself rather than a wrong lot
+    const generic=new Set("vintage antique assorted various large small with from this that lot lots item items set sets box boxes collection misc estate sale auction pieces piece group signed marked old".split(" "));
+    const words=w=>new Set((String(w||"").toLowerCase().match(/[a-z0-9]{4,}/g)||[]).filter(x=>!generic.has(x)));
     const pw=words(p.what+" "+(p.search||"")); let best=null, bestN=0;
-    (item.findLinks||[]).forEach(f=>{if(!f||!/^https?:/.test(f.url||""))return;let n=0;words(f.text).forEach(w=>{if(pw.has(w))n++;});if(n>bestN){bestN=n;best=f.url;}});
+    (item.findLinks||[]).forEach(f=>{if(!f||!/^https?:/.test(f.url||""))return;const fw=words(f.text);let n=0;fw.forEach(w=>{if(pw.has(w))n++;});
+      if(n>=2&&n>=fw.size*0.4&&n>bestN){bestN=n;best=f.url;}});
     return best||item.direct||item.url||"";
   }
   // eBay search words for a find: the AI's own, else a short version of its description (a long one finds nothing)
@@ -408,58 +409,17 @@ body{margin:0;font-size:15px}
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
     return box;
   }
-  // "Show work": what the local vision model saw, laid out photo by photo instead of as raw JSON.
-  function workBatches(raw){
-    const out=[]; if(!raw) return out;
-    const parts=String(raw).split(/\[photos (\d+)-(\d+)\]\s*/);
-    const one=(txt,start)=>{const a=txt.indexOf("{"),b=txt.lastIndexOf("}"); if(a<0||b<=a) return;
-      try{out.push({start,j:JSON.parse(txt.slice(a,b+1))});}catch(e){}};
-    if(parts.length===1){one(parts[0],1);return out;}
-    for(let i=1;i+2<parts.length+1;i+=3) one(parts[i+2]||"",+parts[i]);
-    return out;
-  }
   async function showWork(id,box,btn){
     const old=box.querySelector(".work"); if(old){old.remove();btn.textContent="Show work";return;}
     btn.textContent="Loading…";
     try{const r=await fetch(RELAY+"/sales-vision?item="+encodeURIComponent(id),{headers:{"X-Sales-Key":localStorage.getItem("hs.key")||""}});
       if(!r.ok) throw new Error(r.status); const v=await r.json();
       const w=el("div","work");
-      w.append(el("p","status",(v.model||"model")+" looked at "+(v.photos||0)+" photos · "+new Date(v.at).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})));
-      if(v.seen) w.append(el("p",null,v.seen));
-      // 1. its picks, each beside the photo it came from: check the photo matches what it claims
-      const picks=v.picks||[];
-      if(picks.length){
-        w.append(el("p","work-h","What it picked out. Check each photo really shows what it says:"));
-        picks.forEach(p=>{const row=el("div","work-pick");
-          if(p.url){const a=link(p.url,"");const im=document.createElement("img");im.src=p.url;im.alt=p.what||"photo";im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);row.append(a);}
-          else row.append(el("div","work-nophoto","no photo"));
-          const t=el("div");t.append(el("b",null,p.what||"?"));
-          t.append(document.createTextNode(" · its guess "+money(+p.low||0)+"–"+money(+p.high||0)+(p.unique?" · one-of-a-kind":"")));
-          if(p.why) t.append(el("div",null,"Why: "+p.why));
-          if(p.search) t.append(el("div","work-muted","Would search eBay for: "+p.search));
-          row.append(t);w.append(row);});
-      }else w.append(el("p",null,"It didn't pick out anything worth reselling."));
-      // 2. its notes on each group of photos, in plain lines
-      const batches=workBatches(v.raw);
-      if(batches.length){
-        const d=document.createElement("details");d.append(el("summary",null,"Its notes on each group of photos ("+batches.length+")"));
-        batches.forEach(b=>{const ps=(b.j.picks||[]);
-          const head=el("p",null);head.append(el("b",null,"Photos from #"+b.start+": "));head.append(document.createTextNode(b.j.seen||"(no summary)"));d.append(head);
-          if(ps.length){const ul=el("ul");ps.forEach(p=>{const n=parseInt(p.photo)||0;
-            ul.append(el("li",null,(n?"Photo "+(b.start+n-1)+": ":"")+(p.what||"?")+" ("+money(+p.low||0)+"–"+money(+p.high||0)+")"+(p.why?" · "+p.why:"")));});d.append(ul);}
-          else d.append(el("p","work-muted","nothing picked from these"));});
-        w.append(d);
-      }
-      // 3. every photo it was given, numbered
-      if((v.shots||[]).length){
-        const d=document.createElement("details");d.append(el("summary",null,"Photos it was given ("+v.shots.length+" shown)"));
-        const th=el("div","thumbs");v.shots.forEach((u,i)=>{const a=link(u,"");const im=document.createElement("img");im.src=u;im.alt="Photo "+(i+1);im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);a.append(el("span",null,String(i+1)));th.append(a);});
-        d.append(th);w.append(d);
-      }
-      // 4. the raw answer, tucked away for debugging only
-      if(v.raw){const d=document.createElement("details");d.append(el("summary","work-muted","Raw answer (for debugging)"));
-        let raw=v.raw; try{raw=JSON.stringify(JSON.parse(raw),null,2)}catch(e){}
-        d.append(el("pre",null,raw));w.append(d);}
+      w.append(el("p","status",(v.model||"model")+" · "+(v.photos||0)+" photos · "+new Date(v.at).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})));
+      const th=el("div","thumbs");(v.shots||[]).forEach((u,i)=>{const a=link(u,"");const im=document.createElement("img");im.src=u;im.alt="Photo "+(i+1);im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);a.append(el("span",null,String(i+1)));th.append(a);});
+      w.append(th);
+      let raw=v.raw||""; try{raw=JSON.stringify(JSON.parse(raw),null,2)}catch(e){}
+      const pre=el("pre",null,raw||"(no raw answer saved for this one)"); w.append(pre);
       box.append(w); btn.textContent="Hide work";
     }catch(e){btn.textContent="Show work (not available yet)";}
   }
@@ -517,40 +477,6 @@ body{margin:0;font-size:15px}
   function short(s){return parse(s).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});}
   function dayDiff(a,b){return Math.round((parse(b)-parse(a))/864e5);}
   const label={estate:"Estate sale",garage:"Garage / yard",auction:"Auction",online:"Online auction"};
-  // "Spotted" as a list: each find on its own line, its name in bold and its prices highlighted
-  function findsList(txt,links,used){
-    let t=String(txt||"").trim(),intro="";
-    // split on ';' (and find the intro's ':') only outside brackets: "(full size; eBay comps):" is one piece
-    const top=(str,ch)=>{const out=[];let d=0,st=0;for(let i=0;i<str.length;i++){const c=str[i];
-      if(c==="("||c==="[")d++;else if((c===")"||c==="]")&&d>0)d--;else if(c===ch&&d===0){out.push(i);}}return out;};
-    const colon=top(t,":")[0];
-    if(colon!==undefined&&colon<260&&top(t,";").length>1){intro=t.slice(0,colon).trim();t=t.slice(colon+1).trim();}
-    const cuts=top(t,";");const parts=[];let st=0;cuts.forEach(i=>{parts.push(t.slice(st,i));st=i+1;});parts.push(t.slice(st));
-    for(let i=0;i<parts.length;i++)parts[i]=parts[i].trim();
-    const kept=parts.filter(Boolean);parts.length=0;parts.push(...kept);
-    if(parts.length<2) return null;
-    const frag=document.createDocumentFragment();
-    if(intro) frag.append(el("div","find-intro",intro));
-    const ul=el("ul","find-list");
-    // photo links (s.findLinks) go next to the item they name: each link to the item sharing the most words
-    const STOP=new Set(["the","and","for","with","of","in","on","a","an","more","old","box"]);
-    const wd=x=>String(x||"").toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>=3&&!STOP.has(w));
-    const byPart=parts.map(()=>[]);
-    (links||[]).forEach((lk,li)=>{const lw=wd(lk.text);let best=-1,bn=0;
-      parts.forEach((pt,i)=>{const pw=new Set(wd(pt));let n=0;lw.forEach(w=>{if(pw.has(w))n++;});if(n>bn){bn=n;best=i;}});
-      if(best>=0){byPart[best].push(lk);if(used)used.add(li);}});
-    const PRICE=/(~?\$[\d,]*\d(?:\.\d\d)?(?:\s*[-–]\s*\$?[\d,]*\d)?(?:\s*(?:each|pair))?|[≤→]\s*~?\$[\d,]*\d(?:\s*[-–]\s*\d+)?)/g;
-    parts.forEach((pt,pi)=>{const li=el("li");
-      const nm=(pt.match(/^(.+?)(?=,|\s[-–—]\s|\s\(|\s~?\$|$)/)||[pt,pt])[1];
-      li.append(el("span","find-name",nm));
-      byPart[pi].forEach(lk=>{const a=link(lk.url,"📷");a.className="find-photo";a.title="Photo: "+(lk.text||"item");
-        a.setAttribute("aria-label","Photo: "+(lk.text||"item"));li.append(document.createTextNode(" "),a);});
-      const rest=pt.slice(nm.length);
-      rest.split(PRICE).forEach((bit,i)=>{ if(!bit) return; li.append(i%2?el("span","find-price",bit):document.createTextNode(bit)); });
-      ul.append(li);});
-    frag.append(ul);
-    return frag;
-  }
   function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
   function link(href,text){const a=el("a",null,text);a.href=href;a.target="_blank";a.rel="noopener";return a;}
 
@@ -584,13 +510,9 @@ body{margin:0;font-size:15px}
       if(s.hours&&s.start!==s.end) a.append(document.createTextNode(" · "+s.hours));
       c.append(a);
     }
-    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"));
-      const fl=(s.findLinks||[]).filter(x=>x&&x.url&&/^https?:/.test(x.url)).slice(0,24);
-      const usedL=new Set();
-      const fl0=findsList(s.finds,fl,usedL); if(fl0) f.append(fl0); else f.append(document.createTextNode(s.finds||""));
-      const left=fl.filter((x,i)=>!usedL.has(i));
-      if(left.length){const pl=el("p","find-photos");pl.append(el("b",null,"📷 Photos: "));
-        left.forEach((x,i)=>{if(i) pl.append(document.createTextNode(" · "));pl.append(link(x.url,String(x.text||"Item").replace(/^📷\s*/,"")));});f.append(pl);}
+    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds||""));
+      const fl=(s.findLinks||[]).filter(x=>x&&x.url&&/^https?:/.test(x.url)).slice(0,8);
+      if(fl.length){const ul=el("ul");fl.forEach(x=>{const li=el("li");li.append(link(x.url,(x.text||"Item")+" ↗"));ul.append(li);});f.append(ul);}
       c.append(f);}
     const ai=aiBox(s.id,false,null,s); if(ai) c.append(ai);
     if(s.summary) c.append(el("p","sum",s.summary));
