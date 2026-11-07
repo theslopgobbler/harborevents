@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#12171c">
+<script>(function(){var t="dark";try{if(localStorage.getItem("hs.theme")==="light")t="light"}catch(e){}document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==="light"?"#eef1f3":"#12171c";})();</script>
 <title>Harbor Sale Finder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap">
@@ -29,6 +31,8 @@ header{display:flex;flex-direction:column;gap:6px}
 .titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .textsize{font:700 15px/1 var(--body);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;flex:none}
 .textsize span{font-size:21px;margin-left:1px}
+.tbtns{display:flex;gap:8px;flex:none}
+.textsize.theme{font-size:17px;min-width:42px}
 .textsize[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 html.big body{zoom:1.22}
 h1{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;letter-spacing:.01em;margin:0;text-transform:uppercase;text-wrap:balance}
@@ -168,7 +172,7 @@ body{margin:0;font-size:15px}
 
 <div class="wrap">
   <header>
-    <div class="titlebar"><h1>Harbor <span>Sale</span> Finder</h1><button type="button" class="textsize" id="bigtext" aria-pressed="false" title="Bigger text">A<span>A</span></button></div>
+    <div class="titlebar"><h1>Harbor <span>Sale</span> Finder</h1><div class="tbtns"><button type="button" class="textsize theme" id="theme" aria-label="Switch to light mode" title="Light mode">☀</button><button type="button" class="textsize" id="bigtext" aria-pressed="false" title="Bigger text">A<span>A</span></button></div></div>
     <p class="sub">Estate sales, garage and yard sales, and estate auctions within driving range of Hoquiam. Updated Wednesday and Friday mornings; miles are approximate road distance from Hoquiam.</p>
     <div class="status" id="status">Loading sales…</div>
   </header>
@@ -678,6 +682,11 @@ body{margin:0;font-size:15px}
     const t=await r.text(); if(r.ok) load(); return {ok:r.ok,status:r.status,body:t};
   };
   // bigger text, remembered on this device (like the traffic map's BIGGER TEXT setting)
+  const th=$("#theme"); const setTheme=t=>{document.documentElement.setAttribute("data-theme",t);const dark=t!=="light";
+    th.textContent=dark?"☀":"☾"; th.title=dark?"Light mode":"Dark mode"; th.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");
+    const m=document.querySelector('meta[name="theme-color"]'); if(m) m.content=dark?"#12171c":"#eef1f3";};
+  setTheme(K.get("hs.theme")==="light"?"light":"dark");
+  th.addEventListener("click",()=>{const light=document.documentElement.getAttribute("data-theme")!=="light";setTheme(light?"light":"dark");K.set("hs.theme",light?"light":null);});
   const bt=$("#bigtext"); const setBig=on=>{document.documentElement.classList.toggle("big",on);bt.setAttribute("aria-pressed",String(on));bt.title=on?"Normal text":"Bigger text";};
   setBig(K.get("hs.bigText")==="1"); bt.addEventListener("click",()=>{const on=!document.documentElement.classList.contains("big");setBig(on);K.set("hs.bigText",on?"1":null);});
   render(); load();
