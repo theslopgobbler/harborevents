@@ -132,6 +132,36 @@ body{margin:0;font-size:15px}
 .gate input{font:500 15px var(--body);padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);min-width:0;flex:1 1 220px}
 .gate .err{flex-basis:100%;color:var(--sign);font-size:13px;margin:0}
 .signout{background:none;border:0;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer;padding:0}
+/* Calendar strip: the next 14 days at the top; each sale shows on every day it's open, online auctions on their closing day */
+.calsec{display:flex;flex-direction:column;gap:8px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cday{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 5px;min-height:78px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.cday.today{border-color:var(--sign);box-shadow:inset 0 0 0 1px var(--sign)}
+.cday.wkend .cdh{color:var(--ink)}
+.cdh{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;align-items:baseline;justify-content:space-between;gap:4px}
+.cdh b{font-size:19px;line-height:1;color:var(--ink);font-weight:700}
+.cday.today .cdh,.cday.today .cdh b{color:var(--sign)}
+.cev{font:inherit;text-align:left;background:var(--chip);color:var(--ink);border:0;border-left:4px solid var(--c,var(--line));border-radius:4px;padding:3px 5px;cursor:pointer;display:flex;flex-direction:column;min-width:0;font-size:12px;line-height:1.25}
+.cev b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cev span{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cev.hot b::before{content:"★ ";color:var(--sign)}
+.cev.ended{opacity:.5}.cev.ended b{text-decoration:line-through}
+.cev:hover{filter:brightness(.96)}
+.cev:focus-visible,.cmore:focus-visible{outline:2px solid var(--sign);outline-offset:1px}
+.cev[data-t="estate"]{--c:var(--estate)} .cev[data-t="garage"]{--c:var(--garage)} .cev[data-t="auction"]{--c:var(--auction)} .cev[data-t="online"]{--c:var(--online)}
+.cmore{font:600 11px var(--body);background:none;border:0;color:var(--muted);text-align:left;padding:0 2px;cursor:pointer;text-decoration:underline}
+.cnone{color:var(--muted);opacity:.5;font-size:12px;padding:0 2px}
+.ckey{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);margin:0}
+.ckey i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px;background:var(--c)}
+.ckey .hot{color:var(--sign);font-style:normal}
+.sale{scroll-margin-top:72px}
+.sale.flash{animation:calflash 1.8s ease-out}
+@keyframes calflash{from{box-shadow:0 0 0 3px var(--sign)}to{box-shadow:0 0 0 3px transparent}}
+@media (max-width:640px){
+  .cal{display:flex;overflow-x:auto;scroll-snap-type:x proximity;gap:6px;margin-inline:-16px;padding:0 16px 6px;scrollbar-width:thin}
+  .cday{flex:0 0 118px;scroll-snap-align:start}
+}
+@media (prefers-reduced-motion:reduce){.sale.flash{animation:none;box-shadow:0 0 0 3px var(--sign)}}
 </style>
 </head>
 <body>
@@ -142,6 +172,12 @@ body{margin:0;font-size:15px}
     <p class="sub">Estate sales, garage and yard sales, and estate auctions within driving range of Hoquiam. Updated Wednesday and Friday mornings; miles are approximate road distance from Hoquiam.</p>
     <div class="status" id="status">Loading sales…</div>
   </header>
+
+  <section class="calsec" id="cal-sec" aria-labelledby="h-cal" hidden>
+    <h2 id="h-cal">Next two weeks <small id="c-cal"></small></h2>
+    <div id="cal" class="cal" role="list"></div>
+    <p class="ckey"><span><i style="--c:var(--estate)"></i>Estate</span><span><i style="--c:var(--garage)"></i>Garage / yard</span><span><i style="--c:var(--auction)"></i>Auction</span><span><i style="--c:var(--online)"></i>Online (closing day)</span><span><em class="hot">★</em> worth a look</span><span>Tap a sale to jump to it</span></p>
+  </section>
 
   <form class="gate" id="gate" hidden>
     <label for="key">Key</label>
@@ -486,7 +522,7 @@ body{margin:0;font-size:15px}
   function lotEnded(x,t){const e=endDate(x.closesAt);return e?Date.now()>e.getTime()+15*60000:(x.closes&&x.closes<t);}
   function card(s,t){
     const over=saleEnded(s,t);
-    const c=el("article","sale"+((s.interest||0)>=2?" hot":"")+(over?" ended":"")); c.dataset.t=s.type;
+    const c=el("article","sale"+((s.interest||0)>=2?" hot":"")+(over?" ended":"")); c.dataset.t=s.type; c.id="sale-"+s.id;
     const top=el("div","top"); top.append(el("h3","title",s.title));
     let when="";
     if(s.type==="online"){const n=dayDiff(t,s.end); when= n<=0?"Ends today":n===1?"Ends tomorrow":"Ends "+short(s.end);
@@ -525,10 +561,52 @@ body{margin:0;font-size:15px}
     return c;
   }
 
+  // ---- calendar strip: next 14 days; in-person sales on every day they're open, online auctions on their closing day ----
+  const calOpen={};
+  function addDays(s,n){const d=parse(s);d.setDate(d.getDate()+n);const p=x=>String(x).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());}
+  function calTime(s,k){
+    const ct=iso=>endTime(iso).replace(":00","").replace(/\s*(AM|PM)$/,(x,y)=>y.toLowerCase());
+    if(s.type==="online"){const et=ct(s.endsAt);return "ends"+(et?" "+et:"");}
+    if(s.type==="auction"&&ct(s.endsAt)) return "live "+ct(s.endsAt);
+    const h=String(s.hours||"").replace(/\s+/g," ");
+    const m=h.match(/(\d{1,2}(?::\d\d)?)\s*(am|pm|a\.m\.|p\.m\.)?\s*(?:–|-|to)\s*(\d{1,2}(?::\d\d)?)\s*(am|pm|a\.m\.|p\.m\.)?/i);
+    if(m){const ap=x=>x?x.replace(/\./g,"").toLowerCase():"";return m[1]+ap(m[2])+"–"+m[3]+ap(m[4]);}
+    return h.length<=16?h:"";
+  }
+  function jumpTo(id){const c=document.getElementById("sale-"+id);if(!c)return;
+    c.scrollIntoView({behavior:"smooth",block:"start"});c.classList.remove("flash");void c.offsetWidth;c.classList.add("flash");}
+  function renderCal(vis,t){
+    const cal=$("#cal"); if(!cal) return; cal.replaceChildren();
+    $("#cal-sec").hidden=!sales.length;
+    let n=0;
+    for(let i=0;i<14;i++){
+      const k=addDays(t,i), d=parse(k), wd=d.getDay();
+      const items=vis.filter(s=>s.type==="online"?s.end===k:(s.start<=k&&s.end>=k))
+        .sort((a,b)=>((b.interest||0)-(a.interest||0))||((a.dist??99)-(b.dist??99)));
+      n+=items.length;
+      const cell=el("div","cday"+(k===t?" today":"")+(wd===0||wd===6?" wkend":"")); cell.setAttribute("role","listitem");
+      const h=el("div","cdh"); h.append(document.createTextNode(k===t?"Today":d.toLocaleDateString("en-US",{weekday:"short"})),
+        el("b",null,String(d.getDate()))); h.title=fmtDay(k); cell.append(h);
+      const cap=calOpen[k]?99:4;
+      items.slice(0,cap).forEach(s=>{
+        const b=el("button","cev"+((s.interest||0)>=2?" hot":"")+(saleEnded(s,t)?" ended":"")); b.type="button"; b.dataset.t=s.type;
+        const tm=calTime(s,k);
+        b.append(el("b",null,s.town||s.title)); if(tm) b.append(el("span",null,tm));
+        b.title=s.title+" · "+(label[s.type]||s.type)+(s.dist!=null?" · "+s.dist+" mi":"")+(s.hours?" · "+s.hours:"");
+        b.setAttribute("aria-label",fmtDay(k)+": "+b.title);
+        b.addEventListener("click",()=>jumpTo(s.id)); cell.append(b);});
+      if(items.length>cap){const m=el("button","cmore","+"+(items.length-cap)+" more");m.type="button";m.addEventListener("click",()=>{calOpen[k]=1;render();});cell.append(m);}
+      if(!items.length) cell.append(el("div","cnone","—"));
+      cal.append(cell);
+    }
+    $("#c-cal").textContent=n?"":"nothing scheduled with these filters";
+  }
+
   function render(){
     const t=today();
     const vis=sales.filter(s=>s.end>=t && (s.dist==null||s.dist<=fdist) &&
       (ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild||bestTag(s.id,s)))));
+    renderCal(vis,t);
     const inp=vis.filter(s=>s.type!=="online"), onl=vis.filter(s=>s.type==="online");
     const days=$("#days"); days.replaceChildren();
     const groups={};
