@@ -527,6 +527,12 @@ body{margin:0;font-size:15px}
     const keepIt=p=>isMine(p)||isOne(p)||p.museum||clear(p)>=CUTOFF||(/sign|autograph/i.test(p.what)&&(!ck(p)||ck(p).n===0));
     const ranked=all.map((p,i)=>[p,i]).sort((a,b)=>(isMine(b[0])-isMine(a[0]))||(isOne(b[0])-isOne(a[0]))||(clear(b[0])-clear(a[0])));
     const top=ranked.filter(([p])=>keepIt(p)).slice(0,6), low=ranked.filter(([p])=>!keepIt(p));
+    // catalog auctions: finds that came from the same lot page are bought together, so they're priced together below
+    const byLot={}; if(!isLot) all.forEach(p=>{if(p.link&&/^https?:/.test(p.link))(byLot[p.link]=byLot[p.link]||[]).push(p);});
+    const grouped=l=>l&&byLot[l]&&byLot[l].length>1;
+    const lotName=l=>{const u=String(l);let m=u.match(/\/lot-0*(\d{1,5})-/i);if(m)return "Lot "+m[1];
+      m=u.match(/\/([a-z][a-z0-9-]{3,})\/?(?:[?#].*)?$/i);if(m&&/[a-z]{3}/i.test(m[1])&&!/^\d+$/.test(m[1])){const w=m[1].replace(/-+/g," ").trim();return "Lot: "+(w.charAt(0).toUpperCase()+w.slice(1)).slice(0,40);}
+      return "Same lot";};
     if(top.length){const ul=el("ul");top.forEach(([p,i])=>{const li=el("li");
       // the range links to eBay sold listings for the AI's own search words: cheapest first, priciest first
       const q=encodeURIComponent(ebayWords(p)), sold="https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q;
@@ -542,12 +548,20 @@ body{margin:0;font-size:15px}
         li.append(document.createTextNode(" · "),a);}
       else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+(c.days||90)+" days: a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
       // in an auction lot the bid buys every find together, so price and deal are judged for the whole lot below
-      if(!isLot){li.append(priceChip(id+"~p"+i,p,null,c,lotUrl));
+      if(!isLot&&grouped(p.link)){const g=el("span","deal d-plain","in "+lotName(p.link)+" with "+(byLot[p.link].length-1)+" more");g.title="Sold together in one lot: priced as a group below";li.append(g);}
+      else if(!isLot){li.append(priceChip(id+"~p"+i,p,null,c,lotUrl));
         {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:null,item));if(d)li.append(d);}}
       if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
       if(isJessie(p)){const m=el("span","deal d-jes","💎 Jessie");m.title="Jewelry Jessie looks for (micromosaic, cameo, reverse glass, niello, Siam silver, signed, hallmarked): always shown";li.append(m);}
       if(!isRJ(p)&&!isJessie(p)&&isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
+    Object.entries(byLot).filter(([l,ps])=>ps.length>1).forEach(([l,ps])=>{
+      let lo=0,hi=0,cost=0;ps.forEach(p=>{const c=ck(p),eb=c&&c.matched>=3&&c.low>0&&c.high>0;lo+=eb?c.low:(+p.low||0);hi+=eb?c.high:(+p.high||0);cost+=costs(p);});
+      const P={what:lotName(l)+" ("+ps.length+" finds)",low:lo,high:hi,_cost:cost};
+      const row=el("div","lottotal");row.append(link(l,lotName(l)+" ↗"),document.createTextNode(" total "+money(lo)+"–"+money(hi)+" for "+ps.length+" finds: "+ps.map(p=>p.what).join("; ").slice(0,160)+" "));
+      const key=id+"~L"+hkey(l);row.append(priceChip(key,P,null,null,l));
+      {const saved=prices[key];const d=dealChip(dealOf(P,null,saved?saved[0]:null,item));if(d)row.append(d);}
+      box.append(row);});
     if(isLot&&all.length){
       // the whole lot: add up every find's low and high (eBay's middle range where it has 3+ close matches), then judge the bid
       let lo=0,hi=0,cost=0;all.forEach(p=>{const c=ck(p),eb=c&&c.matched>=3&&c.low>0&&c.high>0;lo+=eb?c.low:(+p.low||0);hi+=eb?c.high:(+p.high||0);cost+=costs(p);});
