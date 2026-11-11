@@ -92,7 +92,8 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ended{opacity:.55}.ended .when{color:var(--bad);font-weight:700}
 .deal{display:inline-block;margin-left:6px;font:700 12px/1 var(--body);padding:4px 8px;border-radius:999px;vertical-align:middle;white-space:nowrap}
 .deal.d-hot{background:#b3261e;color:#fff}.deal.d-ok{background:#1e6b3a;color:#fff}.deal.d-uni{background:#5b2a86;color:#fff}
-.deal.d-mus{background:#6b4f1d;color:#fff}.deal.d-q{background:var(--line);color:var(--ink)}.deal.d-plain{border:1px solid var(--line);color:var(--muted)}
+.deal.d-mus{background:#6b4f1d;color:#fff}.deal.d-me{background:#a8326e;color:#fff}.deal.d-rj{background:#8a6d1f;color:#fff}
+details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary{cursor:pointer}.deal.d-q{background:var(--line);color:var(--ink)}.deal.d-plain{border:1px solid var(--line);color:var(--muted)}
 .nowbtn{font:600 12px/1 var(--body);border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 8px;cursor:pointer;vertical-align:middle}
 .nowbtn.ok{border-style:solid;border-color:var(--estate);color:var(--estate)}
 .nowbtn.tight{border-style:solid;border-color:var(--garage);color:var(--garage)}
@@ -106,6 +107,19 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ai .signout{display:block;margin-top:6px;font-size:12.5px}
 .work{margin-top:6px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .thumbs{display:flex;flex-wrap:wrap;gap:6px}
+.mystery{margin:8px 0 4px;padding:6px 8px;border-radius:4px;background:var(--chip)}
+.mystery>b{display:block;margin-bottom:6px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.mcard{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;font-size:12.5px}
+.mcard a.mimg{display:block;aspect-ratio:1;background:var(--bg)}
+.mcard img{width:100%;height:100%;object-fit:cover;display:block}
+.mcard .mt{padding:4px 6px;line-height:1.25;flex:1;overflow-wrap:anywhere}
+.mcard .mt small{display:block;color:var(--muted)}
+.mcard .votes{margin:0;padding:0 6px 6px;justify-content:flex-start}
+.mcard.liked{border-color:var(--estate)}
+.mmore{margin-top:8px;font:600 13px/1 var(--body);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:7px 12px;cursor:pointer}
+#research .mgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+#research .mcard .mt a{color:var(--ink);font-weight:600}
 .thumbs a{position:relative;display:block;width:84px;height:84px;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--chip)}
 .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
 .thumbs span{position:absolute;left:3px;top:3px;background:var(--ink);color:var(--panel);font:600 11px/1 var(--body);padding:2px 4px;border-radius:3px}
@@ -205,6 +219,11 @@ body{margin:0;font-size:15px}
       <option value="999">Any</option>
     </select>
   </div>
+
+  <section id="research-sec" aria-labelledby="h-res" hidden>
+    <h2 id="h-res">Books to research <small id="c-res">mystery books someone gave a 👍</small></h2>
+    <div id="research"></div>
+  </section>
 
   <section id="inperson" aria-labelledby="h-in">
     <h2 id="h-in">In person <small id="c-in"></small></h2>
@@ -315,6 +334,20 @@ body{margin:0;font-size:15px}
   }
   // eBay's cut on a typical sale: ~13.25% final value fee + $0.40 per order (rough; varies by category)
   const FEE=0.1325, FEE_FIXED=0.40, net=v=>Math.max(0,v*(1-FEE)-FEE_FIXED);
+  // ---- Chris's own costs per item (Nov 11 2026; also in the Sale Finder database, meta/profit_rules): his time $5
+  // ($10 for one-of-a-kind pieces that need research), packing/space/slow-sale by size, and eBay's fee on the
+  // postage (buyers pay shipping). Drive time isn't counted. Finds that clear under $5 are tucked away as bundle filler,
+  // except Chris's personal interests (always shown first) and one-of-a-kind pieces; autographs get no pass unless
+  // eBay has nothing to compare.
+  const TIME=5, TIME_RESEARCH=10, CUTOFF=5;
+  const HANDLE={card:0.5,small:1,medium:4,large:15,freight:30,"":2}, SHIPFEE={card:0.6,small:0.9,medium:2,large:3.5,freight:0,"":1.2};
+  const PERSONAL=/\b(nudes?|figural|statues?|statuettes?|bronze (figure|lady|woman|maiden)|female figure|busts?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade|coin[- ]?op|skulls?|bones?|skeleton|vertebrae?|antlers?)\b/i;
+  function isOne(p){return (p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);}
+  // RJ collects ancient coins: tag them for him and always show them too
+  const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic)\b/i;
+  function isRJ(p){return RJ.test(String(p.what||"")+" "+String(p.why||""));}
+  function isMine(p){return PERSONAL.test(String(p.what||"")+" "+String(p.why||""))||isRJ(p);}
+  function costs(p){const z=p.size||"";return (HANDLE[z]??2)+(SHIPFEE[z]??1.2)+(isOne(p)?TIME_RESEARCH:TIME);}
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
   // ---- deal score: what an AI find is worth to Chris at today's price
   // value = eBay sold median when 3+ close matches (else blended with / or just the AI's middle guess); cost = price plus
@@ -331,13 +364,13 @@ body{margin:0;font-size:15px}
     const speed=c&&(c.sell>=50||c.matched>=5)?"fast":(c&&c.n===0)||generic?"slow":"normal";
     const k=speed==="slow"?1.5:speed==="fast"?0.85:1;
     const one=(p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);
-    const nv=net(value);
+    const nv=Math.max(0,net(value)-costs(p));
     if(p.museum||/\bivory\b|scrimshaw|human skull|anatomical skull|medical skull/i.test(p.what)) return {tag:"🏛",text:"🏛 museum piece, not for resale",why:"Human remains and ivory can't be sold on eBay/Amazon; flagged for the museum. Check provenance (never Native American or archaeological remains) and state law before buying."};
     if(c&&c.n===0) return one||(+p.high>=100&&!PRINT.test(p.what))?{tag:"🦄",text:"🦄 one of a kind? check by hand",why:"No eBay sales to compare"+(one?"; the AI thinks this is one-of-a-kind":"")}:{tag:"❓",text:"❓ no comps",why:"No eBay sales in 90 days and nothing marks it as special"};
     if(!c&&one) return {tag:"🦄",text:"🦄 one of a kind: check by hand",why:"The AI thinks this is one-of-a-kind; no eBay prices checked yet"};
     let maxT=0; TIERS.forEach(([lo,hi,r])=>{const t=Math.min(hi,nv/(r*k),nv-8);if(t>lo&&t>maxT)maxT=t;});
     const maxBid=maxT>0?maxT/(1+premium/100):0;
-    const basis=(c&&c.matched>=3?"eBay sold median":c&&c.median?"eBay + AI blend":"AI guess")+" "+money(value)+", "+money(nv)+" after eBay fees"+(premium?", "+premium+"% buyer's premium":"")+", "+speed+" seller";
+    const basis=(c&&c.matched>=3?"eBay sold median":c&&c.median?"eBay + AI blend":"AI guess")+" "+money(value)+", "+money(nv)+" after eBay fees, $"+costs(p).toFixed(0)+" time/packing"+(premium?", "+premium+"% buyer's premium":"")+", "+speed+" seller";
     if(cur==null) return maxBid>0?{tag:"",text:"max bid "+money(maxBid),why:"Highest price that still clears the bar ("+basis+")"}:null;
     const total=cur*(1+premium/100), mult=total>0?nv/total:Infinity, profit=nv-total;
     const req=(TIERS.find(([lo,hi])=>total>lo&&total<=hi)||TIERS[0])[2]*k;
@@ -350,7 +383,7 @@ body{margin:0;font-size:15px}
   }
   function dealChip(d){if(!d)return null;const e=el("span","deal"+(d.tag?" d-"+({"🔥":"hot","✅":"ok","🦄":"uni","❓":"q","🏛":"mus"})[d.tag]:" d-plain"),d.text);e.title=d.why;return e;}
   function bestTag(id,item){const v=vision[id];if(!v)return "";let t="";(v.picks||[]).forEach((p,i)=>{const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
-    const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||((d.tag==="🦄"||d.tag==="🏛")&&t!=="🔥")))t=d.tag;});return t;}
+    const saved=prices[id+"~p"+i];const d=dealOf(p,c,saved?saved[0]:null,item);if(d&&(d.tag==="🔥"||((d.tag==="🦄"||d.tag==="🏛")&&t!=="🔥")))t=d.tag;if(!t&&isMine(p))t="💜";});return t;}
   const LIVE=/^https:\/\/(www\.)?(soundauctionservice\.com\/auction\/\d+\/item\/|hibid\.com\/([a-z-]+\/)?lot\/\d+)/;
   function priceChip(key,p,fallback,c,lotUrl){
     const live=LIVE.test(lotUrl||"");
@@ -407,11 +440,62 @@ body{margin:0;font-size:15px}
     const stop=new Set("a an and the of with in on for from to set lot pair some various assorted possibly likely looks like appears".split(" "));
     return String(p.what||"").replace(/\([^)]*\)/g," ").replace(/[^\w'&-]+/g," ").split(/\s+/).filter(w=>w&&!stop.has(w.toLowerCase())).slice(0,5).join(" ");
   }
+  // ---- Mystery books: books the local AI couldn't match to one exact book (why starts "[?]"), plus photos with
+  // spines it couldn't read ("[?photo]"). 👍 puts one on "Books to research" (shared: anyone with the key sees it),
+  // 👎 hides that book (only that book, never the sale). Votes use the usual /sales-vote, kind "mystery-book".
+  const mysteryOpen=new Set();
+  function hkey(t){let h=5381;for(let i=0;i<t.length;i++)h=((h*33)^t.charCodeAt(i))>>>0;return h.toString(36);}
+  function isMystery(b){return /^\[\?(photo)?\]/.test(b.why||"");}
+  function mKey(id,b){return id+"~mb"+hkey((b.t||"")+"|"+(b.ph||""));}
+  function mState(k){const v=votes[k]||[0,0];return v[1]>v[0]?"hidden":v[0]>0?"liked":"";}
+  function mTitle(b){return /^\[\?photo\]/.test(b.why||"")?b.t:("“"+b.t+"”"+(b.a?" — "+b.a:"")+(b.ed?" ("+b.ed+")":""));}
+  function mCard(id,b,extra){
+    const k=mKey(id,b), st=mState(k), c=el("div","mcard"+(st==="liked"?" liked":""));
+    if(b.ph){const a=link(b.ph,"");a.className="mimg";a.title="Open the full photo";const im=document.createElement("img");im.src=b.ph;im.alt=b.t;im.loading="lazy";im.referrerPolicy="no-referrer";a.append(im);c.append(a);}
+    const t=el("div","mt",mTitle(b)); if(b.lot&&b.lot!=="Books") t.append(el("small",null,b.lot)); if(extra) t.append(extra); c.append(t);
+    c.append(voteBar(k,(b.lot?b.lot+": ":"")+b.t,"mystery-book")); return c;
+  }
+  function mysteryBox(id){
+    const v=vision[id]; if(!v) return null;
+    const list=(v.books||[]).filter(isMystery).filter(b=>mState(mKey(id,b))!=="hidden")
+      .sort((a,b)=>(/\[\?photo\]/.test(a.why)?1:0)-(/\[\?photo\]/.test(b.why)?1:0)||(b.hi||0)-(a.hi||0));
+    if(!list.length) return null;
+    const CAP=8, open=mysteryOpen.has(id), box=el("div","mystery");
+    box.append(el("b",null,"\u2753 Mystery books · "+list.length+" it couldn't match exactly"));
+    const g=el("div","mgrid"); (open?list:list.slice(0,CAP)).forEach(b=>g.append(mCard(id,b))); box.append(g);
+    if(list.length>CAP){const m=el("button","mmore",open?"Show fewer":"AND "+(list.length-CAP)+" MORE · show all");m.type="button";
+      m.addEventListener("click",()=>{open?mysteryOpen.delete(id):mysteryOpen.add(id);render();});box.append(m);}
+    box.title="👍 = worth researching (adds it to Books to research at the top). 👎 = not worth it (hides just that book).";
+    return box;
+  }
+  function renderResearch(){
+    const sec=$("#research-sec"), out=$("#research"); if(!sec||!out) return;
+    out.replaceChildren(); const t=today(), where={};
+    sales.forEach(s=>{if(s.end>=t) where[s.id]={title:s.title,url:s.url,end:s.end};});
+    lots.forEach(x=>{if(!x.closes||x.closes>=t) where[x.id]={title:x.title,url:x.url,end:x.closes};});
+    const got=[];
+    Object.entries(vision).forEach(([id,v])=>{if(!where[id]) return;
+      (v.books||[]).filter(isMystery).forEach(b=>{if(mState(mKey(id,b))==="liked") got.push([id,b]);});});
+    got.sort((a,b)=>String(where[a[0]].end||"9").localeCompare(String(where[b[0]].end||"9")));
+    const g=el("div","mgrid");
+    got.forEach(([id,b])=>{const w=where[id], x=el("small");
+      x.append(w.url?link(w.url,w.title):document.createTextNode(w.title||""));
+      if(w.end) x.append(document.createTextNode(" · ends "+(w.end===t?"today":short(w.end))));
+      const q=encodeURIComponent((b.t+" "+(b.a||"")).trim());
+      if(!/^\[\?photo\]/.test(b.why||"")){x.append(document.createTextNode(" · "));x.append(link("https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q,"eBay sold"));}
+      g.append(mCard(id,b,x));});
+    out.append(g); $("#c-res").textContent=got.length+" to look up · mystery books someone gave a 👍";
+    sec.hidden=!got.length;
+  }
   function aiBox(id,isLot,lotBid,item){
     const v=vision[id]; if(!v||(!v.seen&&!(v.picks||[]).length)) return null;
     const box=el("div","ai"); box.append(el("b",null,"Local AI saw"),document.createTextNode(v.seen||""));
     const all=v.picks||[];
-    const top=all.map((p,i)=>[p,i]).filter(([p])=>p.high>=5||/sign|autograph/i.test(p.what)).slice(0,5);
+    const ck=p=>comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
+    const clear=p=>{const c=ck(p);const mid=((+p.low||0)+(+p.high||0))/2;const v=c&&c.median>0&&c.matched>=1?(c.matched>=3?c.median:(c.median+mid)/2):mid;return net(v)-costs(p);};
+    const keepIt=p=>isMine(p)||isOne(p)||p.museum||clear(p)>=CUTOFF||(/sign|autograph/i.test(p.what)&&(!ck(p)||ck(p).n===0));
+    const ranked=all.map((p,i)=>[p,i]).sort((a,b)=>(isMine(b[0])-isMine(a[0]))||(isOne(b[0])-isOne(a[0]))||(clear(b[0])-clear(a[0])));
+    const top=ranked.filter(([p])=>keepIt(p)).slice(0,6), low=ranked.filter(([p])=>!keepIt(p));
     if(top.length){const ul=el("ul");top.forEach(([p,i])=>{const li=el("li");
       // the range links to eBay sold listings for the AI's own search words: cheapest first, priciest first
       const q=encodeURIComponent(ebayWords(p)), sold="https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q;
@@ -428,8 +512,14 @@ body{margin:0;font-size:15px}
       else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+(c.days||90)+" days: a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
       li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c,isLot&&i>0?"":lotUrl));
       {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:(isLot&&i===0?lotBid:null),item));if(d)li.append(d);}
+      if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
+      else if(isMine(p)){const m=el("span","deal d-me","💜 yours");m.title="One of Chris's personal interests: always shown";li.append(m);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
-    const bk=v.books||[];
+    if(low.length){const d=document.createElement("details");d.className="low";
+      const sum=low.reduce((t,[p])=>t+(+p.low||0),0);
+      d.append(el("summary",null,low.length+" low-value find"+(low.length>1?"s":"")+" hidden (under $"+CUTOFF+" each after fees, time and packing; ~"+money(sum)+" resale together, bundle filler)"));
+      const ol=el("ol");low.forEach(([p])=>ol.append(el("li",null,"$"+Math.round(p.low)+"–"+Math.round(p.high)+" · "+p.what)));d.append(ol);box.append(d);}
+    const bk=(v.books||[]).filter(b=>!/^\[\?photo\]/.test(b.why||"")&&!(isMystery(b)&&mState(mKey(id,b))==="hidden"));
     const lots={};bk.forEach(b=>{(lots[b.lot||"Books"]=lots[b.lot||"Books"]||[]).push(b);});
     Object.entries(lots).sort((x,y)=>y[1].reduce((t,b)=>t+(+b.hi||0),0)-x[1].reduce((t,b)=>t+(+b.hi||0),0)).forEach(([name,list])=>{
       const d=document.createElement("details");d.className="books";
@@ -441,10 +531,12 @@ body{margin:0;font-size:15px}
       const ol=el("ol");list.slice().sort((a,b)=>b.hi-a.hi).forEach(b=>{const li=el("li");
         if(/^\(\d+ more/.test(b.t)){li.textContent="$"+Math.round(b.lo)+"–"+Math.round(b.hi)+" · "+b.t;ol.append(li);return;}
         const q=encodeURIComponent((b.t+" "+(b.a||"")).trim());
-        li.append(link("https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q,"$"+Math.round(b.lo)+"–"+Math.round(b.hi)),document.createTextNode(" · "+b.t+(b.a?" — "+b.a:"")+(b.ed?" ("+b.ed+")":"")+(b.why?" · "+b.why:"")));
+        const why=String(b.why||"").replace(/^\[\?\]\s*/,""), unsure=isMystery(b);
+        li.append(link("https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q,"$"+Math.round(b.lo)+"–"+Math.round(b.hi)),document.createTextNode(" · "+(unsure?"\u2753 ":"")+b.t+(b.a?" — "+b.a:"")+(b.ed?" ("+b.ed+")":"")+(why?" · "+why:"")));
         if(b.ph){const ph=link(b.ph,"\u{1F4F7}");ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
         if(b.hi>=20||/key issue/.test(b.why||"")) li.className="good";ol.append(li);});
       d.append(ol);box.append(d);});
+    {const mb=mysteryBox(id); if(mb) box.append(mb);}
     const sw=el("button","signout","Show work");sw.type="button";sw.addEventListener("click",()=>showWork(id,box,sw));box.append(sw);
     box.title="From the vision model on Chris's desktop, looking at the listing photos. Price ranges are its estimates; tap one to see real eBay sold listings.";
     return box;
@@ -479,7 +571,7 @@ body{margin:0;font-size:15px}
     render();
     try{const r=await fetch(RELAY+"/sales-vote",{method:"POST",headers:{"X-Sales-Key":key,"Content-Type":"application/json"},body:JSON.stringify({item,voter:voter(),vote:nv,title:String(title||"").slice(0,200),kind:kind||"",note:""})});
       if(r.ok){const j=await r.json();votes[item]=[j.up,j.down];render();}}catch(e){}
-    if(nv) askWhy(item,nv,title,kind);
+    if(nv&&kind!=="mystery-book") askWhy(item,nv,title,kind);
   }
   const AI_CHIPS={"-1":["Wrong item","Value way off (too high)","Value way off (too low)","Not worth listing","Can't tell from the photo"],
                   "1":["Right item","Value looks right","Great catch"]};
@@ -634,6 +726,7 @@ body{margin:0;font-size:15px}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
       ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes&&!over) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id,true,parseFloat(String(x.bid||"").replace(/[$,]/g,""))||null,x);if(ai)d.append(ai);L.append(d);});
     $("#lots-sec").hidden=!lv.length;
+    renderResearch();
   }
 
   function renderStatus(){
