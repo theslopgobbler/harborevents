@@ -92,7 +92,7 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ended{opacity:.55}.ended .when{color:var(--bad);font-weight:700}
 .deal{display:inline-block;margin-left:6px;font:700 12px/1 var(--body);padding:4px 8px;border-radius:999px;vertical-align:middle;white-space:nowrap}
 .deal.d-hot{background:#b3261e;color:#fff}.deal.d-ok{background:#1e6b3a;color:#fff}.deal.d-uni{background:#5b2a86;color:#fff}
-.deal.d-mus{background:#6b4f1d;color:#fff}.deal.d-me{background:#a8326e;color:#fff}.deal.d-rj{background:#8a6d1f;color:#fff}
+.deal.d-mus{background:#6b4f1d;color:#fff}.deal.d-me{background:#a8326e;color:#fff}.deal.d-rj{background:#8a6d1f;color:#fff}.deal.d-jes{background:#2a6f86;color:#fff}
 details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary{cursor:pointer}.deal.d-q{background:var(--line);color:var(--ink)}.deal.d-plain{border:1px solid var(--line);color:var(--muted)}
 .nowbtn{font:600 12px/1 var(--body);border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 8px;cursor:pointer;vertical-align:middle}
 .nowbtn.ok{border-style:solid;border-color:var(--estate);color:var(--estate)}
@@ -230,6 +230,7 @@ body{margin:0;font-size:15px}
     <button class="chipbtn" id="f-estate" data-type="estate" aria-pressed="false">Estate</button>
     <button class="chipbtn" id="f-garage" data-type="garage" aria-pressed="false">Garage / yard</button>
     <button class="chipbtn" id="f-auction" data-type="auction" aria-pressed="false">Auctions</button>
+    <button class="chipbtn" id="f-storage" data-type="storage" aria-pressed="false">Storage</button>
     <button class="chipbtn" id="f-finds" data-type="finds" aria-pressed="false">Good finds</button>
     <span class="spacer"></span>
     <label for="dist" class="status">Within</label>
@@ -257,7 +258,7 @@ body{margin:0;font-size:15px}
   </section>
 
   <section id="lots-sec" aria-labelledby="h-lots" hidden>
-    <h2 id="h-lots">Lots to watch <small>single HiBid lots within 100 mi, best first</small></h2>
+    <h2 id="h-lots">Lots to watch <small id="c-lots">single lots and storage units, best first</small></h2>
     <div id="lots" class="day"></div>
   </section>
 
@@ -368,7 +369,10 @@ body{margin:0;font-size:15px}
   // RJ collects ancient coins: tag them for him and always show them too
   const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic)\b/i;
   function isRJ(p){return RJ.test(String(p.what||"")+" "+String(p.why||""));}
-  function isMine(p){return PERSONAL.test(String(p.what||"")+" "+String(p.why||""))||isRJ(p);}
+  // Jessie: jewelry features (micromosaic, cameo, reverse glass, niello, Siam silver, signed jewelry, hallmarks; not Hallmark the store)
+  const JESSIE=/\b(micro[- ]?mosaics?|cameos?|reverse[- ](painted|carved|etched|intaglio)?[- ]?glass|reverse intaglio|essex crystal|niello|siam(ese)? (silver|sterling|jewelry|bracelet|brooch|pin|earrings?)|siam|hallmark(s|ed)?(?! (keepsake|ornaments?|cards?|stores?|channel|movie))|signed (brooch|pin|necklace|bracelet|earrings?|ring|pendant|jewelry|cuff ?links?)|(trifari|coro|eisenberg|weiss|napier|haskell|juliana|sarah coventry|monet|kramer|schiaparelli|boucher|hobe|hollycraft|regency)\b.{0,30}(brooch|pin|necklace|bracelet|earrings?|pendant|jewelry))\b/i;
+  function isJessie(p){return JESSIE.test(String(p.what||"")+" "+String(p.why||""));}
+  function isMine(p){return PERSONAL.test(String(p.what||"")+" "+String(p.why||""))||isRJ(p)||isJessie(p);}
   function costs(p){const z=p.size||"";return (HANDLE[z]??2)+(SHIPFEE[z]??1.2)+(isOne(p)?TIME_RESEARCH:TIME);}
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
   // ---- deal score: what an AI find is worth to Chris at today's price
@@ -535,7 +539,8 @@ body{margin:0;font-size:15px}
       li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c,isLot&&i>0?"":lotUrl));
       {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:(isLot&&i===0?lotBid:null),item));if(d)li.append(d);}
       if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
-      else if(isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
+      if(isJessie(p)){const m=el("span","deal d-jes","💎 Jessie");m.title="Jewelry Jessie looks for (micromosaic, cameo, reverse glass, niello, Siam silver, signed, hallmarked): always shown";li.append(m);}
+      if(!isRJ(p)&&!isJessie(p)&&isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     if(low.length){const d=document.createElement("details");d.className="low";
       const sum=low.reduce((t,[p])=>t+(+p.low||0),0);
@@ -741,7 +746,7 @@ body{margin:0;font-size:15px}
   function render(){
     const t=today();
     const vis=sales.filter(s=>s.end>=t && (s.dist==null||s.dist<=fdist) &&
-      (ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild||bestTag(s.id,s)))));
+      ftype!=="storage"&&(ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild||bestTag(s.id,s)))));
     renderCal(vis,t);
     const inp=vis.filter(s=>s.type!=="online"), onl=vis.filter(s=>s.type==="online");
     const days=$("#days"); days.replaceChildren();
@@ -757,7 +762,7 @@ body{margin:0;font-size:15px}
     const on=$("#online"); on.replaceChildren();
     onl.sort((a,b)=>a.end.localeCompare(b.end)).forEach(s=>on.append(card(s,t)));
     $("#online-sec").hidden=!onl.length;
-    const lv=lots.filter(x=>!x.closes||x.closes>=t).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
+    const lv=lots.filter(x=>(!x.closes||x.closes>=t)&&(ftype==="storage"?x.category==="storage":!(ftype==="estate"||ftype==="garage")||x.category!=="storage")).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
     const L=$("#lots"); L.replaceChildren();
     lv.forEach(x=>{const over=lotEnded(x,t);const d=el("div","lot"+((x.score||0)>=3?" hot":"")+(over?" ended":""));d.append(link(x.url,x.title));
       d.firstChild.className="lt";
@@ -765,8 +770,13 @@ body{margin:0;font-size:15px}
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
       ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes&&!over) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id,true,parseFloat(String(x.bid||"").replace(/[$,]/g,""))||null,x);if(ai)d.append(ai);L.append(d);});
-    $("#lots-sec").hidden=!lv.length;
-    renderResearch();
+    const st=ftype==="storage";
+    $("#inperson").hidden=st; $("#online-sec").hidden=st||!onl.length; 
+    $("#h-lots").firstChild.textContent=st?"Storage units ":"Lots to watch ";
+    $("#c-lots").textContent=st?(lv.length?lv.length+" unit"+(lv.length>1?"s":"")+" worth a look, best first":""):"single lots and storage units, best first";
+    if(st&&!lv.length) L.append(el("div","empty","No storage units on the list yet. The storage auction scout adds the ones worth a look every afternoon."));
+    $("#lots-sec").hidden=!lv.length&&!st;
+    renderResearch(); if(ftype==="storage") $("#research-sec").hidden=true;
   }
 
   function renderStatus(){
