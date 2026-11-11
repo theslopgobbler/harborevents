@@ -108,6 +108,9 @@ details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary
 .ai .signout{display:block;margin-top:6px;font-size:12.5px}
 .ai .lottotal{margin:6px 0 2px;padding:5px 8px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
 .ai .lottotal b{color:var(--ink)}
+#who .whol{list-style:none;padding:0;margin:4px 0 0;grid-column:1/-1;font-size:13.5px}
+#who .whol li{padding:4px 8px;border-radius:3px}#who .whol li:nth-child(odd){background:rgba(127,127,127,.14)}
+#who .muted{color:var(--muted)}
 .work{margin-top:6px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .thumbs{display:flex;flex-wrap:wrap;gap:6px}
 .mystery{margin:8px 0 4px;padding:6px 8px;border-radius:4px;background:var(--chip)}
@@ -236,6 +239,9 @@ body{margin:0;font-size:15px}
     <button class="chipbtn" id="f-auction" data-type="auction" aria-pressed="false">Auctions</button>
     <button class="chipbtn" id="f-storage" data-type="storage" aria-pressed="false">Storage</button>
     <button class="chipbtn" id="f-finds" data-type="finds" aria-pressed="false">Good finds</button>
+    <button class="chipbtn" id="f-chris" data-type="who:chris" aria-pressed="false" title="Everything tagged for Chris">💜 Chris</button>
+    <button class="chipbtn" id="f-jessie" data-type="who:jessie" aria-pressed="false" title="Jewelry tagged for Jessie">💎 Jessie</button>
+    <button class="chipbtn" id="f-rj" data-type="who:rj" aria-pressed="false" title="Ancient coins and floor edgers for RJ">🪙 RJ</button>
     <span class="spacer"></span>
     <label for="dist" class="status">Within</label>
     <select id="dist">
@@ -245,6 +251,11 @@ body{margin:0;font-size:15px}
       <option value="999">Any</option>
     </select>
   </div>
+
+  <section id="who-sec" aria-labelledby="h-who" hidden>
+    <h2 id="h-who">Wish list <small id="c-who"></small></h2>
+    <div id="who" class="day"></div>
+  </section>
 
   <section id="research-sec" aria-labelledby="h-res" hidden>
     <h2 id="h-res">Books to research <small id="c-res">mystery books someone gave a 👍</small></h2>
@@ -368,16 +379,52 @@ body{margin:0;font-size:15px}
   const TIME=5, TIME_RESEARCH=10, CUTOFF=5;
   const HANDLE={card:0.5,small:1,medium:4,large:15,freight:30,"":2}, SHIPFEE={card:0.6,small:0.9,medium:2,large:3.5,freight:0,"":1.2};
   // nude/figure art only (not every statue: a lighthouse statue isn't his thing), SDRs, arcade, bones and skulls
-  const PERSONAL=/\b(nudes?|nudity|naked|figural (nude|woman|female|lady)|female (nude|figure|form)|(bronze|french|art deco|art nouveau|cast[- ]stone|concrete|marble|plaster) (nude|lady|woman|maiden|venus|nymph|female figure)|venus|nymphs?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade|coin[- ]?op|skulls?|bones?|skeleton|vertebrae?|antlers?)\b/i;
+  const PERSONAL=/\b(nudes?|nudity|naked|figural (nude|woman|female|lady)|female (nude|figure|form)|(bronze|french|art deco|art nouveau|cast[- ]stone|concrete|marble|plaster) (nude|lady|woman|maiden|venus|nymph|female figure)|venus|nymphs?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade (cabinet|game|machine)|pinball|skulls?|bones?|skeleton|vertebrae?|antlers?)\b/i;
   function isOne(p){return (p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);}
   // RJ collects ancient coins: tag them for him and always show them too
-  const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic)\b/i;
+  const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic|floor edgers?|edging sanders?|edger sanders?|(floor|wood ?floor|hardwood) sanders?.{0,20}edg\w*|edg\w* .{0,20}(floor )?sanders?|super ?7r|super edger|bona edge|clarke (super )?edger|american sanders? (super )?(7r|edger)|essex silverline edger|galaxy edger|l[aä]gler (flip|elan|unico)? ?edger)\b/i;
   // tags match the find's name only: the AI's 'why' says things like "fits Chris's interest in figural art" about horse paintings
   function isRJ(p){return RJ.test(String(p.what||""));}
   // Jessie: jewelry features (micromosaic, cameo, reverse glass, niello, Siam silver, signed jewelry, hallmarks; not Hallmark the store)
   const JESSIE=/\b(micro[- ]?mosaics?|cameos?|reverse[- ](painted|carved|etched|intaglio)?[- ]?glass|reverse intaglio|essex crystal|niello|siam(ese)? (silver|sterling|jewelry|bracelet|brooch|pin|earrings?)|siam|hallmark(s|ed)?(?! (keepsake|ornaments?|cards?|stores?|channel|movie))|signed (brooch|pin|necklace|bracelet|earrings?|ring|pendant|jewelry|cuff ?links?)|(trifari|coro|eisenberg|weiss|napier|haskell|juliana|sarah coventry|monet|kramer|schiaparelli|boucher|hobe|hollycraft|regency)\b.{0,30}(brooch|pin|necklace|bracelet|earrings?|pendant|jewelry))\b/i;
   function isJessie(p){return JESSIE.test(String(p.what||""));}
-  function isMine(p){return PERSONAL.test(String(p.what||""))||isRJ(p)||isJessie(p);}
+  // pull-tab dispensers, slots, vending and claw machines get called "arcade" by the AI: not Chris's thing
+  const NOT_ARCADE=/pull[- ]?tabs?|ticket (dispenser|vend)|slot machine|vending|gumball|candy machine|change machine|claw|crane|kiddie ride/i;
+  function isChris(p){const w=String(p.what||"");return PERSONAL.test(w)&&!NOT_ARCADE.test(w);}
+  const WHO={chris:{name:"Chris",icon:"💜",test:isChris,txt:t=>PERSONAL.test(t)&&!NOT_ARCADE.test(t)},
+             jessie:{name:"Jessie",icon:"💎",test:isJessie,txt:t=>JESSIE.test(t)},
+             rj:{name:"RJ",icon:"🪙",test:isRJ,txt:t=>RJ.test(t)}};
+  // everything on the list for one person: AI finds in the photos, plus matching lines in each listing's "Spotted" text
+  function whoFinds(w,t){const W=WHO[w],out=[];
+    const add=(item,kind,when)=>{const v=vision[item.id],hits=[];
+      (v&&v.picks||[]).forEach(p=>{if(W.test(p))hits.push({p});});
+      const txt=[item.finds||"",kind==="lot"?item.title||"":""].join("; ");
+      txt.split(/;\s+|\.\s+(?=[A-Z])/).map(x=>x.trim().replace(/^[A-Z][A-Z-]{2,}(?:[ /&]+[A-Z][A-Z-]+)*(?:\s\([^)]{1,30}\)|\s[a-z][a-z-]{1,12})?:\s*/,"").replace(/\.$/,"")).filter(x=>x&&W.txt(x)).forEach(x=>{if(!hits.some(h=>h.p&&x.toLowerCase().includes(String(h.p.what).toLowerCase().slice(0,12))))hits.push({line:x});});
+      if(hits.length)out.push({item,kind,when,hits});};
+    sales.filter(s=>s.end>=t&&(s.dist==null||s.dist<=fdist)).forEach(s=>add(s,"sale",s.type==="online"?s.end:(s.start<t?t:s.start)));
+    lots.filter(x=>(!x.closes||x.closes>=t)&&(x.dist==null||x.dist<=fdist)).forEach(x=>add(x,"lot",x.closes||"9"));
+    return out.sort((a,b)=>String(a.when).localeCompare(String(b.when)));}
+  function renderWho(w,t){
+    const W=WHO[w],list=whoFinds(w,t),box=$("#who");box.replaceChildren();
+    $("#h-who").firstChild.textContent=W.icon+" "+W.name+"'s list ";
+    const n=list.reduce((a,x)=>a+x.hits.length,0);
+    $("#c-who").textContent=n?n+" find"+(n>1?"s":"")+" at "+list.length+" sale"+(list.length>1?"s":"")+" or lot"+(list.length>1?"s":""):"";
+    if(!list.length) box.append(el("div","empty","Nothing for "+W.name+" on the list right now."));
+    list.forEach(({item,kind,when,hits})=>{
+      const d=el("div","lot");const go=(item.direct&&/^https?:/.test(item.direct))?item.direct:item.url;
+      d.append(go?link(go,item.title):el("span",null,item.title));d.firstChild.className="lt";
+      d.append(el("div","bid",(kind==="lot"?(item.bid||"")+" · ends ":item.type==="online"?"ends ":"")+(when===t?"today":short(when))));
+      const ln=el("div","ln");ln.append(document.createTextNode([kind==="lot"?item.company:(label[item.type]||item.type),item.town,item.dist!=null?item.dist+" mi":""].filter(Boolean).join(" · ")+" "));
+      const j=el("button","nowedit","jump to it ↓");j.type="button";j.addEventListener("click",()=>{ftype="all";document.querySelectorAll(".filters .chipbtn").forEach(x=>x.setAttribute("aria-pressed",x.dataset.type==="all"));render();setTimeout(()=>jumpTo(item.id),50);});ln.append(j);d.append(ln);
+      const ul=el("ul");ul.className="whol";hits.forEach(h=>{const li=el("li");
+        if(h.p){const p=h.p;li.append(document.createTextNode("$"+Math.round(p.low)+"–"+Math.round(p.high)+" · "));li.append(p.link&&/^https?:/.test(p.link)?link(p.link,p.what+" ↗"):document.createTextNode(p.what));
+          if(p.url){const ph=link(p.url,"\u{1F4F7}");ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
+          if(p.why) li.append(el("span","muted"," ("+p.why+")"));}
+        else{li.append(document.createTextNode(h.line+" "));li.append(el("span","muted","(from the listing)"));}
+        ul.append(li);});
+      d.append(ul);box.append(d);});
+  }
+  function isMine(p){const w=String(p.what||"");return (PERSONAL.test(w)&&!NOT_ARCADE.test(w))||isRJ(p)||isJessie(p);}
   function costs(p){if(p._cost!=null)return p._cost;const z=p.size||"";return (HANDLE[z]??2)+(SHIPFEE[z]??1.2)+(isOne(p)?TIME_RESEARCH:TIME);}
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
   // ---- deal score: what an AI find is worth to Chris at today's price
@@ -776,6 +823,14 @@ body{margin:0;font-size:15px}
 
   function render(){
     const t=today();
+    const who=String(ftype).startsWith("who:")?ftype.slice(4):null;
+    $("#who-sec").hidden=!who;
+    if(who){
+      const ids=new Set(whoFinds(who,t).map(x=>x.item.id));
+      renderCal(sales.filter(s=>ids.has(s.id)),t);
+      ["#inperson","#online-sec","#lots-sec","#research-sec"].forEach(q=>$(q).hidden=true);
+      renderWho(who,t);return;}
+    $("#inperson").hidden=false;
     const vis=sales.filter(s=>s.end>=t && (s.dist==null||s.dist<=fdist) &&
       ftype!=="storage"&&(ftype==="all"||s.type===ftype||(ftype==="auction"&&s.type==="online")||(ftype==="finds"&&((s.interest||0)>=2||s.wild||bestTag(s.id,s)))));
     renderCal(vis,t);
