@@ -87,6 +87,8 @@ dialog.why .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
 .ai li{margin:3px 0}
 .now{margin-left:6px}
 .ai .photo-link{text-decoration:none}
+dialog.phview{width:min(960px,calc(100vw - 24px));padding:10px}dialog.phview img{display:block;max-width:100%;max-height:78vh;margin:0 auto;border-radius:4px}
+dialog.phview .row{align-items:center}button.photo-link{background:none;border:0;padding:0 2px;cursor:pointer;font:inherit}
 .ai .comps{font-weight:600;white-space:nowrap}
 .ai .books{margin:6px 0}.ai .books summary{cursor:pointer;font-weight:700}.ai .books ol{margin:6px 0 0;padding-left:20px;max-height:340px;overflow:auto}
 .ai .books li{margin:2px 0}.ai .books li.good{font-weight:700}
@@ -288,6 +290,10 @@ body{margin:0;font-size:15px}
     </form>
   </dialog>
 
+  <dialog class="why phview" id="phv" aria-label="Photo">
+    <img id="phv-img" alt="" referrerpolicy="no-referrer">
+    <div class="row"><a id="phv-lot" target="_blank" rel="noopener" hidden>Open the lot page ↗</a><span style="flex:1"></span><button class="chipbtn" type="button" id="phv-close">Close</button></div>
+  </dialog>
   <dialog class="why" id="rem" aria-labelledby="rem-h">
     <h3 id="rem-h">Remind me</h3>
     <p class="what" id="rem-what"></p>
@@ -420,7 +426,7 @@ body{margin:0;font-size:15px}
       const j=el("button","nowedit","jump to it ↓");j.type="button";j.addEventListener("click",()=>{ftype="all";document.querySelectorAll(".filters .chipbtn").forEach(x=>x.setAttribute("aria-pressed",x.dataset.type==="all"));render();setTimeout(()=>jumpTo(item.id),50);});ln.append(j);d.append(ln);
       const ul=el("ul");ul.className="whol";hits.forEach(h=>{const li=el("li");
         if(h.p){const p=h.p;li.append(document.createTextNode("$"+Math.round(p.low)+"–"+Math.round(p.high)+" · "));li.append(p.link&&/^https?:/.test(p.link)?link(p.link,p.what+" ↗"):document.createTextNode(p.what));
-          if(p.url){const ph=link(p.url,"\u{1F4F7}");ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
+          if(p.url) li.append(document.createTextNode(" "),photoBtn(p.url,kind==="lot"?item.url:(p.link||item.direct||item.url),p.what));
           if(p.why) li.append(el("span","muted"," ("+p.why+")"));}
         else{li.append(document.createTextNode(h.line+" "));li.append(el("span","muted","(from the listing)"));}
         ul.append(li);});
@@ -587,7 +593,7 @@ body{margin:0;font-size:15px}
       const q=encodeURIComponent(ebayWords(p)), sold="https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q;
       li.append(link(sold+"&_sop=15","$"+Math.round(p.low)),document.createTextNode("–"),link(sold+"&_sop=16","$"+Math.round(p.high)),document.createTextNode(" · "));
       const tgt=findTarget(p,item), lotUrl=isLot&&i===0?item&&item.url:(p.link||tgt); li.append(tgt?link(tgt,p.what+" ↗"):document.createTextNode(p.what));
-      if(p.url){const ph=link(p.url,"\u{1F4F7}");ph.title="The photo the AI looked at (may not be the exact one)";ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
+      if(p.url) li.append(document.createTextNode(" "),photoBtn(p.url,isLot?item&&item.url:(p.link||tgt),"The photo the AI looked at (may not be the exact one)"));
       if(p.why) li.append(document.createTextNode(" ("+p.why+")"));
       // real eBay sold prices for this find, looked up on the eBay Research tab by the desktop script
       const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
@@ -624,6 +630,9 @@ body{margin:0;font-size:15px}
       const sum=low.reduce((t,[p])=>t+(+p.low||0),0);
       d.append(el("summary",null,low.length+" low-value find"+(low.length>1?"s":"")+" hidden (under $"+CUTOFF+" each after fees, time and packing; ~"+money(sum)+" resale together, bundle filler)"));
       const ol=el("ol");low.forEach(([p])=>ol.append(el("li",null,"$"+Math.round(p.low)+"–"+Math.round(p.high)+" · "+p.what)));d.append(ol);box.append(d);}
+    // which lot page each book belongs to: a single lot's page, or (in a catalog) the lot link on the book-lot / standout finds
+    const bookLot={};if(!isLot)all.forEach(p=>{if(!p.link)return;const m=String(p.what).match(/^Book lot - (.+?): \d+/);if(m)bookLot["L:"+m[1].slice(0,60)]=p.link;if(p.url)bookLot["P:"+p.url]=p.link;});
+    const lotOf=b=>isLot?(item&&item.url):(bookLot["L:"+(b.lot||"")]||bookLot["P:"+(b.ph||"")]||"");
     const bk=(v.books||[]).filter(b=>!/^\[\?photo\]/.test(b.why||"")&&!(isMystery(b)&&mState(mKey(id,b))==="hidden"));
     const lots={};bk.forEach(b=>{(lots[b.lot||"Books"]=lots[b.lot||"Books"]||[]).push(b);});
     Object.entries(lots).sort((x,y)=>y[1].reduce((t,b)=>t+(+b.hi||0),0)-x[1].reduce((t,b)=>t+(+b.hi||0),0)).forEach(([name,list])=>{
@@ -632,13 +641,15 @@ body{margin:0;font-size:15px}
       const more=list.filter(b=>/^\(\d+ more/.test(b.t)).reduce((t,b)=>t+(+(b.t.match(/\d+/)||[0])[0]),0);
       const kind=(list[0]&&list[0].k)||"books",cnt=list.length-list.filter(b=>/^\(\d+ more/.test(b.t)).length+more;
       const icon=kind==="books"?"\u{1F4DA}":kind==="magazines"?"\u{1F4F0}":"\u{1F4D5}";
-      const s=document.createElement("summary");s.textContent=icon+" "+(name==="Books"?"":name+" · ")+cnt+" "+kind+(more?" ("+(cnt-more)+" read one by one)":" read one by one")+" · about "+money(lo)+"–"+money(hi)+(kind!=="books"?" at back-issue prices":"");d.append(s);
+      const s=document.createElement("summary");const gl=list.map(lotOf).find(Boolean);s.textContent=icon+" "+(name==="Books"?"":name+" · ")+cnt+" "+kind+(more?" ("+(cnt-more)+" read one by one)":" read one by one")+" · about "+money(lo)+"–"+money(hi)+(kind!=="books"?" at back-issue prices":"");if(gl){s.append(document.createTextNode(" "));const a=link(gl,"lot page ↗");a.addEventListener("click",e=>e.stopPropagation());s.append(a);}d.append(s);
       const ol=el("ol");list.slice().sort((a,b)=>b.hi-a.hi).forEach(b=>{const li=el("li");
         if(/^\(\d+ more/.test(b.t)){li.textContent="$"+Math.round(b.lo)+"–"+Math.round(b.hi)+" · "+b.t;ol.append(li);return;}
         const q=encodeURIComponent((b.t+" "+(b.a||"")).trim());
         const why=String(b.why||"").replace(/^\[\?\]\s*/,""), unsure=isMystery(b);
-        li.append(link("https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q,"$"+Math.round(b.lo)+"–"+Math.round(b.hi)),document.createTextNode(" · "+(unsure?"\u2753 ":"")+b.t+(b.a?" — "+b.a:"")+(b.ed?" ("+b.ed+")":"")+(why?" · "+why:"")));
-        if(b.ph){const ph=link(b.ph,"\u{1F4F7}");ph.className="photo-link";li.append(document.createTextNode(" "),ph);}
+        const bl=lotOf(b),nm=(unsure?"\u2753 ":"")+b.t+(b.a?" — "+b.a:"")+(b.ed?" ("+b.ed+")":"");
+        li.append(link("https://www.ebay.com/sch/i.html?LH_Sold=1&LH_Complete=1&_nkw="+q,"$"+Math.round(b.lo)+"–"+Math.round(b.hi)),document.createTextNode(" · "));
+        li.append(bl?link(bl,nm+" ↗"):document.createTextNode(nm));if(why)li.append(document.createTextNode(" · "+why));
+        if(b.ph) li.append(document.createTextNode(" "),photoBtn(b.ph,bl,b.t));
         if(b.hi>=20||/key issue/.test(b.why||"")) li.className="good";ol.append(li);});
       d.append(ol);box.append(d);});
     {const mb=mysteryBox(id); if(mb) box.append(mb);}
@@ -736,6 +747,11 @@ body{margin:0;font-size:15px}
     const parts=t.split(/;\s+/).map(x=>x.trim().replace(/\.$/,"")).filter(Boolean);
     return parts.length>=3?parts.map(x=>["",x]):[["",t]];
   }
+  // 📷: show the photo in a viewer (some auction sites make a plain photo link download), with the lot page beside it
+  function photoBtn(src,lotUrl,title){const b=el("button","photo-link","\u{1F4F7}");b.type="button";b.title=title||"See the photo";
+    src=String(src).replace(/(hibid\.com\/img\.axd\?.*checksum=[^&]*)&.*$/,"$1"); // HiBid thumbnail -> full size
+    b.addEventListener("click",()=>{const d=$("#phv");$("#phv-img").src=src;$("#phv-img").alt=title||"";const a=$("#phv-lot");
+      if(lotUrl&&/^https?:/.test(lotUrl)){a.href=lotUrl;a.hidden=false;}else a.hidden=true;d.showModal();});return b;}
   function card(s,t){
     const over=saleEnded(s,t);
     const c=el("article","sale"+((s.interest||0)>=2?" hot":"")+(over?" ended":"")); c.dataset.t=s.type; c.id="sale-"+s.id;
@@ -884,6 +900,7 @@ body{margin:0;font-size:15px}
   {let wide=window.innerWidth>=1100;window.addEventListener("resize",()=>{const w=window.innerWidth>=1100;if(w!==wide){wide=w;render();}});}
   $("#dist").addEventListener("change",e=>{fdist=+e.target.value;try{localStorage.setItem("hsf-dist",e.target.value)}catch(_){};render();});
 
+  $("#phv-close").addEventListener("click",()=>$("#phv").close());$("#phv").addEventListener("click",e=>{if(e.target===$("#phv"))$("#phv").close();});
   const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
   const K={get:n=>{try{return localStorage.getItem(n)}catch(e){return null}},set:(n,v)=>{try{v?localStorage.setItem(n,v):localStorage.removeItem(n)}catch(e){}}};
   function apply(j){
