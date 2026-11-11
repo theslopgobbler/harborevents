@@ -14,17 +14,17 @@
 /* Layout: one narrow route-sheet column — filters up top, in-person sales grouped by day, online auctions below */
 :root{
   --bg:#eef1f3; --panel:#ffffff; --ink:#18212a; --muted:#5b6872; --line:#d3dade;
-  --sign:#e2541b; --estate:#16706a; --auction:#7a3e8c; --garage:#e2541b; --online:#3a5f9e;
+  --sign:#e2541b; --estate:#16706a; --auction:#7a3e8c; --garage:#e2541b; --online:#3a5f9e; --storage:#8c6a12;
   --chip:#e3e8eb; --bad:#c62a22;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#12171c; --panel:#1b232a; --ink:#e6ecef; --muted:#97a5ae; --line:#2c3740;
-  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; --bad:#ff5a4f; color-scheme:dark}}
+  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --storage:#e0b44c; --chip:#26313a; --bad:#ff5a4f; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12171c; --panel:#1b232a; --ink:#e6ecef; --muted:#97a5ae; --line:#2c3740;
-  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --chip:#26313a; --bad:#ff5a4f; color-scheme:dark}
+  --sign:#ff7a3d; --estate:#4cc2b6; --auction:#c48ad6; --garage:#ff7a3d; --online:#7fa6e6; --storage:#e0b44c; --chip:#26313a; --bad:#ff5a4f; color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
 .wrap{max-width:760px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
 header{display:flex;flex-direction:column;gap:6px}
@@ -56,6 +56,7 @@ h2 small{font-family:var(--body);font-size:13px;text-transform:none;letter-spaci
 .sale[data-t="estate"]{--c:var(--estate)} .sale[data-t="garage"]{--c:var(--garage)} .sale[data-t="auction"]{--c:var(--auction)} .sale[data-t="online"]{--c:var(--online)}
 .top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
 .title{font-weight:600;font-size:16px;margin:0;min-width:0;overflow-wrap:anywhere}
+.title a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}.title a:hover{text-decoration-color:currentColor}
 .when{font-family:var(--display);font-weight:600;font-size:15px;white-space:nowrap;color:var(--c);text-transform:uppercase;letter-spacing:.03em}
 .meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12.5px}
 .tag{background:var(--chip);border-radius:4px;padding:2px 7px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -105,6 +106,8 @@ details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary
 .ai li .votes{margin-left:6px;vertical-align:middle}
 .ai li .vb{padding:2px 7px;font-size:12px}
 .ai .signout{display:block;margin-top:6px;font-size:12.5px}
+.ai .lottotal{margin:6px 0 2px;padding:5px 8px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.ai .lottotal b{color:var(--ink)}
 .work{margin-top:6px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .thumbs{display:flex;flex-wrap:wrap;gap:6px}
 .mystery{margin:8px 0 4px;padding:6px 8px;border-radius:4px;background:var(--chip)}
@@ -175,14 +178,15 @@ body{margin:0;font-size:15px}
 .cev.ended{opacity:.5}.cev.ended b{text-decoration:line-through}
 .cev:hover{filter:brightness(.96)}
 .cev:focus-visible,.cmore:focus-visible{outline:2px solid var(--sign);outline-offset:1px}
-.cev[data-t="estate"]{--c:var(--estate)} .cev[data-t="garage"]{--c:var(--garage)} .cev[data-t="auction"]{--c:var(--auction)} .cev[data-t="online"]{--c:var(--online)}
+.cev[data-t="estate"]{--c:var(--estate)} .cev[data-t="garage"]{--c:var(--garage)} .cev[data-t="auction"]{--c:var(--auction)} .cev[data-t="online"]{--c:var(--online)} .cev[data-t="storage"]{--c:var(--storage)}
 .cmore{font:600 11px var(--body);background:none;border:0;color:var(--muted);text-align:left;padding:0 2px;cursor:pointer;text-decoration:underline}
 .cnone{color:var(--muted);opacity:.5;font-size:12px;padding:0 2px}
 .ckey{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);margin:0}
 .ckey i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px;background:var(--c)}
 .ckey .hot{color:var(--sign);font-style:normal}
 .sale{scroll-margin-top:72px}
-.sale.flash{animation:calflash 1.8s ease-out}
+.sale.flash,.lot.flash{animation:calflash 1.8s ease-out}
+.lot{scroll-margin-top:72px}
 @keyframes calflash{from{box-shadow:0 0 0 3px var(--sign)}to{box-shadow:0 0 0 3px transparent}}
 @media (max-width:640px){
   .cal{display:flex;overflow-x:auto;scroll-snap-type:x proximity;gap:6px;margin-inline:-16px;padding:0 16px 6px;scrollbar-width:thin}
@@ -215,7 +219,7 @@ body{margin:0;font-size:15px}
   <section class="calsec" id="cal-sec" aria-labelledby="h-cal" hidden>
     <h2 id="h-cal">Next two weeks <small id="c-cal"></small></h2>
     <div id="cal" class="cal" role="list"></div>
-    <p class="ckey"><span><i style="--c:var(--estate)"></i>Estate</span><span><i style="--c:var(--garage)"></i>Garage / yard</span><span><i style="--c:var(--auction)"></i>Auction</span><span><i style="--c:var(--online)"></i>Online (closing day)</span><span><em class="hot">★</em> worth a look</span><span>Tap a sale to jump to it</span></p>
+    <p class="ckey"><span><i style="--c:var(--estate)"></i>Estate</span><span><i style="--c:var(--garage)"></i>Garage / yard</span><span><i style="--c:var(--auction)"></i>Auction</span><span><i style="--c:var(--online)"></i>Online (closing day)</span><span><i style="--c:var(--storage)"></i>Storage unit (closing day)</span><span><em class="hot">★</em> worth a look</span><span>Tap a sale to jump to it</span></p>
   </section>
 
   <form class="gate" id="gate" hidden>
@@ -374,7 +378,7 @@ body{margin:0;font-size:15px}
   const JESSIE=/\b(micro[- ]?mosaics?|cameos?|reverse[- ](painted|carved|etched|intaglio)?[- ]?glass|reverse intaglio|essex crystal|niello|siam(ese)? (silver|sterling|jewelry|bracelet|brooch|pin|earrings?)|siam|hallmark(s|ed)?(?! (keepsake|ornaments?|cards?|stores?|channel|movie))|signed (brooch|pin|necklace|bracelet|earrings?|ring|pendant|jewelry|cuff ?links?)|(trifari|coro|eisenberg|weiss|napier|haskell|juliana|sarah coventry|monet|kramer|schiaparelli|boucher|hobe|hollycraft|regency)\b.{0,30}(brooch|pin|necklace|bracelet|earrings?|pendant|jewelry))\b/i;
   function isJessie(p){return JESSIE.test(String(p.what||""));}
   function isMine(p){return PERSONAL.test(String(p.what||""))||isRJ(p)||isJessie(p);}
-  function costs(p){const z=p.size||"";return (HANDLE[z]??2)+(SHIPFEE[z]??1.2)+(isOne(p)?TIME_RESEARCH:TIME);}
+  function costs(p){if(p._cost!=null)return p._cost;const z=p.size||"";return (HANDLE[z]??2)+(SHIPFEE[z]??1.2)+(isOne(p)?TIME_RESEARCH:TIME);}
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
   // ---- deal score: what an AI find is worth to Chris at today's price
   // value = eBay sold median when 3+ close matches (else blended with / or just the AI's middle guess); cost = price plus
@@ -537,12 +541,21 @@ body{margin:0;font-size:15px}
         a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?(c.matched>=3?", middle half of the close matches: ":": ")+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
         li.append(document.createTextNode(" · "),a);}
       else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+(c.days||90)+" days: a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
-      li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c,isLot&&i>0?"":lotUrl));
-      {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:(isLot&&i===0?lotBid:null),item));if(d)li.append(d);}
+      // in an auction lot the bid buys every find together, so price and deal are judged for the whole lot below
+      if(!isLot){li.append(priceChip(id+"~p"+i,p,null,c,lotUrl));
+        {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:null,item));if(d)li.append(d);}}
       if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
       if(isJessie(p)){const m=el("span","deal d-jes","💎 Jessie");m.title="Jewelry Jessie looks for (micromosaic, cameo, reverse glass, niello, Siam silver, signed, hallmarked): always shown";li.append(m);}
       if(!isRJ(p)&&!isJessie(p)&&isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
+    if(isLot&&all.length){
+      // the whole lot: add up every find's low and high (eBay's middle range where it has 3+ close matches), then judge the bid
+      let lo=0,hi=0,cost=0;all.forEach(p=>{const c=ck(p),eb=c&&c.matched>=3&&c.low>0&&c.high>0;lo+=eb?c.low:(+p.low||0);hi+=eb?c.high:(+p.high||0);cost+=costs(p);});
+      const P={what:"the whole lot ("+all.length+" find"+(all.length>1?"s":"")+")",low:lo,high:hi,_cost:cost};
+      const row=el("div","lottotal");row.append(el("b",null,"Lot total"),document.createTextNode(money(lo)+"–"+money(hi)+" for "+all.length+" find"+(all.length>1?"s":"")+(low.length?" (incl. "+low.length+" low-value)":"")+" "));
+      row.append(priceChip(id+"~p0",P,lotBid,null,item&&item.url));
+      {const saved=prices[id+"~p0"];const d=dealChip(dealOf(P,null,saved?saved[0]:lotBid,item));if(d)row.append(d);}
+      box.append(row);}
     if(low.length){const d=document.createElement("details");d.className="low";
       const sum=low.reduce((t,[p])=>t+(+p.low||0),0);
       d.append(el("summary",null,low.length+" low-value find"+(low.length>1?"s":"")+" hidden (under $"+CUTOFF+" each after fees, time and packing; ~"+money(sum)+" resale together, bundle filler)"));
@@ -636,7 +649,7 @@ body{margin:0;font-size:15px}
   function fmtDay(s){return parse(s).toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});}
   function short(s){return parse(s).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});}
   function dayDiff(a,b){return Math.round((parse(b)-parse(a))/864e5);}
-  const label={estate:"Estate sale",garage:"Garage / yard",auction:"Auction",online:"Online auction"};
+  const label={estate:"Estate sale",garage:"Garage / yard",auction:"Auction",online:"Online auction",storage:"Storage unit"};
   function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
   function link(href,text){const a=el("a",null,text);a.href=href;a.target="_blank";a.rel="noopener";return a;}
 
@@ -662,7 +675,9 @@ body{margin:0;font-size:15px}
   function card(s,t){
     const over=saleEnded(s,t);
     const c=el("article","sale"+((s.interest||0)>=2?" hot":"")+(over?" ended":"")); c.dataset.t=s.type; c.id="sale-"+s.id;
-    const top=el("div","top"); top.append(el("h3","title",s.title));
+    // the title is the link: straight to the auction / sale page when there is one, else the listing
+    const top=el("div","top"),h3=el("h3","title"),go=(s.direct&&/^https?:/.test(s.direct))?s.direct:(s.url&&/^https?:/.test(s.url)?s.url:"");
+    h3.append(go?link(go,s.title):document.createTextNode(s.title)); top.append(h3);
     let when="";
     if(s.type==="online"){const n=dayDiff(t,s.end); when= n<=0?"Ends today":n===1?"Ends tomorrow":"Ends "+short(s.end);
       const et=endTime(s.endsAt); if(et) when+=" · "+et;}
@@ -695,8 +710,6 @@ body{margin:0;font-size:15px}
     const ai=aiBox(s.id,false,null,s); if(ai) c.append(ai);
     if(s.summary) c.append(el("p","sum",s.summary));
     const l=el("div","links");
-    if(s.direct&&/^https?:/.test(s.direct)){l.append(link(s.direct,(s.type==="online"||s.type==="auction"?"Open auction":"Open sale page")+" ↗")); if(s.url) l.append(link(s.url,"listing ↗"));}
-    else if(s.url) l.append(link(s.url,"Open listing ↗"));
     if(remindable(s)&&!over) l.append(remindBtn(s.id,s.title,s.direct||s.url,s.type==="online"?"auction":"sale",s.endsAt,s.end,s.start));
     l.append(voteBar(s.id,s.title,s.type));
     if(s.source) l.append(el("span","status","via "+s.source)); c.append(l);
@@ -708,7 +721,7 @@ body{margin:0;font-size:15px}
   function addDays(s,n){const d=parse(s);d.setDate(d.getDate()+n);const p=x=>String(x).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());}
   function calTime(s,k){
     const ct=iso=>endTime(iso).replace(":00","").replace(/\s*(AM|PM)$/,(x,y)=>y.toLowerCase());
-    if(s.type==="online"){const et=ct(s.endsAt);return "ends"+(et?" "+et:"");}
+    if(s.type==="online"||s.type==="storage"){const et=ct(s.endsAt);return "ends"+(et?" "+et:"");}
     if(s.type==="auction"&&ct(s.endsAt)) return "live "+ct(s.endsAt);
     const h=String(s.hours||"").replace(/\s+/g," ");
     const m=h.match(/(\d{1,2}(?::\d\d)?)\s*(am|pm|a\.m\.|p\.m\.)?\s*(?:–|-|to)\s*(\d{1,2}(?::\d\d)?)\s*(am|pm|a\.m\.|p\.m\.)?/i);
@@ -719,11 +732,14 @@ body{margin:0;font-size:15px}
     c.scrollIntoView({behavior:"smooth",block:"start"});c.classList.remove("flash");void c.offsetWidth;c.classList.add("flash");}
   function renderCal(vis,t){
     const cal=$("#cal"); if(!cal) return; cal.replaceChildren();
-    $("#cal-sec").hidden=!sales.length;
+    $("#cal-sec").hidden=!sales.length&&!lots.length;
+    // storage units (from the storage auction scout) show on the day bidding closes
+    const units=(ftype==="all"||ftype==="storage"||ftype==="auction")?lots.filter(x=>x.category==="storage"&&x.closes&&(x.dist==null||x.dist<=fdist))
+      .map(x=>({id:x.id,type:"storage",title:x.title,town:String(x.company||"").split(",").pop().trim()||x.title,dist:x.dist,interest:x.score,endsAt:x.closesAt,closes:x.closes,_lot:x})):[];
     let n=0;
     for(let i=0;i<14;i++){
       const k=addDays(t,i), d=parse(k), wd=d.getDay();
-      const items=vis.filter(s=>s.type==="online"?s.end===k:(s.start<=k&&s.end>=k))
+      const items=vis.filter(s=>s.type==="online"?s.end===k:(s.start<=k&&s.end>=k)).concat(units.filter(u=>u.closes===k))
         .sort((a,b)=>((b.interest||0)-(a.interest||0))||((a.dist??99)-(b.dist??99)));
       n+=items.length;
       const cell=el("div","cday"+(k===t?" today":"")+(wd===0||wd===6?" wkend":"")); cell.setAttribute("role","listitem");
@@ -731,7 +747,7 @@ body{margin:0;font-size:15px}
         el("b",null,String(d.getDate()))); h.title=fmtDay(k); cell.append(h);
       const cap=calOpen[k]?99:(window.innerWidth>=1100?8:4);
       items.slice(0,cap).forEach(s=>{
-        const b=el("button","cev"+((s.interest||0)>=2?" hot":"")+(saleEnded(s,t)?" ended":"")); b.type="button"; b.dataset.t=s.type;
+        const b=el("button","cev"+((s.interest||0)>=2?" hot":"")+((s._lot?lotEnded(s._lot,t):saleEnded(s,t))?" ended":"")); b.type="button"; b.dataset.t=s.type;
         const tm=calTime(s,k);
         b.append(el("b",null,s.town||s.title)); if(tm) b.append(el("span",null,tm));
         b.title=s.title+" · "+(label[s.type]||s.type)+(s.dist!=null?" · "+s.dist+" mi":"")+(s.hours?" · "+s.hours:"");
@@ -765,7 +781,7 @@ body{margin:0;font-size:15px}
     $("#online-sec").hidden=!onl.length;
     const lv=lots.filter(x=>(!x.closes||x.closes>=t)&&(ftype==="storage"?x.category==="storage":!(ftype==="estate"||ftype==="garage")||x.category!=="storage")).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
     const L=$("#lots"); L.replaceChildren();
-    lv.forEach(x=>{const over=lotEnded(x,t);const d=el("div","lot"+((x.score||0)>=3?" hot":"")+(over?" ended":""));d.append(link(x.url,x.title));
+    lv.forEach(x=>{const over=lotEnded(x,t);const d=el("div","lot"+((x.score||0)>=3?" hot":"")+(over?" ended":""));d.id="sale-"+x.id;d.append(link(x.url,x.title));
       d.firstChild.className="lt";
       d.append(el("div","bid",over?"Bidding ended (last seen "+(x.bid||"$0")+")":(x.bid||"$0")+(x.closes?" · ends "+(x.closes===t?"today":short(x.closes))+(endTime(x.closesAt)?" "+endTime(x.closesAt):""):"")));
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
