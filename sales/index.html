@@ -130,6 +130,9 @@ details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary
 .lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .finds{font-size:14px;margin:0;padding:6px 10px;border-radius:4px;background:var(--chip);max-width:65ch}
 .finds ul{margin:4px 0 0;padding-left:18px}
+.finds .fl{margin:3px 0 0;padding-left:0;list-style:none}
+.finds .fl li{margin:3px 0;padding-left:10px;border-left:2px solid var(--line)}
+.finds .fl .lab{font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin-right:6px}
 .finds a,.ai a{color:var(--ink);font-weight:600;text-underline-offset:2px}
 .finds b{color:var(--sign);font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:13px;margin-right:6px}
 .lot{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;min-width:0}
@@ -181,10 +184,10 @@ body{margin:0;font-size:15px}
 }
 @media (prefers-reduced-motion:reduce){.sale.flash{animation:none;box-shadow:0 0 0 3px var(--sign)}}
 /* Desktop (Nov 11 2026): the calendar uses the full width with roomier days; the lists stay one column (in person,
-   then online auctions, then lots), just a little wider than on a phone. Phones keep the single narrow column. */
+   then online auctions, then lots), as wide as the calendar. Phones keep the single narrow column. */
 @media (min-width:1100px){
   .wrap{max-width:1440px}
-  #research-sec,#inperson,#online-sec,#lots-sec,.wrap>.foot{width:100%;max-width:980px;align-self:center}
+  .ai,.finds{max-width:120ch}
   .cal{gap:8px}
   .cday{min-height:150px;padding:8px 7px;gap:5px}
   .cdh{font-size:14px}.cdh b{font-size:22px}
@@ -628,6 +631,21 @@ body{margin:0;font-size:15px}
   function saleEnded(s,t){if(s.type!=="online"&&s.type!=="auction")return false;const e=endDate(s.endsAt);
     return e?Date.now()>e.getTime()+150*60000:(s.end<t);}
   function lotEnded(x,t){const e=endDate(x.closesAt);return e?Date.now()>e.getTime()+15*60000:(x.closes&&x.closes<t);}
+  // "COMICS: a; b. SIGNED: c" -> one line per category; no categories but a list of 3+ things -> one line per thing
+  function findLines(t){
+    t=String(t||"").trim(); if(!t) return [];
+    const re=/(?:^|(?<=[.;)]\s)|(?<=\.\s?))([A-Z][A-Z-]{2,}(?:[ /&]+[A-Z][A-Z-]+)*(?:\s\([^)]{1,30}\)|\s[a-z][a-z-]{1,12})?):\s/g;
+    const hits=[...t.matchAll(re)];
+    if(hits.length){
+      const out=[]; const pre=t.slice(0,hits[0].index).trim().replace(/[.;]$/,""); if(pre) out.push(["",pre]);
+      hits.forEach((m,i)=>{const end=i+1<hits.length?hits[i+1].index:t.length;
+        let body=t.slice(m.index+m[0].length,end).trim().replace(/[.;]$/,"");
+        const also=body.match(/^(.*?)\.\s+(Also .*)$/); if(also){out.push([m[1],also[1]]);out.push(["",also[2].replace(/\.$/,"")]);}
+        else out.push([m[1],body]);});
+      return out;}
+    const parts=t.split(/;\s+/).map(x=>x.trim().replace(/\.$/,"")).filter(Boolean);
+    return parts.length>=3?parts.map(x=>["",x]):[["",t]];
+  }
   function card(s,t){
     const over=saleEnded(s,t);
     const c=el("article","sale"+((s.interest||0)>=2?" hot":"")+(over?" ended":"")); c.dataset.t=s.type; c.id="sale-"+s.id;
@@ -654,7 +672,10 @@ body{margin:0;font-size:15px}
       if(s.hours&&s.start!==s.end) a.append(document.createTextNode(" · "+s.hours));
       c.append(a);
     }
-    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"),document.createTextNode(s.finds||""));
+    if(s.finds||(s.findLinks||[]).length){const f=el("div","finds");f.append(el("b",null,"Spotted"));
+      const fl0=findLines(s.finds||"");
+      if(fl0.length>1){const ul=el("ul","fl");fl0.forEach(([lab,txt])=>{const li=el("li");if(lab)li.append(el("span","lab",lab));li.append(document.createTextNode(txt));ul.append(li);});f.append(ul);}
+      else f.append(document.createTextNode(s.finds||""));
       const fl=(s.findLinks||[]).filter(x=>x&&x.url&&/^https?:/.test(x.url)).slice(0,8);
       if(fl.length){const ul=el("ul");fl.forEach(x=>{const li=el("li");li.append(link(x.url,(x.text||"Item")+" ↗"));ul.append(li);});f.append(ul);}
       c.append(f);}
