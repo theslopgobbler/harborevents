@@ -180,6 +180,21 @@ body{margin:0;font-size:15px}
   .cday{flex:0 0 118px;scroll-snap-align:start}
 }
 @media (prefers-reduced-motion:reduce){.sale.flash{animation:none;box-shadow:0 0 0 3px var(--sign)}}
+/* Desktop (Nov 11 2026): use the width. Calendar full width with roomier days; in-person sales on the left, online
+   auctions and single lots on the right. Phones and narrow windows keep the single column. */
+@media (min-width:1100px){
+  .wrap{max-width:1440px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;row-gap:20px;align-items:start;
+    grid-template-areas:"head head" "cal cal" "gate gate" "filt filt" "res res" "in on" "in lots" "in ." "foot foot";grid-template-rows:auto auto auto auto auto auto auto 1fr auto}
+  .wrap>.foot{grid-area:foot} .wrap>dialog{grid-area:head}
+  .wrap>header{grid-area:head} #cal-sec{grid-area:cal} #gate{grid-area:gate} .wrap>.filters{grid-area:filt}
+  #research-sec{grid-area:res} #inperson{grid-area:in} #online-sec{grid-area:on} #lots-sec{grid-area:lots}
+  .cal{gap:8px}
+  .cday{min-height:150px;padding:8px 7px;gap:5px}
+  .cdh{font-size:14px}.cdh b{font-size:22px}
+  .cev{font-size:13px;padding:4px 7px}
+  .cev span{font-size:12px}
+}
+@media (min-width:1600px){.wrap{max-width:1680px}}
 </style>
 </head>
 <body>
@@ -683,7 +698,7 @@ body{margin:0;font-size:15px}
       const cell=el("div","cday"+(k===t?" today":"")+(wd===0||wd===6?" wkend":"")); cell.setAttribute("role","listitem");
       const h=el("div","cdh"); h.append(document.createTextNode(k===t?"Today":d.toLocaleDateString("en-US",{weekday:"short"})),
         el("b",null,String(d.getDate()))); h.title=fmtDay(k); cell.append(h);
-      const cap=calOpen[k]?99:4;
+      const cap=calOpen[k]?99:(window.innerWidth>=1100?8:4);
       items.slice(0,cap).forEach(s=>{
         const b=el("button","cev"+((s.interest||0)>=2?" hot":"")+(saleEnded(s,t)?" ended":"")); b.type="button"; b.dataset.t=s.type;
         const tm=calTime(s,k);
@@ -742,6 +757,7 @@ body{margin:0;font-size:15px}
 
   document.querySelectorAll(".filters .chipbtn").forEach(b=>b.addEventListener("click",()=>{
     ftype=b.dataset.type; document.querySelectorAll(".filters .chipbtn").forEach(x=>x.setAttribute("aria-pressed",x===b));render();}));
+  {let wide=window.innerWidth>=1100;window.addEventListener("resize",()=>{const w=window.innerWidth>=1100;if(w!==wide){wide=w;render();}});}
   $("#dist").addEventListener("change",e=>{fdist=+e.target.value;try{localStorage.setItem("hsf-dist",e.target.value)}catch(_){};render();});
 
   const RELAY="https://harbor-traffic-relay.sms-relay-protocol.workers.dev";
