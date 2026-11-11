@@ -379,7 +379,7 @@ body{margin:0;font-size:15px}
   const TIME=5, TIME_RESEARCH=10, CUTOFF=5;
   const HANDLE={card:0.5,small:1,medium:4,large:15,freight:30,"":2}, SHIPFEE={card:0.6,small:0.9,medium:2,large:3.5,freight:0,"":1.2};
   // nude/figure art only (not every statue: a lighthouse statue isn't his thing), SDRs, arcade, bones and skulls
-  const PERSONAL=/\b(nudes?|nudity|naked|figural (nude|woman|female|lady)|female (nude|figure|form)|(bronze|french|art deco|art nouveau|cast[- ]stone|concrete|marble|plaster) (nude|lady|woman|maiden|venus|nymph|female figure)|venus|nymphs?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade (cabinet|game|machine)|pinball|skulls?|bones?|skeleton|vertebrae?|antlers?)\b/i;
+  const PERSONAL=/\b(nudes?|nudity|naked|figural (nude|woman|female|lady)|female (nude|figure|form)|(bronze|french|art deco|art nouveau|cast[- ]stone|concrete|marble|plaster) (nude|lady|woman|maiden|venus|nymph|female figure)|venus|nymphs?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade (cabinet|game|machine)|pinball|skulls?|bones?|skeleton|vertebrae?|antlers?|silk (sheets?|sheet set|bedding|pillowcases?|duvet)|mulberry silk|nintendo switch 2|switch 2 (console|system|bundle|dock))\b/i;
   function isOne(p){return (p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);}
   // RJ collects ancient coins: tag them for him and always show them too
   const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic|floor edgers?|edging sanders?|edger sanders?|(floor|wood ?floor|hardwood) sanders?.{0,20}edg\w*|edg\w* .{0,20}(floor )?sanders?|super ?7r|super edger|bona edge|clarke (super )?edger|american sanders? (super )?(7r|edger)|essex silverline edger|galaxy edger|l[aä]gler (flip|elan|unico)? ?edger)\b/i;
@@ -390,6 +390,8 @@ body{margin:0;font-size:15px}
   function isJessie(p){return JESSIE.test(String(p.what||""));}
   // pull-tab dispensers, slots, vending and claw machines get called "arcade" by the AI: not Chris's thing
   const NOT_ARCADE=/pull[- ]?tabs?|ticket (dispenser|vend)|slot machine|vending|gumball|candy machine|change machine|claw|crane|kiddie ride/i;
+  // video games: a 🎮 marker (no free pass: they still have to clear the profit cutoff)
+  const GAMES=/\b(atari|nes|snes|super nintendo|nintendo (64|entertainment system|ds|gamecube|wii|switch)|n64|gamecube|game ?boy|sega|genesis|dreamcast|saturn|playstation|ps[1-5]|psp|ps vita|xbox|turbografx|neo ?geo|colecovision|intellivision|vectrex|video games?|game cartridges?|cib|nintendo power|strategy guide)\b/i;
   function isChris(p){const w=String(p.what||"");return PERSONAL.test(w)&&!NOT_ARCADE.test(w);}
   const WHO={chris:{name:"Chris",icon:"💜",test:isChris,txt:t=>PERSONAL.test(t)&&!NOT_ARCADE.test(t)},
              jessie:{name:"Jessie",icon:"💎",test:isJessie,txt:t=>JESSIE.test(t)},
@@ -600,6 +602,7 @@ body{margin:0;font-size:15px}
         {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:null,item));if(d)li.append(d);}}
       if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
       if(isJessie(p)){const m=el("span","deal d-jes","💎 Jessie");m.title="Jewelry Jessie looks for (micromosaic, cameo, reverse glass, niello, Siam silver, signed, hallmarked): always shown";li.append(m);}
+      if(GAMES.test(String(p.what||""))&&!isChris(p)){const m=el("span","deal d-plain","🎮 games");m.title="Video games: a good seller for Chris";li.append(m);}
       if(!isRJ(p)&&!isJessie(p)&&isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     Object.entries(byLot).filter(([l,ps])=>ps.length>1).forEach(([l,ps])=>{
