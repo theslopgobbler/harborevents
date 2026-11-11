@@ -180,14 +180,11 @@ body{margin:0;font-size:15px}
   .cday{flex:0 0 118px;scroll-snap-align:start}
 }
 @media (prefers-reduced-motion:reduce){.sale.flash{animation:none;box-shadow:0 0 0 3px var(--sign)}}
-/* Desktop (Nov 11 2026): use the width. Calendar full width with roomier days; in-person sales on the left, online
-   auctions and single lots on the right. Phones and narrow windows keep the single column. */
+/* Desktop (Nov 11 2026): the calendar uses the full width with roomier days; the lists stay one column (in person,
+   then online auctions, then lots), just a little wider than on a phone. Phones keep the single narrow column. */
 @media (min-width:1100px){
-  .wrap{max-width:1440px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;row-gap:20px;align-items:start;
-    grid-template-areas:"head head" "cal cal" "gate gate" "filt filt" "res res" "in on" "in lots" "in ." "foot foot";grid-template-rows:auto auto auto auto auto auto auto 1fr auto}
-  .wrap>.foot{grid-area:foot} .wrap>dialog{grid-area:head}
-  .wrap>header{grid-area:head} #cal-sec{grid-area:cal} #gate{grid-area:gate} .wrap>.filters{grid-area:filt}
-  #research-sec{grid-area:res} #inperson{grid-area:in} #online-sec{grid-area:on} #lots-sec{grid-area:lots}
+  .wrap{max-width:1440px}
+  #research-sec,#inperson,#online-sec,#lots-sec,.wrap>.foot{width:100%;max-width:980px;align-self:center}
   .cal{gap:8px}
   .cday{min-height:150px;padding:8px 7px;gap:5px}
   .cdh{font-size:14px}.cdh b{font-size:22px}
