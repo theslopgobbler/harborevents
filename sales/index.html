@@ -125,6 +125,11 @@ details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary
 .thumbs span{position:absolute;left:3px;top:3px;background:var(--ink);color:var(--panel);font:600 11px/1 var(--body);padding:2px 4px;border-radius:3px}
 .work pre{margin:0;max-height:260px;overflow:auto;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px;white-space:pre-wrap;overflow-wrap:anywhere}
 .ai li{font-variant-numeric:tabular-nums}
+/* striped rows (Nov 11 2026), same as the Spotted lines */
+.ai ul{list-style:none;padding-left:0}
+.ai ol{list-style-position:inside;padding-left:0!important}
+.ai ul>li,.ai ol>li{margin:0;padding:4px 8px;border-radius:3px}
+.ai ul>li:nth-child(odd),.ai ol>li:nth-child(odd){background:rgba(127,127,127,.14)}
 .lot .ai{grid-column:1/-1}
 .tag.wild{background:var(--auction);color:var(--panel)}
 .lot .ln{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
