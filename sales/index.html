@@ -362,7 +362,8 @@ body{margin:0;font-size:15px}
   // eBay has nothing to compare.
   const TIME=5, TIME_RESEARCH=10, CUTOFF=5;
   const HANDLE={card:0.5,small:1,medium:4,large:15,freight:30,"":2}, SHIPFEE={card:0.6,small:0.9,medium:2,large:3.5,freight:0,"":1.2};
-  const PERSONAL=/\b(nudes?|figural|statues?|statuettes?|bronze (figure|lady|woman|maiden)|female figure|busts?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade|coin[- ]?op|skulls?|bones?|skeleton|vertebrae?|antlers?)\b/i;
+  // nude/figure art only (not every statue: a lighthouse statue isn't his thing), SDRs, arcade, bones and skulls
+  const PERSONAL=/\b(nudes?|nudity|naked|figural (nude|woman|female|lady)|female (nude|figure|form)|(bronze|french|art deco|art nouveau|cast[- ]stone|concrete|marble|plaster) (nude|lady|woman|maiden|venus|nymph|female figure)|venus|nymphs?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade|coin[- ]?op|skulls?|bones?|skeleton|vertebrae?|antlers?)\b/i;
   function isOne(p){return (p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);}
   // RJ collects ancient coins: tag them for him and always show them too
   const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic)\b/i;
@@ -534,7 +535,7 @@ body{margin:0;font-size:15px}
       li.append(priceChip(id+"~p"+i,p,isLot&&i===0?lotBid:null,c,isLot&&i>0?"":lotUrl));
       {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:(isLot&&i===0?lotBid:null),item));if(d)li.append(d);}
       if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
-      else if(isMine(p)){const m=el("span","deal d-me","💜 yours");m.title="One of Chris's personal interests: always shown";li.append(m);}
+      else if(isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
       li.append(voteBar(id+"~p"+i,p.what,"ai-pick")); ul.append(li);});box.append(ul);}
     if(low.length){const d=document.createElement("details");d.className="low";
       const sum=low.reduce((t,[p])=>t+(+p.low||0),0);
