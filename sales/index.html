@@ -368,11 +368,12 @@ body{margin:0;font-size:15px}
   function isOne(p){return (p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);}
   // RJ collects ancient coins: tag them for him and always show them too
   const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic)\b/i;
-  function isRJ(p){return RJ.test(String(p.what||"")+" "+String(p.why||""));}
+  // tags match the find's name only: the AI's 'why' says things like "fits Chris's interest in figural art" about horse paintings
+  function isRJ(p){return RJ.test(String(p.what||""));}
   // Jessie: jewelry features (micromosaic, cameo, reverse glass, niello, Siam silver, signed jewelry, hallmarks; not Hallmark the store)
   const JESSIE=/\b(micro[- ]?mosaics?|cameos?|reverse[- ](painted|carved|etched|intaglio)?[- ]?glass|reverse intaglio|essex crystal|niello|siam(ese)? (silver|sterling|jewelry|bracelet|brooch|pin|earrings?)|siam|hallmark(s|ed)?(?! (keepsake|ornaments?|cards?|stores?|channel|movie))|signed (brooch|pin|necklace|bracelet|earrings?|ring|pendant|jewelry|cuff ?links?)|(trifari|coro|eisenberg|weiss|napier|haskell|juliana|sarah coventry|monet|kramer|schiaparelli|boucher|hobe|hollycraft|regency)\b.{0,30}(brooch|pin|necklace|bracelet|earrings?|pendant|jewelry))\b/i;
-  function isJessie(p){return JESSIE.test(String(p.what||"")+" "+String(p.why||""));}
-  function isMine(p){return PERSONAL.test(String(p.what||"")+" "+String(p.why||""))||isRJ(p)||isJessie(p);}
+  function isJessie(p){return JESSIE.test(String(p.what||""));}
+  function isMine(p){return PERSONAL.test(String(p.what||""))||isRJ(p)||isJessie(p);}
   function costs(p){const z=p.size||"";return (HANDLE[z]??2)+(SHIPFEE[z]??1.2)+(isOne(p)?TIME_RESEARCH:TIME);}
   function money(v){return "$"+(v>=100?Math.round(v):v.toFixed(2).replace(/\.00$/,""));}
   // ---- deal score: what an AI find is worth to Chris at today's price
