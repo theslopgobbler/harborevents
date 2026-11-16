@@ -452,7 +452,7 @@ body{margin:0;font-size:15px}
     const one=(p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);
     const nv=Math.max(0,net(value)-costs(p));
     if(p.museum||/\bivory\b|scrimshaw|human skull|anatomical skull|medical skull/i.test(p.what)) return {tag:"🏛",text:"🏛 museum piece, not for resale",why:"Human remains and ivory can't be sold on eBay/Amazon; flagged for the museum. Check provenance (never Native American or archaeological remains) and state law before buying."};
-    if(c&&c.n===0) return one||(+p.high>=100&&!PRINT.test(p.what))?{tag:"🦄",text:"🦄 one of a kind? check by hand",why:"No eBay sales to compare"+(one?"; the AI thinks this is one-of-a-kind":"")}:{tag:"❓",text:"❓ no comps",why:"No eBay sales in 90 days and nothing marks it as special"};
+    if(c&&c.n===0) return one||(+p.high>=100&&!PRINT.test(p.what))?{tag:"🦄",text:"🦄 one of a kind? check by hand",why:"No eBay sales to compare"+(one?"; the AI thinks this is one-of-a-kind":"")}:{tag:"❓",text:"❓ no comps",why:"No eBay sales in the last "+(c.days>=1095?"3 years":c.days+" days")+" and nothing marks it as special"};
     if(!c&&one) return {tag:"🦄",text:"🦄 one of a kind: check by hand",why:"The AI thinks this is one-of-a-kind; no eBay prices checked yet"};
     let maxT=0; TIERS.forEach(([lo,hi,r])=>{const t=Math.min(hi,nv/(r*k),nv-8);if(t>lo&&t>maxT)maxT=t;});
     const maxBid=maxT>0?maxT/(1+premium/100):0;
@@ -599,9 +599,9 @@ body{margin:0;font-size:15px}
       const c=comps[String(ebayWords(p)).toLowerCase().replace(/\s+/g," ").trim()];
       if(c&&c.matched===0&&c.n>0){const a=link(c.url||sold,"eBay: no close matches");a.className="comps";a.title="eBay's search found "+c.n+" sales, but none were this item (parts, accessories or other things), so there's no eBay price. Check by hand.";li.append(document.createTextNode(" · "),a);}
       else if(c&&(c.median||c.avg)){const a=link(c.url||sold,"eBay sold ~"+money(c.median||c.avg)+(c.matched?" ("+c.matched+" like it)":c.n?" ("+c.n+" sold)":""));a.className="comps";
-        a.title=["Last "+(c.days||90)+" days on eBay Research"+(c.low!=null&&c.high!=null?(c.matched>=3?", middle half of the close matches: ":": ")+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
+        a.title=["Last "+((c.days||90)>=1095?"3 years":(c.days||90)+" days")+" on eBay Research"+(c.low!=null&&c.high!=null?(c.matched>=3?", middle half of the close matches: ":": ")+money(c.low)+"–"+money(c.high):"")+(c.note?" · "+c.note:"")].concat((c.rows||[]).map(r=>money(r.p)+"  "+r.t+(r.d?" ("+r.d+")":""))).join("\n");
         li.append(document.createTextNode(" · "),a);}
-      else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+(c.days||90)+" days: a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
+      else if(c&&c.n===0){const a=link(c.url||sold,"\u2753 no eBay sales");a.className="comps";a.title="Nothing sold on eBay under these words in the last "+((c.days||90)>=1095?"3 years":(c.days||90)+" days")+": a rare one, or the words are off. Worth a look by hand.";li.append(document.createTextNode(" · "),a);}
       // in an auction lot the bid buys every find together, so price and deal are judged for the whole lot below
       if(!isLot&&grouped(p.link)){const g=el("span","deal d-plain","in "+lotName(p.link)+" with "+(byLot[p.link].length-1)+" more");g.title="Sold together in one lot: priced as a group below";li.append(g);}
       else if(!isLot){li.append(priceChip(id+"~p"+i,p,null,c,lotUrl));
