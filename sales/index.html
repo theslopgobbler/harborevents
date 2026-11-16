@@ -243,13 +243,14 @@ body{margin:0;font-size:15px}
     <button class="chipbtn" id="f-finds" data-type="finds" aria-pressed="false">Good finds</button>
     <button class="chipbtn" id="f-chris" data-type="who:chris" aria-pressed="false" title="Everything tagged for Chris">💜 Chris</button>
     <button class="chipbtn" id="f-jessie" data-type="who:jessie" aria-pressed="false" title="Jewelry tagged for Jessie">💎 Jessie</button>
-    <button class="chipbtn" id="f-rj" data-type="who:rj" aria-pressed="false" title="Ancient coins and floor edgers for RJ">🪙 RJ</button>
+    <button class="chipbtn" id="f-rj" data-type="who:rj" aria-pressed="false" title="Ancient coins, floor edgers and mid-century modern furniture for RJ">🪙 RJ</button>
     <span class="spacer"></span>
     <label for="dist" class="status">Within</label>
     <select id="dist">
       <option value="25">25 mi</option>
       <option value="40">40 mi</option>
       <option value="65" selected>65 mi</option>
+      <option value="100">100 mi</option>
       <option value="999">Any</option>
     </select>
   </div>
@@ -387,8 +388,8 @@ body{margin:0;font-size:15px}
   // nude/figure art only (not every statue: a lighthouse statue isn't his thing), SDRs, arcade, bones and skulls
   const PERSONAL=/\b(nudes?|nudity|naked|figural (nude|woman|female|lady)|female (nude|figure|form)|(bronze|french|art deco|art nouveau|cast[- ]stone|concrete|marble|plaster) (nude|lady|woman|maiden|venus|nymph|female figure)|venus|nymphs?|sdr|rtl-?sdr|sdrplay|airspy|hackrf|kiwisdr|software[- ]defined radio|arcade (cabinet|game|machine)|pinball|skulls?|bones?|skeleton|vertebrae?|antlers?|silk (sheets?|sheet set|bedding|pillowcases?|duvet)|mulberry silk|nintendo switch 2|switch 2 (console|system|bundle|dock))\b/i;
   function isOne(p){return (p.unique||/original|hand[- ]?made|one[- ]of[- ]a[- ]kind|prototype|\b1\/1\b/i.test(p.what))&&!PRINT.test(p.what);}
-  // RJ collects ancient coins: tag them for him and always show them too
-  const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic|floor edgers?|edging sanders?|edger sanders?|(floor|wood ?floor|hardwood) sanders?.{0,20}edg\w*|edg\w* .{0,20}(floor )?sanders?|super ?7r|super edger|bona edge|clarke (super )?edger|american sanders? (super )?(7r|edger)|essex silverline edger|galaxy edger|l[aä]gler (flip|elan|unico)? ?edger)\b/i;
+  // RJ collects ancient coins and wants a floor edger and mid-century modern furniture: tag those for him and always show them too
+  const RJ=/\b(ancient coins?|roman (coin|bronze|silver|empire)|greek (coin|silver|drachm)|byzantine|denarius|denarii|antoninianus|follis|sestertius|drachms?|tetradrachms?|obol|solidus|siliqua|nummus|prutah|widow'?s mite|celtic coin|parthian|seleucid|ptolemaic|floor edgers?|edging sanders?|edger sanders?|(floor|wood ?floor|hardwood) sanders?.{0,20}edg\w*|edg\w* .{0,20}(floor )?sanders?|super ?7r|super edger|bona edge|clarke (super )?edger|american sanders? (super )?(7r|edger)|essex silverline edger|galaxy edger|l[aä]gler (flip|elan|unico)? ?edger|mid[- ]?century( modern)?|\bmcm\b|danish modern|eames|paul mccobb|george nelson|nelson (bench|clock|bubble)|heywood[- ]wakefield|broyhill (brasilia|saga|sculptra|emphasis)|lane (acclaim|perception|rhythm|staccato|tuxedo)|drexel (declaration|profile)|american of martinsville|kofod[- ]larsen|wegner|saarinen|tulip (table|chair)|bertoia|womb chair|egg chair|(teak|walnut) (credenza|sideboard|dresser|lowboy|highboy|nightstand|coffee table|end table|side table|dining (table|set|chairs?)|desk|bookcase|cabinet|hutch|armchair|lounge chair)|(credenza|sideboard|lowboy|highboy|lounge chair|armchair|dresser|coffee table|end table|side table|dining (table|set|chairs?)|desk|bookcase|cabinet|hutch|sofa|chair).{0,25}(mid[- ]?century|danish modern|mcm|teak|walnut))\b/i;
   // tags match the find's name only: the AI's 'why' says things like "fits Chris's interest in figural art" about horse paintings
   function isRJ(p){return RJ.test(String(p.what||""));}
   // Jessie: jewelry features (micromosaic, cameo, reverse glass, niello, Siam silver, signed jewelry, hallmarks; not Hallmark the store)
@@ -606,7 +607,7 @@ body{margin:0;font-size:15px}
       if(!isLot&&grouped(p.link)){const g=el("span","deal d-plain","in "+lotName(p.link)+" with "+(byLot[p.link].length-1)+" more");g.title="Sold together in one lot: priced as a group below";li.append(g);}
       else if(!isLot){li.append(priceChip(id+"~p"+i,p,null,c,lotUrl));
         {const saved=prices[id+"~p"+i];const d=dealChip(dealOf(p,c,saved?saved[0]:null,item));if(d)li.append(d);}}
-      if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="Ancient coin: RJ collects these, always shown";li.append(m);}
+      if(isRJ(p)){const m=el("span","deal d-rj","🪙 RJ");m.title="For RJ (ancient coins, floor edgers, mid-century modern furniture): always shown";li.append(m);}
       if(isJessie(p)){const m=el("span","deal d-jes","💎 Jessie");m.title="Jewelry Jessie looks for (micromosaic, cameo, reverse glass, niello, Siam silver, signed, hallmarked): always shown";li.append(m);}
       if(GAMES.test(String(p.what||""))&&!isChris(p)){const m=el("span","deal d-plain","🎮 games");m.title="Video games: a good seller for Chris";li.append(m);}
       if(!isRJ(p)&&!isJessie(p)&&isMine(p)){const m=el("span","deal d-me","💜 Chris");m.title="One of Chris's personal interests: always shown";li.append(m);}
@@ -814,7 +815,7 @@ body{margin:0;font-size:15px}
     const cal=$("#cal"); if(!cal) return; cal.replaceChildren();
     $("#cal-sec").hidden=!sales.length&&!lots.length;
     // storage units (from the storage auction scout) show on the day bidding closes
-    const units=(ftype==="all"||ftype==="storage"||ftype==="auction")?lots.filter(x=>x.category==="storage"&&x.closes&&(x.dist==null||x.dist<=fdist))
+    const units=(ftype==="all"||ftype==="storage")?lots.filter(x=>x.category==="storage"&&x.closes&&(x.dist==null||x.dist<=fdist))
       .map(x=>({id:x.id,type:"storage",title:x.title,town:String(x.company||"").split(",").pop().trim()||x.title,dist:x.dist,interest:x.score,endsAt:x.closesAt,closes:x.closes,_lot:x})):[];
     let n=0;
     for(let i=0;i<14;i++){
@@ -867,7 +868,7 @@ body{margin:0;font-size:15px}
     const on=$("#online"); on.replaceChildren();
     onl.sort((a,b)=>a.end.localeCompare(b.end)).forEach(s=>on.append(card(s,t)));
     $("#online-sec").hidden=!onl.length;
-    const lv=lots.filter(x=>(!x.closes||x.closes>=t)&&(ftype==="storage"?x.category==="storage":!(ftype==="estate"||ftype==="garage")||x.category!=="storage")).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
+    const lv=lots.filter(x=>(!x.closes||x.closes>=t)&&(ftype==="storage"?x.category==="storage":!(ftype==="estate"||ftype==="garage"||ftype==="auction")||x.category!=="storage")).sort((a,b)=>((b.score||0)-(a.score||0))||String(a.closes||"9").localeCompare(String(b.closes||"9")));
     const L=$("#lots"); L.replaceChildren();
     lv.forEach(x=>{const over=lotEnded(x,t);const d=el("div","lot"+((x.score||0)>=3?" hot":"")+(over?" ended":""));d.id="sale-"+x.id;d.append(link(x.url,x.title));
       d.firstChild.className="lt";
