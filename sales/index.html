@@ -155,6 +155,10 @@ details.low{margin:4px 0 0;font-size:13px;color:var(--muted)}details.low summary
 .lot .bid{font-family:var(--display);font-weight:600;font-size:15px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .lot .ln{grid-column:1/-1;font-size:13px;color:var(--muted)}
 .lot .ln b{color:var(--sign);font-weight:600}
+.lot .lval{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.lot .against{grid-column:1/-1;font-size:13px;border-left:3px solid var(--bad,#c0392b);padding:2px 8px;margin:2px 0}
+.lot .against b{color:var(--bad,#c0392b)}
+.lot .against ul{margin:2px 0 0;padding-left:18px}
 .empty{background:var(--panel);border:1px dashed var(--line);border-radius:6px;padding:20px;color:var(--muted)}
 .foot{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
 @media (max-width:480px){h1{font-size:32px}.top{flex-direction:column;gap:2px}}
@@ -875,6 +879,8 @@ body{margin:0;font-size:15px}
       d.append(el("div","bid",over?"Bidding ended (last seen "+(x.bid||"$0")+")":(x.bid||"$0")+(x.closes?" · ends "+(x.closes===t?"today":short(x.closes))+(endTime(x.closesAt)?" "+endTime(x.closesAt):""):"")));
       const ln=el("div","ln");if(x.note){ln.append(el("b",null,x.note+" "));}
       if(x.wild) ln.prepend(el("span","tag wild","Wild card"));
+      if(x.visibleValue||x.possibleValue){d.append(el("div","lval",["Visible "+(x.visibleValue||"?"),x.possibleValue?"possible "+x.possibleValue:"",x.confidence?"confidence "+x.confidence:""].filter(Boolean).join(" · ")));}
+      if(Array.isArray(x.against)&&x.against.length){const ag=el("div","against");ag.append(el("b",null,"Points against"));const ul=el("ul");x.against.forEach(a=>ul.append(el("li",null,typeof a==="string"?a:((a.cost!=null?"−$"+Math.abs(a.cost)+" ":"")+(a.what||"")))));ag.append(ul);d.append(ag);}
       ln.append(document.createTextNode([x.company,x.dist!=null?x.dist+" mi":""].filter(Boolean).join(" · ")));if(x.closes&&!over) ln.append(remindBtn(x.id,x.title,x.url,"auction",x.closesAt,x.closes,null));ln.append(voteBar(x.id,x.title,"lot:"+(x.category||"")));d.append(ln);const ai=aiBox(x.id,true,parseFloat(String(x.bid||"").replace(/[$,]/g,""))||null,x);if(ai)d.append(ai);L.append(d);});
     const st=ftype==="storage";
     $("#inperson").hidden=st; $("#online-sec").hidden=st||!onl.length; 
